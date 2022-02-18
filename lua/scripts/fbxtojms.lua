@@ -1,3 +1,4 @@
+package.path = package.path .. [[;.\lua\?.lua;.\lua\scripts\modules\?.lua"]]
 local fs = require "lua.scripts.modules.fs"
 
 local inputPath = arg[1]
@@ -13,7 +14,7 @@ for nameFbx, entry in fs.dir(fbxPath) do
     local command = ("hek\\harvest_h1a_tool fbx-to-jms \"$input\" \"$output\""):gsub("%$(%w+)",
                                                                                          {
         input = entry:path(),
-        output = jmsPath .. "/" .. nameJms
+        output = jmsPath .. "\\" .. nameJms
     })
     os.execute(command)
 end
