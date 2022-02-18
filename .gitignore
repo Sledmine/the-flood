@@ -53,12 +53,14 @@ temp/
 package/game-maps/*.map
 
 # Map files
-tags
-data
-six-shooter.ini
+tags/
+data/
+maps/
 project/
 hek/
 gamestate.txt
+debug.txt
+six-shooter.ini
 
 # Cloud files
 *.db*
