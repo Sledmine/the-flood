@@ -1,5 +1,5 @@
-package.path = package.path .. [[;.\lua\?.lua;.\lua\scripts\modules\?.lua"]]
-local fs = require "lua.scripts.modules.fs"
+package.path = package.path .. [[;./lua/?.lua;./lua/scripts/modules/?.lua]]
+local fs = require "fs"
 
 local inputPath = arg[1]
 local fbxPath = inputPath .. "\\fbx"
