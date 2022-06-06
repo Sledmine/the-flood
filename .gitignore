@@ -52,15 +52,17 @@ dist/
 temp/
 package/game-maps/*.map
 
-# Map files
+# Map project files
 tags/
 data/
 maps/
+maps
 project/
 hek/
 gamestate.txt
 debug.txt
 six-shooter.ini
+*.cfg
 
 # Cloud files
 *.db*
