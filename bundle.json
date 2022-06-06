@@ -1,0 +1,16 @@
+{
+    "name": "Foundation",
+    "target": "lua53",
+    "include": [
+        "lua",
+        "lua/lua_modules/"
+    ],
+    "modules": [
+        "inspect",
+        "glue",
+        "blam",
+        "multiplayer.features.core"
+    ],
+    "main": "lua/multiplayer/foundation",
+    "output": "dist/foundation.lua"
+}
