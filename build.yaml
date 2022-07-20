@@ -6,4 +6,5 @@ tagsize: 64M
 extendlimits: true
 scenarios:
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
+  - keymind/halo_3/levels/multiplayer/bunkerworld/bunkerworld
 outputpath: package/game-maps
