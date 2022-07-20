@@ -1,6 +1,6 @@
 version: 1
-user: gravemind
-cloudpath: Keymind/Projects
+user: mark
+cloudpath: Keymind/Projects/The Flood
 engine: gbx-custom
 tagsize: 64M
 extendlimits: true
