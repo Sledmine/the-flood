@@ -1,6 +1,6 @@
 version: 1
 user: gravemind
-cloudpath: Keymind
+cloudpath: Keymind/Projects
 engine: gbx-custom
 tagsize: 64M
 extendlimits: true
