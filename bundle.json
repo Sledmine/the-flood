@@ -9,8 +9,9 @@
         "inspect",
         "glue",
         "blam",
+        "multiplayer.features.fontOverride",
         "multiplayer.features.core"
     ],
     "main": "lua/multiplayer/foundation",
-    "output": "dist/foundation.lua"
+    "output": "dist/treason_dev.lua"
 }
