@@ -7,13 +7,24 @@ clua_version = 2.042
 ------------------------------------------------------------------------------
 
 blam = require "blam"
+gameplay = require "multiplayer.features.gameplay"
+dynamicCross = require "multiplayer.features.dynamicCross"
 tagClasses = blam.tagClasses
 objectClasses = blam.objectClasses
 
+--function OnLoad()
+    --console_out("it's working")
+--    fontOverride.onLoad()
+--end
+
 function OnTick()
-    DynamicReticles()
-    RotateWeapons()
-    swapFirstPerson()
-    hudExtensions()
+    dynamicCross.DynamicReticles()
+    gameplay.RotateWeapons()
+    gameplay.swapFirstPerson()
+    gameplay.hudExtensions()
+    gameplay.regenerateHealth()
+    gameplay.hudUpgrades()
     --meleeScreen()
 end
+
+--OnLoad()

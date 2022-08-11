@@ -1,3 +1,6 @@
+--Lua libraries
+local glue = require "glue"
+
 local core = {}
 
 --- Find the path, index and id of a tag given partial name and tag type
@@ -76,6 +79,42 @@ function core.rotateObject(objectId, yaw, pitch, roll)
     object.v2X = yawVector.x
     object.v2Y = yawVector.y
     object.v2Z = yawVector.z
+end
+
+--- Send a request to the server throug rcon
+---@return boolean success
+---@return string request
+function core.sendRequest(request, playerIndex)
+    dprint("-> [ Sending request ]")
+    dprint("Request: " .. request)
+    if (server_type == "local") then
+        OnRcon(request)
+        return true, request
+    elseif (server_type == "dedicated") then
+        -- Player is connected to a server
+        local fixedRequest = "rcon forge '" .. request .. "'"
+        execute_script(fixedRequest)
+        return true, fixedRequest
+    elseif (server_type == "sapp") then
+        dprint("Server request: " .. request)
+        -- We want to broadcast to every player in the server
+        if (not playerIndex) then
+            grprint(request)
+        else
+            -- We are looking to send data to a specific player
+            rprint(playerIndex, request)
+        end
+        return true, request
+    end
+    return false
+end
+
+function core.secondsToTicks(seconds)
+    return 30 * seconds
+end
+
+function core.ticksToSeconds(ticks)
+    return glue.round(ticks / 30)
 end
 
 return core

@@ -10,7 +10,10 @@
         "glue",
         "blam",
         "multiplayer.features.fontOverride",
-        "multiplayer.features.core"
+        "multiplayer.features.core",
+        "multiplayer.features.constants",
+        "multiplayer.features.gameplay",
+        "multiplayer.features.dynamicCross"
     ],
     "main": "lua/multiplayer/foundation",
     "output": "dist/treason_dev.lua"
