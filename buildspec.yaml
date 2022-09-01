@@ -1,0 +1,10 @@
+version: 1
+game_engine: gbx-custom
+tag_space: 64M
+extend_limits: true
+scenarios:
+  - keymind/the_flood/levels/multiplayer/foundation/treason_dev
+  - keymind/the_flood/levels/multiplayer/unraveled/unraveled
+  - keymind/halo_3/levels/multiplayer/bunkerworld/bunkerworld
+
+
