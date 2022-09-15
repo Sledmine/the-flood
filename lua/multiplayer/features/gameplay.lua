@@ -3,21 +3,19 @@
 -- Mark Mc'Fuzz
 -- Set of different treason gameplay features
 ------------------------------------------------------------------------------
-
-
---Lua libraries
+-- Lua libraries
 local core = require "multiplayer.features.core"
 local const = require "multiplayer.features.constants"
 local glue = require "glue"
 
---local fontOverride = require "multiplayer.features.fontOverride"
+-- local fontOverride = require "multiplayer.features.fontOverride"
 
 local gameplay = {}
 
 local rotation = 0
 local lastBipedTagId
 
---Rotate weapons while is not taken, need improve
+-- Rotate weapons while is not taken, need improve
 function gameplay.RotateWeapons()
     if (rotation < 360) then
         rotation = rotation + 1
@@ -38,27 +36,31 @@ end
 --- Change FP arms depending on the biped that is chosen
 function gameplay.swapFirstPerson()
     local player = blam.player(get_player())
-    local playerObject = blam.object(get_object(player.objectId))
-    if playerObject then
-        if lastBipedTagId ~= playerObject.tagId then
-            lastBipedTagId = playerObject.tagId
-            console_out("changing fp")
-            local globals = blam.globalsTag()
-            if (player and playerObject and globals) then
-                local bipedTag = blam.getTag(playerObject.tagId)
-                if (bipedTag) then
-                    local tagPathSplit = glue.string.split(bipedTag.path, "\\")
-                    local bipedName = tagPathSplit[#tagPathSplit]
-                    local fpModelTagId = blam.getTag([[keymind\the_flood\characters\unsc\odst_multiplayer\_types\thefood_legacy\thefood_legacy_fp]], tagClasses.gbxmodel).id
-                    local fpTag = core.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
-                    if (fpTag) then
-                        fpModelTagId = fpTag.id
-                    end
-                    if (fpModelTagId) then
-                        -- Save default first person hands model
-                        local newFirstPersonInterface = globals.firstPersonInterface
-                        newFirstPersonInterface[1].firstPersonHands = fpModelTagId
-                        globals.firstPersonInterface = newFirstPersonInterface
+    if player then
+        local playerObject = blam.object(get_object(player.objectId))
+        if playerObject then
+            if lastBipedTagId ~= playerObject.tagId then
+                lastBipedTagId = playerObject.tagId
+                console_out("changing fp")
+                local globals = blam.globalsTag()
+                if (player and playerObject and globals) then
+                    local bipedTag = blam.getTag(playerObject.tagId)
+                    if (bipedTag) then
+                        local tagPathSplit = glue.string.split(bipedTag.path, "\\")
+                        local bipedName = tagPathSplit[#tagPathSplit]
+                        local fpModelTagId = blam.getTag(
+                                                 [[keymind\the_flood\characters\unsc\odst_multiplayer\_types\thefood_legacy\thefood_legacy_fp]],
+                                                 tagClasses.gbxmodel).id
+                        local fpTag = core.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
+                        if (fpTag) then
+                            fpModelTagId = fpTag.id
+                        end
+                        if (fpModelTagId) then
+                            -- Save default first person hands model
+                            local newFirstPersonInterface = globals.firstPersonInterface
+                            newFirstPersonInterface[1].firstPersonHands = fpModelTagId
+                            globals.firstPersonInterface = newFirstPersonInterface
+                        end
                     end
                 end
             end
@@ -71,7 +73,7 @@ function gameplay.hudExtensions()
     local player = blam.player(get_player())
     local playerObject = blam.biped(get_object(player.objectId))
     if playerObject then
-        --console_out(playerObject.zoomLevel)
+        -- console_out(playerObject.zoomLevel)
         if not blam.isNull(playerObject.zoomLevel) then
             execute_script("hud_show_motion_sensor 0")
         else
@@ -168,10 +170,11 @@ function gameplay.meleeScreen()
     local player = blam.player(get_player())
     local playerObject = blam.biped(get_object(player.objectId))
     if playerObject then
-        --console_out(playerObject.zoomLevel)
+        -- console_out(playerObject.zoomLevel)
         if playerObject.meleeKey then
-            execute_script([[(begin (damage_object keymind\halo_infinite\halo_infinite\weapons\rifle\stalker_rifle\_fx__kinestecia\overheated.damage_effect") (unit (list_get) (players) 0) )]])
-            --execute_script([[damage_object keymind\\halo_infinite\\halo_infinite\\weapons\\rifle\\stalker_rifle\\_fx\\_kinestecia\\overheated]])
+            execute_script(
+                [[(begin (damage_object keymind\halo_infinite\halo_infinite\weapons\rifle\stalker_rifle\_fx__kinestecia\overheated.damage_effect") (unit (list_get) (players) 0) )]])
+            -- execute_script([[damage_object keymind\\halo_infinite\\halo_infinite\\weapons\\rifle\\stalker_rifle\\_fx\\_kinestecia\\overheated]])
         end
     end
 end
