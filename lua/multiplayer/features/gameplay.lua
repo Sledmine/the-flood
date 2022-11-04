@@ -9,7 +9,7 @@ local core = require "multiplayer.features.core"
 local const = require "multiplayer.features.constants"
 local glue = require "glue"
 
--- local fontOverride = require "multiplayer.features.fontOverride"
+-- local fontOverride = require "multiplayer.features.fontOverride" (use later for change the font with a custom one)
 
 local gameplay = {}
 
@@ -163,19 +163,19 @@ function gameplay.regenerateHealth(playerIndex)
 end
 
 -- Shake screen effect when biped is melee, not working yet
-function gameplay.meleeScreen()
+--function gameplay.meleeScreen()
 
-    local player = blam.player(get_player())
-    local playerObject = blam.biped(get_object(player.objectId))
-    if playerObject then
-        -- console_out(playerObject.zoomLevel)
-        if playerObject.meleeKey then
-            execute_script(
-                [[(begin (damage_object keymind\halo_infinite\halo_infinite\weapons\rifle\stalker_rifle\_fx__kinestecia\overheated.damage_effect") (unit (list_get) (players) 0) )]])
-            -- execute_script([[damage_object keymind\\halo_infinite\\halo_infinite\\weapons\\rifle\\stalker_rifle\\_fx\\_kinestecia\\overheated]])
-        end
-    end
-end
+--    local player = blam.player(get_player())
+--   local playerObject = blam.biped(get_object(player.objectId))
+--    if playerObject then
+--        -- console_out(playerObject.zoomLevel)
+--        if playerObject.meleeKey then
+--            execute_script(
+--                [[(begin (damage_object keymind\halo_infinite\halo_infinite\weapons\rifle\stalker_rifle\_fx__kinestecia\overheated.damage_effect") (unit (list_get) (players) 0) )]])
+--            -- execute_script([[damage_object keymind\\halo_infinite\\halo_infinite\\weapons\\rifle\\stalker_rifle\\_fx\\_kinestecia\\overheated]])
+--        end
+--    end
+--end
 
 function gameplay.hudBlur(enableBlur, immediate)
     if (enableBlur) then
