@@ -3,8 +3,6 @@
 -- Mark Mc'Fuzz
 -- Set of different treason gameplay features
 ------------------------------------------------------------------------------
-
-
 --Lua libraries
 local core = require "multiplayer.features.core"
 local const = require "multiplayer.features.constants"
@@ -38,27 +36,29 @@ end
 --- Change FP arms depending on the biped that is chosen
 function gameplay.swapFirstPerson()
     local player = blam.player(get_player())
-    local playerObject = blam.object(get_object(player.objectId))
-    if playerObject then
-        if lastBipedTagId ~= playerObject.tagId then
-            lastBipedTagId = playerObject.tagId
-            console_out("changing fp")
-            local globals = blam.globalsTag()
-            if (player and playerObject and globals) then
-                local bipedTag = blam.getTag(playerObject.tagId)
-                if (bipedTag) then
-                    local tagPathSplit = glue.string.split(bipedTag.path, "\\")
-                    local bipedName = tagPathSplit[#tagPathSplit]
-                    local fpModelTagId = blam.getTag([[keymind\the_flood\characters\unsc\odst_multiplayer\_types\thefood_legacy\thefood_legacy_fp]], tagClasses.gbxmodel).id
-                    local fpTag = core.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
-                    if (fpTag) then
-                        fpModelTagId = fpTag.id
-                    end
-                    if (fpModelTagId) then
-                        -- Save default first person hands model
-                        local newFirstPersonInterface = globals.firstPersonInterface
-                        newFirstPersonInterface[1].firstPersonHands = fpModelTagId
-                        globals.firstPersonInterface = newFirstPersonInterface
+    if player then
+        local playerObject = blam.object(get_object(player.objectId))
+        if playerObject then
+            if lastBipedTagId ~= playerObject.tagId then
+                lastBipedTagId = playerObject.tagId
+                console_out("changing fp")
+                local globals = blam.globalsTag()
+                if (player and playerObject and globals) then
+                    local bipedTag = blam.getTag(playerObject.tagId)
+                    if (bipedTag) then
+                        local tagPathSplit = glue.string.split(bipedTag.path, "\\")
+                        local bipedName = tagPathSplit[#tagPathSplit]
+                        local fpModelTagId = blam.getTag([[keymind\the_flood\characters\unsc\odst_multiplayer\_types\thefood_legacy\thefood_legacy_fp]], tagClasses.gbxmodel).id
+                        local fpTag = core.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
+                        if (fpTag) then
+                            fpModelTagId = fpTag.id
+                        end
+                        if (fpModelTagId) then
+                            -- Save default first person hands model
+                            local newFirstPersonInterface = globals.firstPersonInterface
+                            newFirstPersonInterface[1].firstPersonHands = fpModelTagId
+                            globals.firstPersonInterface = newFirstPersonInterface
+                        end
                     end
                 end
             end
@@ -92,6 +92,8 @@ end
 function gameplay.hudUpgrades()
     local player = blam.biped(get_dynamic_player())
     -- Player must exist
+    --local playerData = blam.player(get_player())
+    -- Player must exist and not be a monitor
     if (player) then
         local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 0
         if (not isPlayerOnMenu) then
@@ -110,31 +112,28 @@ function gameplay.hudUpgrades()
                     end
                 end
             end
-            -- When player is on critical health show blur effect
-            if (player.health < 0.25 and blam.isNull(player.vehicleObjectId)) then
-                if (not healthDepletedRecently) then
-                    healthDepletedRecently = true
-                    execute_script([[(begin
-                        (cinematic_screen_effect_start true)
-                        (cinematic_screen_effect_set_convolution 2 1 4 1 1)
-                        (cinematic_screen_effect_start false)
-                    )]])
+            -- Blur HUD vision on critical health
+            if (player.health <= 0.25 and player.shield <= 0 and blam.isNull(player.vehicleObjectId)) then
+                if (not gameplay.state.playerCriticalHealth) then
+                    gameplay.state.playerCriticalHealth = true
+                    gameplay.hudBlur(true)
                 end
             else
-                if (healthDepletedRecently) then
-                    execute_script([[(begin
-                    (cinematic_screen_effect_set_convolution 2 1 1 0 1)(cinematic_screen_effect_start false)
-                    (sleep 45)
-                    (cinematic_stop)
-                )]])
+                if (gameplay.state.playerCriticalHealth) then
+                    gameplay.hudBlur(false)
                 end
-                healthDepletedRecently = false
+                gameplay.state.playerCriticalHealth = false
+            end
+            if (gameplay.state.playerCriticalHealth) then
+                gameplay.hudBlur(false, true)
+                gameplay.state.playerCriticalHealth = false
             end
         end
     end
 end
 
---- Biped health regen system
+--- Regenerate players health on low shield using game ticks
+---@param playerIndex number
 function gameplay.regenerateHealth(playerIndex)
     if (server_type == "sapp" or server_type == "local") then
         local player
@@ -174,6 +173,32 @@ function gameplay.meleeScreen()
             --execute_script([[damage_object keymind\\halo_infinite\\halo_infinite\\weapons\\rifle\\stalker_rifle\\_fx\\_kinestecia\\overheated]])
         end
     end
+end
+
+function gameplay.hudBlur(enableBlur, immediate)
+    if (enableBlur) then
+        execute_script([[(begin
+                        (cinematic_screen_effect_start true)
+                        (cinematic_screen_effect_set_convolution 2 1 1 1 5)
+                        (cinematic_screen_effect_start false)
+                    )]])
+        return true
+    end
+    if (not enableBlur and immediate) then
+        execute_script([[(begin
+                    (cinematic_screen_effect_set_convolution 2 1 1 0 1)
+                    (cinematic_screen_effect_start false)
+                    (cinematic_stop)
+                )]])
+        return false
+    end
+    execute_script([[(begin
+                    (cinematic_screen_effect_set_convolution 2 1 1 0 1)
+                    (cinematic_screen_effect_start false)
+                    (sleep 45)
+                    (cinematic_stop)
+                )]])
+    return false
 end
 
 return gameplay

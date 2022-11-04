@@ -22,6 +22,7 @@ local sniper_path = "keymind\\the_flood\\weapons\\rifle\\sniper_rifle\\sniper_ri
 local non_path = "keymind\\the_flood\\weapons\\_shared\\empty_crosshair_ref" --ignore
 --local vakara_path = "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando" --VK78 Commando Rifle
 local spnkr_path = "keymind\\halo_infinite\\weapons\\support_high\\m41_spknr\\m41_spknr"
+local br65h_path = "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h"
 
 -- WEAPON TAG PATH VARIABLE
 --local smg_tag = read_dword(get_tag("weap", smg_name) + 0xC)
@@ -37,6 +38,7 @@ local m90_tag = read_dword(get_tag("weap", m90_path) + 0xC)
 local sniper_tag = read_dword(get_tag("weap", sniper_path) + 0xC)
 --local vakara_tag = read_dword(get_tag("weap", vakara_path) + 0xc)
 local spnkr_tag = read_dword(get_tag("weap", spnkr_path) + 0xc)
+local br65h_tag = read_dword(get_tag("weap", br65h_path) + 0xc)
 
 
 globals_tag = read_dword(get_tag("matg", "globals\\globals") + 0x14)
@@ -106,6 +108,7 @@ function InitializeSettings()
         --local m6d_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\magnum_m6d\\magnum_m6d") + 0x14)
         local m6s_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\magnum_m6s\\magnum_m6s") + 0x14)
         local spknr_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\support_high\\m41_spknr\\m41_spknr") + 0x14)
+        local br65h_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h") + 0x14)
 
         -- change heat loss for a .weapon (since guerilla doesn't allow values above 1)
         
@@ -114,6 +117,7 @@ function InitializeSettings()
         write_float(spknr_tag_data + 0x35C, 2.8)
         --write_float(m6d_tag_data + 0x35C, 4.2)
         write_float(m6s_tag_data + 0x35C, 4.2)
+        --write_float(br65h_tag_data + 0x35C, 3.5)
         write_float(ma38_tag_data + 0x35C, 5)
         write_float(needlert54c_tag_data + 0x35C, 5)
         --write_float(needlert54b_tag_data + 0x35C, 5)
@@ -127,6 +131,12 @@ function InitializeSettings()
         m6d_zoom_additional_scale = 0.057
         --m6d_r_inverse_initial_scale = 0.25
         --m6d_r_inverse_additional_scale = 0.1
+
+        --BR65H ZOOM SCALE
+        br65h_zoom_mask_initial_scale = 3
+        br65h_zoom_mask_additional_scale = 0.22
+        br65h_zoom_initial_scale = 0.21
+        br65h_zoom_additional_scale = 0.018
 
         --SPNKR ZOOM SCALE
         spnkr_zoom_mask_initial_scale = 1.7
@@ -186,6 +196,7 @@ function InitializeSettings()
         m6s_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\pistol\\magnum_m6s\\magnum_m6s") + 0x14)
         non_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\_shared\\empty_crosshair_ref") + 0x14)
         spnkr_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\support_high\\rocket_launcher_spnkr\\rocket_launcher_spnkr") + 0x14)
+        br65h_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h") + 0x14)
 
         -- disables multitex overlays
         --write_dword(dmr_hud2 + 0x60, 0)
@@ -265,6 +276,30 @@ function dynamicCross.DynamicReticles()
                         elseif j == 2 then
                             write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
                             write_float(reticle_overlay_address + 0x08, scale)
+                        end
+                    end
+
+                    --BR65H CROSSHAIR
+                elseif weap_obj == br65h_tag then
+                    local heat = read_float(object + 0x23C)
+                    local reticle_address = read_dword(br65h_hud + 0x88)
+                    for j = 0, 1 do
+                        local struct = reticle_address + j * 104
+                        write_byte(struct, 0)
+                        local reticle_overlay_address = read_dword(struct + 0x38)
+                        --change scale
+                        --local zoom_scale = zoom
+                        --if zoom == 2 then
+                        --	zoom_scale = zoom*0.7
+                        --end
+                        local scalemask = br65h_zoom_mask_initial_scale + heat * br65h_zoom_mask_additional_scale
+                        local scalezoom = br65h_zoom_initial_scale + heat * br65h_zoom_additional_scale
+                        if j == 0 then
+                            write_float(reticle_overlay_address + 0x04, scalemask * aspect_ratio_change)
+                            write_float(reticle_overlay_address + 0x08, scalemask)
+                        elseif j == 1 then 
+                            write_float(reticle_overlay_address + 0x04, scalezoom * aspect_ratio_change)
+                            write_float(reticle_overlay_address + 0x08, scalezoom)
                         end
                     end
 
