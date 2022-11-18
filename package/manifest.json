@@ -1,0 +1,15 @@
+{
+    "manifestVersion": "1.1.0",
+    "files": {},
+    "label": "thefloodmp",
+    "version": "1.0.0",
+    "category": "map",
+    "author": "Keymind Dev Team",
+    "name": "The Flood Multiplayer Maps",
+    "description": "Multiplayer maps from The Flood project",
+    "dependencies": [
+        {
+            "label": "chimera"
+        }
+    ],
+}

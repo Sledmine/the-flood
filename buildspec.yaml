@@ -4,7 +4,14 @@ tag_space: 64M
 extend_limits: true
 scenarios:
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
-  - keymind/the_flood/levels/multiplayer/unraveled/unraveled
-  - keymind/halo_3/levels/multiplayer/bunkerworld/bunkerworld
-
-
+commands:
+  package:
+    - rm -rf dist
+    - mkdir -p dist
+    - mercury luabundle
+    - cp dist/treason.lua package/lua-map/treason.lua
+    - mercury pack package/ dist/
+    - rm package/lua-map/treason.lua
+  release:
+    - mercury build --release --output package/game-maps/
+    - mercury build package
