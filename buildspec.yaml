@@ -4,6 +4,8 @@ tag_space: 64M
 extend_limits: true
 scenarios:
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
+  - keymind/the_flood/levels/multiplayer/astray/astray
+  - keymind/the_flood/levels/multiplayer/unraveled/unraveled
 commands:
   package:
     - rm -rf dist
