@@ -41,7 +41,7 @@ function gameplay.swapFirstPerson()
         if playerObject then
             if lastBipedTagId ~= playerObject.tagId then
                 lastBipedTagId = playerObject.tagId
-                console_out("changing fp")
+                --console_out("changing fp")
                 local globals = blam.globalsTag()
                 if (player and playerObject and globals) then
                     local bipedTag = blam.getTag(playerObject.tagId)
