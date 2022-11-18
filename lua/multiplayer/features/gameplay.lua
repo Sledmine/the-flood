@@ -4,14 +4,13 @@
 -- Set of different treason gameplay features
 ------------------------------------------------------------------------------
 -- Lua libraries
-
 local core = require "multiplayer.features.core"
 local const = require "multiplayer.features.constants"
 local glue = require "glue"
 
 -- local fontOverride = require "multiplayer.features.fontOverride" (use later for change the font with a custom one)
 
-local gameplay = {}
+local gameplay = {state = {playerCriticalHealth = false}}
 
 local rotation = 0
 local lastBipedTagId
@@ -49,7 +48,9 @@ function gameplay.swapFirstPerson()
                     if (bipedTag) then
                         local tagPathSplit = glue.string.split(bipedTag.path, "\\")
                         local bipedName = tagPathSplit[#tagPathSplit]
-                        local fpModelTagId = blam.getTag([[keymind\the_flood\characters\unsc\odst_multiplayer\_types\thefood_legacy\thefood_legacy_fp]], tagClasses.gbxmodel).id
+                        local fpModelTagId = blam.getTag(
+                                                 [[keymind\the_flood\characters\unsc\odst_multiplayer\_types\thefood_legacy\thefood_legacy_fp]],
+                                                 tagClasses.gbxmodel).id
                         local fpTag = core.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
                         if (fpTag) then
                             fpModelTagId = fpTag.id
@@ -93,7 +94,7 @@ end
 function gameplay.hudUpgrades()
     local player = blam.biped(get_dynamic_player())
     -- Player must exist
-    --local playerData = blam.player(get_player())
+    -- local playerData = blam.player(get_player())
     -- Player must exist and not be a monitor
     if (player) then
         local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 0
@@ -123,10 +124,6 @@ function gameplay.hudUpgrades()
                 if (gameplay.state.playerCriticalHealth) then
                     gameplay.hudBlur(false)
                 end
-                gameplay.state.playerCriticalHealth = false
-            end
-            if (gameplay.state.playerCriticalHealth) then
-                gameplay.hudBlur(false, true)
                 gameplay.state.playerCriticalHealth = false
             end
         end
@@ -163,7 +160,7 @@ function gameplay.regenerateHealth(playerIndex)
 end
 
 -- Shake screen effect when biped is melee, not working yet
---function gameplay.meleeScreen()
+-- function gameplay.meleeScreen()
 
 --    local player = blam.player(get_player())
 --   local playerObject = blam.biped(get_object(player.objectId))
@@ -175,7 +172,7 @@ end
 --            -- execute_script([[damage_object keymind\\halo_infinite\\halo_infinite\\weapons\\rifle\\stalker_rifle\\_fx\\_kinestecia\\overheated]])
 --        end
 --    end
---end
+-- end
 
 function gameplay.hudBlur(enableBlur, immediate)
     if (enableBlur) then

@@ -50,8 +50,6 @@ local dynamic_crosshairs = true
 
 --END OF CONFIG
 
-set_callback("tick", "OnTick")
-
 local rand = math.random
 local sqrt = math.sqrt
 local cos = math.cos

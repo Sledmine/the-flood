@@ -27,4 +27,6 @@ function OnTick()
     --meleeScreen()
 end
 
+set_callback("tick", "OnTick")
+
 --OnLoad()
