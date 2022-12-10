@@ -70,8 +70,7 @@ end
 
 ---Improvements for HUD, hide HUD on zoom
 function gameplay.hudExtensions()
-    local player = blam.player(get_player())
-    local playerObject = blam.biped(get_object(player.objectId))
+    local playerObject = blam.biped(get_dynamic_player())
     if playerObject then
         -- console_out(playerObject.zoomLevel)
         if not blam.isNull(playerObject.zoomLevel) then
