@@ -19,11 +19,12 @@ objectClasses = blam.objectClasses
 
 function OnTick()
     dynamicCross.DynamicReticles()
-    gameplay.RotateWeapons()
+    gameplay.rotateWeapons()
     gameplay.swapFirstPerson()
     gameplay.hudExtensions()
     gameplay.regenerateHealth()
     gameplay.hudUpgrades()
+    gameplay.pingObjectives()
     --meleeScreen()
 end
 

@@ -7,6 +7,7 @@
 local core = require "multiplayer.features.core"
 local const = require "multiplayer.features.constants"
 local glue = require "glue"
+local harmony = require "mods.harmony"
 
 -- local fontOverride = require "multiplayer.features.fontOverride" (use later for change the font with a custom one)
 
@@ -16,7 +17,7 @@ local rotation = 0
 local lastBipedTagId
 
 -- Rotate weapons while is not taken, need improve
-function gameplay.RotateWeapons()
+function gameplay.rotateWeapons()
     if (rotation < 360) then
         rotation = rotation + 1
     else
@@ -41,7 +42,7 @@ function gameplay.swapFirstPerson()
         if playerObject then
             if lastBipedTagId ~= playerObject.tagId then
                 lastBipedTagId = playerObject.tagId
-                --console_out("changing fp")
+                -- console_out("changing fp")
                 local globals = blam.globalsTag()
                 if (player and playerObject and globals) then
                     local bipedTag = blam.getTag(playerObject.tagId)
@@ -197,6 +198,59 @@ function gameplay.hudBlur(enableBlur, immediate)
                     (cinematic_stop)
                 )]])
     return false
+end
+
+---@type number?
+local raycastProjectileId
+local raycastCoords = {}
+function gameplay.pingObjectives(playerIndex)
+    local player
+    if server_type == "sapp" then
+        player = blam.biped(get_dynamic_player(playerIndex))
+    else
+        player = blam.biped(get_dynamic_player())
+    end
+    if player then
+        if not raycastProjectileId then
+            if player.actionKey then
+                harmony.menu.play_sound(const.sounds.uiFGrenadePath)
+                execute_script(
+                    [[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_1)]])
+                local rayX = player.x + player.xVel + player.cameraX * const.raycastOffset
+                local rayY = player.y + player.yVel + player.cameraY * const.raycastOffset
+                local rayZ = player.z + player.zVel + player.cameraZ * const.raycastOffset + 0.5
+                raycastProjectileId =
+                    spawn_object(const.projectiles.raycastTag.id, rayX, rayY, rayZ)
+                local ray = blam.projectile(get_object(raycastProjectileId))
+                if ray then
+                    ray.xVel = player.cameraX * const.raycastOffset * const.raycastVelocity
+                    ray.yVel = player.cameraY * const.raycastOffset * const.raycastVelocity
+                    ray.zVel = player.cameraZ * const.raycastOffset * const.raycastVelocity
+                    ray.yaw = player.cameraX * const.raycastOffset
+                    ray.pitch = player.cameraY * const.raycastOffset
+                    ray.roll = player.cameraZ * const.raycastOffset
+                end
+            end
+        else
+            local ray = blam.projectile(get_object(raycastProjectileId))
+            if not ray then
+                raycastProjectileId = nil
+            else
+                execute_script([[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_1)]])
+                execute_script(
+                    [[(begin (activate_nav_point_flag default (unit (list_get (players) 0)) waypoint_1 0))]])
+                local scenario = blam.scenario(0)
+                local flags = scenario.cutsceneFlags
+                for cutsceneFlagIndex, cutsceneFlag in pairs(flags) do
+                    cutsceneFlag.x = ray.x
+                    cutsceneFlag.y = ray.y
+                    cutsceneFlag.z = ray.z
+                    flags[cutsceneFlagIndex] = cutsceneFlag
+                end
+                scenario.cutsceneFlags = flags
+            end
+        end
+    end
 end
 
 return gameplay
