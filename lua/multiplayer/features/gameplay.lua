@@ -202,7 +202,7 @@ end
 
 ---@type number?
 local raycastProjectileId
-local raycastCoords = {}
+
 function gameplay.pingObjectives(playerIndex)
     local player
     if server_type == "sapp" then
@@ -210,12 +210,11 @@ function gameplay.pingObjectives(playerIndex)
     else
         player = blam.biped(get_dynamic_player())
     end
-    if player then
+    if player and blam.isNull(player.vehicleObjectId) then
         if not raycastProjectileId then
             if player.actionKey then
+                console_out("Creating waypoint objective for player " .. (playerIndex or "local"))
                 harmony.menu.play_sound(const.sounds.uiFGrenadePath)
-                execute_script(
-                    [[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_1)]])
                 local rayX = player.x + player.xVel + player.cameraX * const.raycastOffset
                 local rayY = player.y + player.yVel + player.cameraY * const.raycastOffset
                 local rayZ = player.z + player.zVel + player.cameraZ * const.raycastOffset + 0.5
@@ -236,18 +235,20 @@ function gameplay.pingObjectives(playerIndex)
             if not ray then
                 raycastProjectileId = nil
             else
-                execute_script([[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_1)]])
-                execute_script(
-                    [[(begin (activate_nav_point_flag default (unit (list_get (players) 0)) waypoint_1 0))]])
-                local scenario = blam.scenario(0)
-                local flags = scenario.cutsceneFlags
-                for cutsceneFlagIndex, cutsceneFlag in pairs(flags) do
-                    cutsceneFlag.x = ray.x
-                    cutsceneFlag.y = ray.y
-                    cutsceneFlag.z = ray.z
-                    flags[cutsceneFlagIndex] = cutsceneFlag
-                end
-                scenario.cutsceneFlags = flags
+                if not blam.isNull(ray.attachedToObjectId) then
+                    local object = blam.object(get_object(ray.attachedToObjectId))
+                    if object then
+                        if object.class == blam.objectClasses.biped then
+                            core.createWaypoint(1, object.x, object.y, object.z + 0.5, "default_red")
+                        elseif object.class == blam.objectClasses.weapon then
+                            core.createWaypoint(1, object.x, object.y, object.z + 0.5, "weapon")
+                        else
+                            core.createWaypoint(1, object.x, object.y, object.z + 0.5)
+                        end
+                    end
+                else
+                    core.createWaypoint(1, ray.x, ray.y, ray.z)
+                end 
             end
         end
     end

@@ -1,4 +1,4 @@
---Lua libraries
+-- Lua libraries
 local glue = require "glue"
 
 local core = {}
@@ -23,7 +23,6 @@ function core.findTag(partialName, searchTagType)
     end
     return nil
 end
-
 
 ---@class vector3D
 ---@field x number
@@ -115,6 +114,38 @@ end
 
 function core.ticksToSeconds(ticks)
     return glue.round(ticks / 30)
+end
+
+---@type table<number, {x: number, y: number, z: number}>
+local raycastCoords = {}
+
+function core.deleteWaypoint(index)
+    console_out("Deleting waypoint " .. index)
+    local deactivateWaypoint =
+        [[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_%s)]]
+    execute_script(deactivateWaypoint:format(index))
+    raycastCoords[tonumber(index)] = nil
+    return false
+end
+DeleteWaypoint = core.deleteWaypoint
+
+function core.createWaypoint(index, x, y, z, type, duration)
+    if not raycastCoords[index] then
+        console_out("Creating waypoint " .. index)
+        local activateWaypoint =
+            [[(activate_nav_point_flag %s (unit (list_get (players) 0)) waypoint_%s 0)]]
+        execute_script(activateWaypoint:format(type or "default", index))
+        local scenario = blam.scenario(0)
+        local flags = scenario.cutsceneFlags
+        flags[index].x = x
+        flags[index].y = y
+        flags[index].z = z
+        scenario.cutsceneFlags = flags
+        raycastCoords[index] = {x = x, y = y, z = z}
+        set_timer(duration or 2000, "DeleteWaypoint", index)
+        return true
+    end
+    return false
 end
 
 return core
