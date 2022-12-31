@@ -50,7 +50,7 @@ function gameplay.swapFirstPerson()
                         local tagPathSplit = glue.string.split(bipedTag.path, "\\")
                         local bipedName = tagPathSplit[#tagPathSplit]
                         local fpModelTagId = blam.getTag(
-                                                 [[keymind\the_flood\characters\unsc\odst_multiplayer\_types\thefood_legacy\thefood_legacy_fp]],
+                                                 [[keymind\the_flood\characters\unsc\odst_multiplayer\_types\theflood_legacy\theflood_legacy_fp]],
                                                  tagClasses.gbxmodel).id
                         local fpTag = core.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
                         if (fpTag) then
