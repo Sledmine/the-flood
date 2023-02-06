@@ -18,7 +18,7 @@ objectClasses = blam.objectClasses
 --end
 
 function OnTick()
-    dynamicCross.DynamicReticles()
+    dynamicCross.dynamicReticles()
     gameplay.rotateWeapons()
     gameplay.swapFirstPerson()
     gameplay.hudExtensions()

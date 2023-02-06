@@ -131,7 +131,7 @@ function gameplay.hudUpgrades()
 end
 
 --- Regenerate players health on low shield using game ticks
----@param playerIndex number
+---@param playerIndex? number
 function gameplay.regenerateHealth(playerIndex)
     if (server_type == "sapp" or server_type == "local") then
         local player

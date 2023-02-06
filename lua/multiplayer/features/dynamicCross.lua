@@ -211,7 +211,7 @@ end
 set_timer(600, "InitializeSettings")
 
 
-function dynamicCross.DynamicReticles()
+function dynamicCross.dynamicReticles()
     if dynamic_crosshairs and WEAPON_RETICLES ~= nil then
         local player = get_dynamic_player()
         if player ~= nil then
