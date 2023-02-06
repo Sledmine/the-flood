@@ -20,7 +20,7 @@ local m90_path = "keymind\\the_flood\\weapons\\rifle\\shotgun_m90\\shotgun_m90"
 --local dmr392_path = "keymind\\the_flood\\weapons\\rifle\\dmr\\dmr_392"
 local sniper_path = "keymind\\the_flood\\weapons\\rifle\\sniper_rifle\\sniper_rifle_srs99c"
 local non_path = "keymind\\the_flood\\weapons\\_shared\\empty_crosshair_ref" --ignore
---local vakara_path = "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando" --VK78 Commando Rifle
+local vakara_path = "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando" --VK78 Commando Rifle
 local spnkr_path = "keymind\\halo_infinite\\weapons\\support_high\\m41_spknr\\m41_spknr"
 local br65h_path = "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h"
 
@@ -36,7 +36,7 @@ local plasmap_tag = read_dword(get_tag("weap", plasmap_path) + 0xC)
 local m90_tag = read_dword(get_tag("weap", m90_path) + 0xC)
 --local dmr392_tag = read_dword(get_tag("weap", dmr392_path) + 0xC)
 local sniper_tag = read_dword(get_tag("weap", sniper_path) + 0xC)
---local vakara_tag = read_dword(get_tag("weap", vakara_path) + 0xc)
+local vakara_tag = read_dword(get_tag("weap", vakara_path) + 0xc)
 local spnkr_tag = read_dword(get_tag("weap", spnkr_path) + 0xc)
 local br65h_tag = read_dword(get_tag("weap", br65h_path) + 0xc)
 
@@ -102,7 +102,7 @@ function InitializeSettings()
             --},
         }
 
-        --local vakara_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando") + 0x14)
+        local vakara_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando") + 0x14)
         --local m6d_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\magnum_m6d\\magnum_m6d") + 0x14)
         local m6s_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\magnum_m6s\\magnum_m6s") + 0x14)
         local spknr_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\support_high\\m41_spknr\\m41_spknr") + 0x14)
@@ -111,7 +111,7 @@ function InitializeSettings()
         -- change heat loss for a .weapon (since guerilla doesn't allow values above 1)
         
         --write_float(smg_tag_data + 0x35C, 5)
-        --write_float(vakara_tag_data + 0x35C, 4.2)
+        write_float(vakara_tag_data + 0x35C, 4.2)
         write_float(spknr_tag_data + 0x35C, 2.8)
         --write_float(m6d_tag_data + 0x35C, 4.2)
         write_float(m6s_tag_data + 0x35C, 4.2)
@@ -167,7 +167,7 @@ function InitializeSettings()
         ---VK78 ZOOM MASK
         vk78_zoom_mask_initial_scale = 2
         vk78_zoom_mask_additional_scale = 0.03
-       
+
         ---VK78 ZOOM BLUR
         vk78_zoom_blur_initial_scale = 0.8
         vk78_zoom_blur_additional_scale = 0.2
@@ -189,7 +189,7 @@ function InitializeSettings()
         m90_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\shotgun_m90\\shotgun_m90") + 0x14)
         --dmr392_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\dmr\\dmr_392") + 0x14)
         sniper_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\sniper_rifle\\sniper_rifle") + 0x14)
-        --vakara_hud = read_dword(get_tag("wphi", "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando") + 0x14)
+        vakara_hud = read_dword(get_tag("wphi", "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando") + 0x14)
         --m6d_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\pistol\\magnum_m6d\\magnum_m6d") + 0x14)
         m6s_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\pistol\\magnum_m6s\\magnum_m6s") + 0x14)
         non_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\_shared\\empty_crosshair_ref") + 0x14)
@@ -327,60 +327,59 @@ function dynamicCross.DynamicReticles()
                     end
 
                     --VK78 COMMANDO RETICLE + ZOOM
-                --elseif weap_obj == vakara_tag then
-                --    local heat = read_float(object + 0x23C)
-                --    local reticle_address = read_dword(vakara_hud + 0x88)
-                --    for j = 1, 11 do
-                --        local struct = reticle_address + j * 104
-                --        write_byte(struct, 0)
-                --        local reticle_overlay_address = read_dword(struct + 0x38)
-                --        local scale = vk78_zoom_full_initial_scale + heat * vk78_zoom_full_additional_scale
-                --        local scalemask = vk78_zoom_mask_initial_scale + heat * vk78_zoom_mask_additional_scale
-                --        local scaleblur = vk78_zoom_blur_initial_scale + heat * vk78_zoom_blur_additional_scale
-                --        local scale_reticle = vk78_reticle_initial_scale + heat*vk78_reticle_additional_scale
-                --        local aditional_pos = heat*1.1*vk78_reticle_additional_pos
-                --        local scale_stroke = vk78_stroke_initial + heat*vk78_stroke_additional
-                --        local scale_dot = dot_reticle_initial_scale + heat * dot_reticle_additional_scale
-
-                --        if j == 1 then
-                --            write_float(reticle_overlay_address + 0x04, scalemask * aspect_ratio_change)
-                --            write_float(reticle_overlay_address + 0x08, scalemask)
-                --        elseif j == 2 then
-                --            write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
-                --            write_float(reticle_overlay_address + 0x08, scale)                           
-                --        elseif j == 3 then
-                --            write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
-                --            write_float(reticle_overlay_address + 0x08, scale)
-                --        elseif j == 4 then
-                --            write_float(reticle_overlay_address + 0x04, scaleblur * aspect_ratio_change)
-                --            write_float(reticle_overlay_address + 0x08, scaleblur)
-                --        elseif j == 5 then
-                --            write_float(reticle_overlay_address + 0x04, scaleblur * aspect_ratio_change)
-                --            write_float(reticle_overlay_address + 0x08, scaleblur)     
-                --        elseif j == 6 then
-                --            write_float(reticle_overlay_address + 0x04, scale_reticle*aspect_ratio_change) --Horizontal
-                --            write_float(reticle_overlay_address + 0x08, scale_reticle) --Vertical
-                --        elseif j == 7 then 
-                --            write_short(reticle_overlay_address, floor(-vk78_reticle_initial_pos - aditional_pos *heat *aspect_ratio_change))
-                --            write_float(reticle_overlay_address + 0x04, scale_stroke - stroke_less *aspect_ratio_change) --Horizontal
-                --            write_float(reticle_overlay_address + 0x08, scale_stroke) --Vertical
-                --        elseif j == 8 then
-                --            write_short(reticle_overlay_address, ceil(vk78_reticle_initial_pos + aditional_pos *heat *aspect_ratio_change))
-                --            write_float(reticle_overlay_address + 0x04, scale_stroke - stroke_less *aspect_ratio_change) --Horizontal
-                --            write_float(reticle_overlay_address + 0x08, scale_stroke) --Vertical
-                --        elseif j == 9 then
-                --            write_short(reticle_overlay_address + 2, floor(-vk78_reticle_initial_pos - aditional_pos *heat *aspect_ratio_change))
-                --            write_float(reticle_overlay_address + 0x04, scale_stroke *aspect_ratio_change) --Horizontal
-                --            write_float(reticle_overlay_address + 0x08, scale_stroke - stroke_less) --Vertical
-                --        elseif j == 10 then
-                --            write_short(reticle_overlay_address + 2, ceil(vk78_reticle_initial_pos + aditional_pos *heat *aspect_ratio_change))
-                --            write_float(reticle_overlay_address + 0x04, scale_stroke *aspect_ratio_change) --Horizontal
-                --            write_float(reticle_overlay_address + 0x08, scale_stroke - stroke_less) --Vertical
-                --        elseif j == 11 then
-                --            write_float(reticle_overlay_address + 0x04, scale_dot *heat *aspect_ratio_change) --Horizontal
-                --            write_float(reticle_overlay_address + 0x08, scale_dot *heat) --Vertical
-                --        end                                       
-                --    end
+            elseif weap_obj == vakara_tag then
+                local heat = read_float(object + 0x23C)
+                local reticle_address = read_dword(vakara_hud + 0x88)
+                for j = 1, 11 do
+                    local struct = reticle_address + j * 104
+                    write_byte(struct, 0)
+                    local reticle_overlay_address = read_dword(struct + 0x38)
+                    local scale = vk78_zoom_full_initial_scale + heat * vk78_zoom_full_additional_scale
+                    local scalemask = vk78_zoom_mask_initial_scale + heat * vk78_zoom_mask_additional_scale
+                    local scaleblur = vk78_zoom_blur_initial_scale + heat * vk78_zoom_blur_additional_scale
+                    local scale_reticle = vk78_reticle_initial_scale + heat*vk78_reticle_additional_scale
+                    local aditional_pos = heat*1.1*vk78_reticle_additional_pos
+                    local scale_stroke = vk78_stroke_initial + heat*vk78_stroke_additional
+                    local scale_dot = dot_reticle_initial_scale + heat * dot_reticle_additional_scale
+                    if j == 1 then
+                        write_float(reticle_overlay_address + 0x04, scalemask * aspect_ratio_change)
+                        write_float(reticle_overlay_address + 0x08, scalemask)
+                    elseif j == 2 then
+                        write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
+                        write_float(reticle_overlay_address + 0x08, scale)                           
+                    elseif j == 3 then
+                        write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
+                        write_float(reticle_overlay_address + 0x08, scale)
+                    elseif j == 4 then
+                        write_float(reticle_overlay_address + 0x04, scaleblur * aspect_ratio_change)
+                        write_float(reticle_overlay_address + 0x08, scaleblur)
+                    elseif j == 5 then
+                           write_float(reticle_overlay_address + 0x04, scaleblur * aspect_ratio_change)
+                        write_float(reticle_overlay_address + 0x08, scaleblur)     
+                    elseif j == 6 then
+                        write_float(reticle_overlay_address + 0x04, scale_reticle*aspect_ratio_change) --Horizontal
+                        write_float(reticle_overlay_address + 0x08, scale_reticle) --Vertical
+                    elseif j == 7 then 
+                        write_short(reticle_overlay_address, floor(-vk78_reticle_initial_pos - aditional_pos *heat *aspect_ratio_change))
+                        write_float(reticle_overlay_address + 0x04, scale_stroke - stroke_less *aspect_ratio_change) --Horizontal
+                        write_float(reticle_overlay_address + 0x08, scale_stroke) --Vertical
+                    elseif j == 8 then
+                        write_short(reticle_overlay_address, ceil(vk78_reticle_initial_pos + aditional_pos *heat *aspect_ratio_change))
+                        write_float(reticle_overlay_address + 0x04, scale_stroke - stroke_less *aspect_ratio_change) --Horizontal
+                        write_float(reticle_overlay_address + 0x08, scale_stroke) --Vertical
+                    elseif j == 9 then
+                        write_short(reticle_overlay_address + 2, floor(-vk78_reticle_initial_pos - aditional_pos *heat *aspect_ratio_change))
+                        write_float(reticle_overlay_address + 0x04, scale_stroke *aspect_ratio_change) --Horizontal
+                        write_float(reticle_overlay_address + 0x08, scale_stroke - stroke_less) --Vertical
+                    elseif j == 10 then
+                        write_short(reticle_overlay_address + 2, ceil(vk78_reticle_initial_pos + aditional_pos *heat *aspect_ratio_change))
+                        write_float(reticle_overlay_address + 0x04, scale_stroke *aspect_ratio_change) --Horizontal
+                        write_float(reticle_overlay_address + 0x08, scale_stroke - stroke_less) --Vertical
+                    elseif j == 11 then
+                        write_float(reticle_overlay_address + 0x04, scale_dot *heat *aspect_ratio_change) --Horizontal
+                        write_float(reticle_overlay_address + 0x08, scale_dot *heat) --Vertical
+                    end                                       
+                end
 
                     --SNIPER CROSSHAIR------------------------------
                 elseif weap_obj == sniper_tag then

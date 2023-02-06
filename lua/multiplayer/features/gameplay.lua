@@ -108,9 +108,9 @@ function gameplay.hudUpgrades()
                 if (lastGrenadeType ~= currentGrenadeType) then
                     lastGrenadeType = currentGrenadeType
                     if (lastGrenadeType == 1) then
-                        gameplay.playSound(const.sounds.uiPGrenadePath, 2)
+                        gameplay.playSound(const.sounds.uiPGrenadePath, 3)
                     else
-                        gameplay.playSound(const.sounds.uiFGrenadePath, 2)
+                        gameplay.playSound(const.sounds.uiFGrenadePath, 3)
                     end
                 end
             end
