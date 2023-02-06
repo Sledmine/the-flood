@@ -24,7 +24,7 @@ function OnTick()
     gameplay.hudExtensions()
     gameplay.regenerateHealth()
     gameplay.hudUpgrades()
-    gameplay.pingObjectives()
+    --gameplay.pingObjectives()
     --meleeScreen()
 end
 
