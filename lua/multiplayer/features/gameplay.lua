@@ -127,6 +127,9 @@ function gameplay.hudUpgrades()
                 gameplay.state.playerCriticalHealth = false
             end
         end
+    elseif gameplay.state.playerCriticalHealth then
+        gameplay.hudBlur(false, true)
+        gameplay.state.playerCriticalHealth = false
     end
 end
 
