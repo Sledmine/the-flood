@@ -15,6 +15,6 @@
         "multiplayer.features.gameplay",
         "multiplayer.features.dynamicCross"
     ],
-    "main": "lua/multiplayer/foundation",
+    "main": "lua/multiplayer/treason",
     "output": "dist/treason.lua"
 }
