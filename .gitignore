@@ -59,6 +59,7 @@ maps/
 maps
 project/
 hek/
+dist/
 gamestate.txt
 debug.txt
 six-shooter.ini

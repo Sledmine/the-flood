@@ -7,7 +7,7 @@
 local core = require "multiplayer.features.core"
 local const = require "multiplayer.features.constants"
 local glue = require "glue"
-local harmony = require "mods.harmony"
+local harmony = pcall(require, "harmony")
 
 -- local fontOverride = require "multiplayer.features.fontOverride" (use later for change the font with a custom one)
 

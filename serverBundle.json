@@ -1,0 +1,18 @@
+{
+    "name": "Treason Server",
+    "target": "lua53",
+    "include": [
+        "lua",
+        "lua/lua_modules/"
+    ],
+    "modules": [
+        "inspect",
+        "glue",
+        "blam",
+        "multiplayer.features.constants",
+        "multiplayer.features.core",
+        "multiplayer.features.gameplay"
+    ],
+    "main": "lua/multiplayer/treason_server",
+    "output": "dist/treason_server.lua"
+}
