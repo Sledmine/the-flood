@@ -3,6 +3,8 @@ local glue = require "glue"
 
 local core = {}
 
+local const = require "multiplayer.features.constants"
+
 --- Find the path, index and id of a tag given partial name and tag type
 ---@param partialName string
 ---@param searchTagType string
@@ -119,33 +121,60 @@ end
 ---@type table<number, {x: number, y: number, z: number}>
 local raycastCoords = {}
 
+local currentWaypointsIndexes = {}
+
 function core.deleteWaypoint(index)
-    console_out("Deleting waypoint " .. index)
-    local deactivateWaypoint =
-        [[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_%s)]]
-    execute_script(deactivateWaypoint:format(index))
-    raycastCoords[tonumber(index)] = nil
+    local index = tonumber(index)
+    if index then
+        local deactivateWaypoint =
+            [[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_%s)]]
+        execute_script(deactivateWaypoint:format(index))
+        raycastCoords[index] = nil
+        currentWaypointsIndexes[index] = nil
+    end
     return false
 end
 DeleteWaypoint = core.deleteWaypoint
 
-function core.createWaypoint(index, x, y, z, type, duration)
-    if not raycastCoords[index] then
-        console_out("Creating waypoint " .. index)
-        local activateWaypoint =
-            [[(activate_nav_point_flag %s (unit (list_get (players) 0)) waypoint_%s 0)]]
-        execute_script(activateWaypoint:format(type or "default", index))
-        local scenario = blam.scenario(0)
-        local flags = scenario.cutsceneFlags
-        flags[index].x = x
-        flags[index].y = y
-        flags[index].z = z
-        scenario.cutsceneFlags = flags
-        raycastCoords[index] = {x = x, y = y, z = z}
-        set_timer(duration or 2000, "DeleteWaypoint", index)
-        return true
+---Create a waypoint at the given coordinates
+---@param x number
+---@param y number
+---@param z number
+---@param type? string
+---@param duration? number
+---@return boolean
+function core.createWaypoint(x, y, z, type, duration)
+    for i = 1, 4 do
+        if not currentWaypointsIndexes[i] then
+            currentWaypointsIndexes[i] = true
+            index = i
+            break
+        end
+    end
+    if index then
+        if not raycastCoords[index] then
+            local activateWaypoint =
+                [[(activate_nav_point_flag %s (unit (list_get (players) 0)) waypoint_%s 0)]]
+            execute_script(activateWaypoint:format(type or "default", index))
+            local scenario = blam.scenario(0)
+            local flags = scenario.cutsceneFlags
+            flags[index].x = x
+            flags[index].y = y
+            flags[index].z = z
+            scenario.cutsceneFlags = flags
+            raycastCoords[index] = {x = x, y = y, z = z}
+            set_timer(duration or 2000, "DeleteWaypoint", index)
+            return true
+        end
     end
     return false
+end
+
+function core.calculateRaycast(player)
+    local rayX = player.x + player.xVel + player.cameraX * const.raycastOffset
+    local rayY = player.y + player.yVel + player.cameraY * const.raycastOffset
+    local rayZ = player.z + player.zVel + player.cameraZ * const.raycastOffset + 0.5
+    return rayX, rayY, rayZ
 end
 
 return core

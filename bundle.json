@@ -9,6 +9,8 @@
         "inspect",
         "glue",
         "blam",
+        "luna",
+        "multiplayer.data.network",
         "multiplayer.features.fontOverride",
         "multiplayer.features.core",
         "multiplayer.features.constants",

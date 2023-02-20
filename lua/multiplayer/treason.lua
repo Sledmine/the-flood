@@ -5,17 +5,16 @@ clua_version = 2.042
 -- Mark Mc'Fuzz
 -- This script is intended to provide functions and features to Treason map
 ------------------------------------------------------------------------------
-
+require "luna"
 blam = require "blam"
-gameplay = require "multiplayer.features.gameplay"
-dynamicCross = require "multiplayer.features.dynamicCross"
 tagClasses = blam.tagClasses
 objectClasses = blam.objectClasses
+local gameplay = require "multiplayer.features.gameplay"
+local dynamicCross = require "multiplayer.features.dynamicCross"
 
--- function OnLoad()
--- console_out("it's working")
---    fontOverride.onLoad()
--- end
+function OnRconMessage(message)
+    return blam.rcon.handle(message)
+end
 
 function OnTick()
     dynamicCross.dynamicReticles()
@@ -24,7 +23,7 @@ function OnTick()
     gameplay.hudExtensions()
     gameplay.regenerateHealth()
     gameplay.hudUpgrades()
-    -- gameplay.pingObjectives()
+    gameplay.pingObjectives()
     -- meleeScreen()
 end
 
@@ -43,5 +42,5 @@ end
 
 set_callback("tick", "OnTick")
 set_callback("preframe", "OnFrame")
-
+set_callback("rcon message", "OnRconMessage")
 -- OnLoad()
