@@ -51,6 +51,8 @@ luac.out
 dist/
 temp/
 package/game-maps/*.map
+#WTF
+lua/lua_modules/offsets.lua
 
 # Map project files
 tags/
