@@ -563,10 +563,39 @@ function hud_message(message)
 end
 
 ---Set the callback for an event game from the game events available on Chimera
----@param event '"command"' | '"frame"' | '"preframe"' | '"map_load"' | '"precamera"' | '"rcon message"' | '"tick"' | '"pretick"' | '"unload"'
----@param callback string global function name to call when the event is triggered
+---@param event '"command"' | '"frame"' | '"preframe"' | '"map load"' | '"precamera"' | '"rcon message"' | '"tick"' | '"pretick"' | '"unload"'
+---@param callback string Global function name to call when the event is triggered
 function set_callback(event, callback)
-    error("Chimera events can not be used on SAPP, use register_callback instead.")
+    if event == "tick" then
+        register_callback(cb["EVENT_TICK"], callback)
+    elseif event == "pretick" then
+        error("SAPP does not support pretick event")
+    elseif event == "frame" then
+        error("SAPP does not support frame event")
+    elseif event == "preframe" then
+        error("SAPP does not support preframe event")
+    elseif event == "map_load" then
+        register_callback(cb["EVENT_GAME_START"], callback)
+    elseif event == "precamera" then
+        error("SAPP does not support precamera event")
+    elseif event == "rcon message" then
+        _G[callback .. "_rcon_message"] = function(playerIndex,
+                                                   command,
+                                                   environment,
+                                                   password)
+            return _G[callback](playerIndex, command, password)
+        end
+        register_callback(cb["EVENT_COMMAND"], callback .. "_rcon_message")
+    elseif event == "command" then
+        _G[callback .. "_command"] = function(playerIndex, command, environment)
+            return _G[callback](playerIndex, command, environment)
+        end
+        register_callback(cb["EVENT_COMMAND"], callback .. "_command")
+    elseif event == "unload" then
+        register_callback(cb["EVENT_GAME_END"], callback)
+    else
+        error("Unknown event: " .. event)
+    end
 end
 
 if (api_version) then
@@ -668,12 +697,12 @@ local function tagClassFromInt(tagClassInt)
     return nil
 end
 
---- Return the current existing objects in the current map, ONLY WORKS FOR CHIMERA!!!
+--- Return a list of all the objects currently in the map
 ---@return table
 function blam.getObjects()
     local currentObjectsList = {}
     for i = 0, 2047 do
-        if (get_object(i)) then
+        if (blam.getObject(i)) then
             currentObjectsList[#currentObjectsList + 1] = i
         end
     end
@@ -2196,7 +2225,7 @@ function blam.tag(address)
         -- Set up values
         tagInfo.address = address
         tagInfo.path = read_string(tagInfo.path)
-        tagInfo.class = tagClassFromInt(tagInfo.class --[[@as number]])
+        tagInfo.class = tagClassFromInt(tagInfo.class --[[@as number]] )
 
         return tagInfo
     end
@@ -2556,47 +2585,105 @@ function blam.getDeviceGroup(index)
     return nil
 end
 
+blam.rcon = {}
+
 ---@class blamRequest
 ---@field requestString string
 ---@field timeout number
 ---@field callback function<boolean, string>
 ---@field sentAt number
 
----@type table<number, blamRequest>
-local requestQueue = {}
-local requestId = -1
-local requestPathMaxLength = 60
----Send a server request to current server trough rcon
----@param method '"GET"' | '"SEND"'
----@param url string Path or name of the resource we want to get
----@param timeout number Time this request will wait for a response, 120ms by default
----@param callback function<boolean, string> Callback function to call when this response returns
----@param retry boolean Retry this request if timeout reaches it's limit
----@param params table<string, any> Optional parameters to send in the request, careful, this will create two requests, one for the resource and another one for the parameters
----@return boolean success
-function blam.request(method, url, timeout, callback, retry, params)
-    if (server_type ~= "dedicated") then
-        console_out("Warning, requests only work while connected to a dedicated server.")
+local rconEvents = {}
+local maxRconDataLength = 60
+
+---Define a request event callback
+---@param eventName string
+---@param callback fun(message?: string, playerIndex?: number): string?
+function blam.rcon.event(eventName, callback)
+    rconEvents[eventName] = callback
+end
+
+---Dispatch an rcon event to a client or server trough rcon.
+---
+--- As a client, you can only send messages to the server.
+---
+--- As a server, you can send messages to a specific client or all clients.
+---@param event string Path or name of the resource we want to get
+---@param message? string Message to send to the server
+---@param playerIndex? number Player index to send the message to
+---@overload fun(resource: string, playerIndex: number)
+---@return {callback: fun(callback: fun(response: string, playerIndex?: number))}
+function blam.rcon.dispatch(event, message, playerIndex)
+    -- if server_type ~= "dedicated" then
+    --    console_out("Warning, requests only work while connected to a dedicated server.")
+    -- end
+    assert(event ~= nil, "Event must not be empty")
+    assert(type(event) == "string", "Event must be a string")
+    local message = message
+    local playerIndex = playerIndex
+    if message and type(message) == "number" then
+        playerIndex = message
+        message = nil
     end
-    if (params) then
-        console_out("Warning, request params are not supported yet.")
+    if event then
+        if blam.isGameSAPP() then
+            if playerIndex then
+                rprint(playerIndex, ("?%s?%s"):format(event, message))
+            else
+                for i = 1, 16 do
+                    rprint(i, ("?%s?%s"):format(event, message))
+                end
+            end
+        else
+            local request = ("?%s?%s"):format(event, message)
+            assert(#request <= maxRconDataLength, "Rcon request is too long")
+            if blam.isGameDedicated() then
+                execute_script("rcon blam " .. request)
+            else
+                blam.rcon.handle(request)
+            end
+        end
+        return {
+            callback = function()
+                blam.rcon.event(event .. "+", callback)
+            end
+        }
     end
-    if (url and url:len() <= requestPathMaxLength) then
-        if (method == "GET") then
-            requestId = requestId + 1
-            local rconRequest = ("rcon blam ?%s?%s"):format(requestId, url)
-            requestQueue[requestId] = {
-                requestString = rconRequest,
-                timeout = timeout or 120,
-                callback = callback
-            }
-            console_out(rconRequest)
-            -- execute_script(request)
-            return true
+    error("No event name provided")
+end
+
+---Evaluate rcon event and handle it as a request
+---@param data string
+---@param password? string
+---@param playerIndex? number
+---@return boolean | nil
+function blam.rcon.handle(data, password, playerIndex)
+    if data:sub(1, 1) == "?" then
+        if blam.isGameSAPP() then
+            if password ~= "blam" then
+                return nil
+            end
+        end
+        local data = split(data, "?")
+        local eventName = data[2]
+        local message = data[3]
+        local event = rconEvents[eventName]
+        if event then
+            local response = event(message, playerIndex)
+            if response then
+                if blam.isGameSAPP() then
+                    rprint(playerIndex, response)
+                else
+                    execute_script(("rcon blam ?%s?%s"):format(eventName .. "+", response))
+                end
+            end
+            return false
+        else
+            error("No rcon event handler for " .. eventName)
         end
     end
-    error("Error, url can not contain more than " .. requestPathMaxLength .. " chars.")
-    return false
+    -- Pass request to the server
+    return nil
 end
 
 --- Find the path, index and id of a tag given partial tag path and tag type
