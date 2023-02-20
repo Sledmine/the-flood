@@ -1,4 +1,6 @@
 api_version = "1.12.0.0"
+require "compat53"
+require "luna"
 blam = require "blam"
 local gameplay
 
@@ -12,12 +14,7 @@ end
 
 function OnMapLoad()
     gameplay = require "multiplayer.features.gameplay"
-    --register_callback(cb["EVENT_TICK"], "OnTick")
     set_callback("tick", "OnTick")
-
-    blam.rcon.event("Ping", function()
-        return "Pong"
-    end)
 end
 
 function OnRconMessage(playerIndex, message, password)
@@ -25,14 +22,15 @@ function OnRconMessage(playerIndex, message, password)
 end
 
 function OnScriptLoad()
-    --register_callback(cb["EVENT_GAME_START"], "OnGameStart")
     set_callback("map load", "OnMapLoad")
     set_callback("rcon message", "OnRconMessage")
+    blam.rcon.patch()
 end
 
 function OnError()
-    cprint(debug.traceback())
+    console_out(debug.traceback())
 end
 
 function OnScriptUnload()
+    blam.rcon.unpatch()
 end

@@ -12,8 +12,22 @@ local network = require "multiplayer.data.network"
 local core = require "multiplayer.features.core"
 
 blam.rcon.event("CreateWaypoint", function(message, playerIndex)
-    local x, y, z = network.parseWaypoint(message)
-    core.createWaypoint(x, y, z)
+    if blam.isGameSAPP() then
+        local senderPlayer = blam.player(get_player(playerIndex))
+        if senderPlayer then
+            for i = 1, 16 do
+                local player = blam.player(get_player(i))
+                if player then
+                    if player.team == senderPlayer.team then
+                        blam.rcon.dispatch("CreateWaypoint", message, i)
+                    end
+                end
+            end
+        end
+    else
+        local x, y, z = network.parseWaypoint(message)
+        core.createWaypoint(x, y, z)
+    end
 end)
 
 -- local fontOverride = require "multiplayer.features.fontOverride" (use later for change the font with a custom one)

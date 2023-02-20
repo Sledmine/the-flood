@@ -9,7 +9,9 @@
         "inspect",
         "glue",
         "blam",
+        "luna",
         "multiplayer.features.constants",
+        "multiplayer.data.network",
         "multiplayer.features.core",
         "multiplayer.features.gameplay"
     ],
