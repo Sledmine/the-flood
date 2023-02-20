@@ -574,7 +574,7 @@ function set_callback(event, callback)
         error("SAPP does not support frame event")
     elseif event == "preframe" then
         error("SAPP does not support preframe event")
-    elseif event == "map_load" then
+    elseif event == "map load" then
         register_callback(cb["EVENT_GAME_START"], callback)
     elseif event == "precamera" then
         error("SAPP does not support precamera event")
@@ -2600,7 +2600,7 @@ local maxRconDataLength = 60
 ---@param eventName string
 ---@param callback fun(message?: string, playerIndex?: number): string?
 function blam.rcon.event(eventName, callback)
-    rconEvents[eventName] = callback
+    rconEvents[eventName:lower()] = callback
 end
 
 ---Dispatch an rcon event to a client or server trough rcon.
@@ -2608,34 +2608,34 @@ end
 --- As a client, you can only send messages to the server.
 ---
 --- As a server, you can send messages to a specific client or all clients.
----@param event string Path or name of the resource we want to get
+---@param eventName string Path or name of the resource we want to get
 ---@param message? string Message to send to the server
 ---@param playerIndex? number Player index to send the message to
----@overload fun(resource: string, playerIndex: number)
+---@overload fun(eventName: string, playerIndex: number)
 ---@return {callback: fun(callback: fun(response: string, playerIndex?: number))}
-function blam.rcon.dispatch(event, message, playerIndex)
+function blam.rcon.dispatch(eventName, message, playerIndex)
     -- if server_type ~= "dedicated" then
     --    console_out("Warning, requests only work while connected to a dedicated server.")
     -- end
-    assert(event ~= nil, "Event must not be empty")
-    assert(type(event) == "string", "Event must be a string")
+    assert(eventName ~= nil, "Event must not be empty")
+    assert(type(eventName) == "string", "Event must be a string")
     local message = message
     local playerIndex = playerIndex
     if message and type(message) == "number" then
         playerIndex = message
         message = nil
     end
-    if event then
+    if eventName then
         if blam.isGameSAPP() then
             if playerIndex then
-                rprint(playerIndex, ("?%s?%s"):format(event, message))
+                rprint(playerIndex, ("?%s?%s"):format(eventName, message))
             else
                 for i = 1, 16 do
-                    rprint(i, ("?%s?%s"):format(event, message))
+                    rprint(i, ("?%s?%s"):format(eventName, message))
                 end
             end
         else
-            local request = ("?%s?%s"):format(event, message)
+            local request = ("?%s?%s"):format(eventName, message)
             assert(#request <= maxRconDataLength, "Rcon request is too long")
             if blam.isGameDedicated() then
                 execute_script("rcon blam " .. request)
@@ -2645,7 +2645,7 @@ function blam.rcon.dispatch(event, message, playerIndex)
         end
         return {
             callback = function()
-                blam.rcon.event(event .. "+", callback)
+                blam.rcon.event(eventName .. "+", callback)
             end
         }
     end
@@ -2667,7 +2667,7 @@ function blam.rcon.handle(data, password, playerIndex)
         local data = split(data, "?")
         local eventName = data[2]
         local message = data[3]
-        local event = rconEvents[eventName]
+        local event = rconEvents[eventName:lower()]
         if event then
             local response = event(message, playerIndex)
             if response then
@@ -2684,6 +2684,40 @@ function blam.rcon.handle(data, password, playerIndex)
     end
     -- Pass request to the server
     return nil
+end
+
+local passwordAddress
+local failMessageAddress
+
+---Patch rcon server function to avoid failed rcon messages
+function blam.rcon.patch()
+    passwordAddress = read_dword(sig_scan("7740BA??????008D9B000000008A01") + 0x3)
+    failMessageAddress = read_dword(sig_scan("B8????????E8??000000A1????????55") + 0x1)
+    if passwordAddress and failMessageAddress then
+        -- Remove "rcon command failure" message
+        safe_write(true)
+        write_byte(failMessageAddress, 0x0)
+        safe_write(false)
+        -- Read current rcon in the server
+        local serverRcon = read_string(passwordAddress)
+        if (serverRcon) then
+            console_out("Server rcon password is: \"" .. serverRcon .. "\"")
+        else
+            console_out("Error, at getting server rcon, please set and enable rcon on the server.")
+        end
+    else
+        console_out("Error, at obtaining rcon patches, please check SAPP version.")
+    end
+end
+
+---Unpatch rcon server function to restore failed rcon messages
+function blam.rcon.unpatch()
+    if failMessageAddress then
+        -- Restore "rcon command failure" message
+        safe_write(true)
+        write_byte(failMessageAddress, 0x72)
+        safe_write(false)
+    end
 end
 
 --- Find the path, index and id of a tag given partial tag path and tag type
