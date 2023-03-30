@@ -23,6 +23,7 @@ local non_path = "keymind\\the_flood\\weapons\\_shared\\empty_crosshair_ref" --i
 local vakara_path = "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando" --VK78 Commando Rifle
 local spnkr_path = "keymind\\halo_infinite\\weapons\\support_high\\m41_spknr\\m41_spknr"
 local br65h_path = "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h"
+local stormR_path = "keymind\\halo_5\\weapons\\rifle\\cv_storm_rifle\\cv_storm_rifle" --Storm Rifle
 
 -- WEAPON TAG PATH VARIABLE
 --local smg_tag = read_dword(get_tag("weap", smg_name) + 0xC)
@@ -39,6 +40,7 @@ local sniper_tag = read_dword(get_tag("weap", sniper_path) + 0xC)
 local vakara_tag = read_dword(get_tag("weap", vakara_path) + 0xc)
 local spnkr_tag = read_dword(get_tag("weap", spnkr_path) + 0xc)
 local br65h_tag = read_dword(get_tag("weap", br65h_path) + 0xc)
+local stormR_tag = read_dword(get_tag("weap", stormR_path) + 0xc)
 
 
 globals_tag = read_dword(get_tag("matg", "globals\\globals") + 0x14)
@@ -106,7 +108,7 @@ function InitializeSettings()
         --local m6d_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\magnum_m6d\\magnum_m6d") + 0x14)
         local m6s_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\magnum_m6s\\magnum_m6s") + 0x14)
         local spknr_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\support_high\\m41_spknr\\m41_spknr") + 0x14)
-        local br65h_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h") + 0x14)
+        --local br65h_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h") + 0x14)
 
         -- change heat loss for a .weapon (since guerilla doesn't allow values above 1)
         
@@ -148,7 +150,7 @@ function InitializeSettings()
         pp_reticle_additional_scale = 0.12
 
         --SHOTGUN CROSSHAIR SCALE
-        m90_reticle_initial_scale = 0.2
+        m90_reticle_initial_scale = 0.23
         m90_reticle_additional_scale = 0.07
 
         --DMR CROSSHAIR SCALE
@@ -156,9 +158,26 @@ function InitializeSettings()
         --dmr_reticle_initial_scale = 0.15
         --dmr_reticle_additional_scale = 0.1
 
+        --STORM RIFLE CROSSHAIR SCALE
+        stormR_reticle_additional_pos = 3
+        stormR_reticle_initial_scale = 0.3
+        stormR_reticle_additional_scale = 0.07
+
         --SNIPER CROSSHAIR SCALE
         sniper_reticle_initial_scale = 0
         sniper_reticle_additional_scale = 0.3
+
+        --SNIPER ZOOM MASK
+        sniper_zoom_mask_initial_scale = 2.209
+        sniper_zoom_mask_additional_scale = 0.03
+
+        --SNIPER ZOOM SCOPE
+        sniper_zoom_scope_initial_scale = 0.47
+        sniper_zoom_scope_additional_scale = 0.03
+
+        --SNIPER ZOOM LEVELS
+        sniper_zoom_levels_initial_scale = 0.45
+        sniper_zoom_levels_additional_scale = 0.03
 
         --VK78 ZOOM FULL
         vk78_zoom_full_initial_scale = 0.4
@@ -182,7 +201,7 @@ function InitializeSettings()
         stroke_less = 0.08
 
         --DOT CROSSHAIR SCALE
-        dot_reticle_initial_scale = 0.1
+        dot_reticle_initial_scale = 0.08
         dot_reticle_additional_scale = 0
 
         plasmap_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\pistol\\plasma_pistol\\plasma_pistol") + 0x14)
@@ -195,6 +214,7 @@ function InitializeSettings()
         non_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\_shared\\empty_crosshair_ref") + 0x14)
         spnkr_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\support_high\\rocket_launcher_spnkr\\rocket_launcher_spnkr") + 0x14)
         br65h_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\br65h\\br_65h") + 0x14)
+        stormR_hud = read_dword(get_tag("wphi", "keymind\\halo_5\\weapons\\rifle\\cv_storm_rifle\\cv_storm_rifle") + 0x14)
 
         -- disables multitex overlays
         --write_dword(dmr_hud2 + 0x60, 0)
@@ -385,18 +405,27 @@ function dynamicCross.dynamicReticles()
                 elseif weap_obj == sniper_tag then
                     local heat = read_float(object + 0x23C)
                     local reticle_address = read_dword(sniper_hud + 0x88)
-                    for j = 0, 0 do
+                    for j = 1, 3 do
                         local struct = reticle_address + j * 104
                         write_byte(struct, 0)
                         local reticle_overlay_address = read_dword(struct + 0x38)
-                        --change scale
-                        --local zoom_scale = zoom
-                        --if zoom == 2 then
-                        --	zoom_scale = zoom*0.7
-                        --end
                         local scale = sniper_reticle_initial_scale + heat * sniper_reticle_additional_scale --* zoom_scale
-                        write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
-                        write_float(reticle_overlay_address + 0x08, scale)
+                        local scalemask = sniper_zoom_mask_initial_scale + heat * sniper_zoom_mask_additional_scale
+                        local scalezoomscope = sniper_zoom_scope_initial_scale + heat * sniper_zoom_scope_additional_scale
+                        local scalezoomlevels = sniper_zoom_levels_initial_scale + heat * sniper_zoom_levels_additional_scale
+                        if j == 1 then
+                            write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
+                            write_float(reticle_overlay_address + 0x08, scale)
+                        elseif j == 2 then
+                            write_float(reticle_overlay_address + 0x04, scalemask * aspect_ratio_change)
+                            write_float(reticle_overlay_address + 0x08, scalemask)
+                        elseif j == 3 then
+                            write_float(reticle_overlay_address + 0x04, scalezoomscope * aspect_ratio_change)
+                            write_float(reticle_overlay_address + 0x08, scalezoomscope)
+                        --elseif j == 4 then
+                            --write_float(reticle_overlay_address + 0x04, scalezoomlevels * aspect_ratio_change)
+                            --write_float(reticle_overlay_address + 0x08, scalezoomlevels)
+                        end            
                     end
 
                     --M90 CROSSHAIR---------------------------------
@@ -446,6 +475,37 @@ function dynamicCross.dynamicReticles()
                     --        end
                     --    end
 
+                    --STORM RIFLE CROSSHAIR---------------------------------
+                    elseif weap_obj == stormR_tag then
+                    	local heat = read_float(object + 0x23C)
+                    	local reticle_address = read_dword(stormR_hud + 0x88)
+                    	for j=0,4 do
+                    		local struct = reticle_address + j * 104
+                    		write_byte(struct, 0)
+                    		local reticle_overlay_address = read_dword(struct + 0x38)
+                    		local scale = stormR_reticle_initial_scale + heat * stormR_reticle_additional_scale 
+                            local positionstormR = heat * stormR_reticle_additional_pos * 2
+                            local scale_dot = dot_reticle_initial_scale + heat * dot_reticle_additional_scale 
+                            write_float(reticle_overlay_address + 0x04, scale*aspect_ratio_change)
+                    		write_float(reticle_overlay_address + 0x08, scale)
+                    		if j == 0 then
+                    			write_short(reticle_overlay_address, floor(-positionstormR*aspect_ratio_change))
+                                write_short(reticle_overlay_address + 2, floor(-positionstormR))
+                    		elseif j == 1 then
+                    			write_short(reticle_overlay_address, ceil(positionstormR * aspect_ratio_change))
+                                write_short(reticle_overlay_address + 2, ceil(positionstormR))
+                            elseif j == 2 then
+                    			write_short(reticle_overlay_address + 2, floor(-positionstormR * aspect_ratio_change))
+                                write_short(reticle_overlay_address, ceil(positionstormR))
+                    		elseif j == 3 then
+                    			write_short(reticle_overlay_address + 2, ceil(positionstormR))
+                                write_short(reticle_overlay_address, floor(-positionstormR * aspect_ratio_change))
+                            else
+                                write_float(reticle_overlay_address + 0x04, scale_dot *heat *aspect_ratio_change) --Horizontal
+                                write_float(reticle_overlay_address + 0x08, scale_dot *heat) --Vertical
+                            end
+                        end
+
                     --PLASMA PISTOL CROSSHAIR------------------------
                 elseif weap_obj == plasmap_tag then
                     local heat = read_float(object + 0x23C)
@@ -454,19 +514,10 @@ function dynamicCross.dynamicReticles()
                         local struct = reticle_address + j * 104
                         write_byte(struct, 0)
                         local reticle_overlay_address = read_dword(struct + 0x38)
-                        --change scale
-                        --local zoom_scale = zoom
-                        --if zoom == 2 then
-                        --	zoom_scale = zoom*0.7
-                        --end
                         local scale = pp_reticle_initial_scale + heat * pp_reticle_additional_scale --* zoom_scale
+                        local position = heat * pp_reticle_additional_pos * 2 
                         write_float(reticle_overlay_address + 0x04, scale * aspect_ratio_change)
                         write_float(reticle_overlay_address + 0x08, scale)
-                        --change position
-                        --if zoom == 3 then
-                        --	zoom_scale = zoom*0.7
-                        --end
-                        local position = heat * pp_reticle_additional_pos * 2 --* zoom_scale
                         if j == 0 then
                             write_short(reticle_overlay_address, floor(-position * aspect_ratio_change))
                             write_short(reticle_overlay_address + 2, ceil(position))
