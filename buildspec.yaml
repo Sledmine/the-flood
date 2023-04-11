@@ -9,9 +9,10 @@ commands:
     - rm -rf dist
     - mkdir -p dist
     - mercury luabundle
-    - cp dist/treason.lua package/lua-map/treason.lua
+    - mercury luabundle bleed
+    - cp dist/*.lua package/lua-map/
     - mercury pack package/ dist/
-    - rm package/lua-map/treason.lua
+    - rm package/lua-map/*.lua
   release:
     - mercury build --release --output package/game-maps/
     - mercury build package
