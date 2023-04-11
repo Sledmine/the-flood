@@ -201,7 +201,7 @@ function InitializeSettings()
         stroke_less = 0.08
 
         --DOT CROSSHAIR SCALE
-        dot_reticle_initial_scale = 0.08
+        dot_reticle_initial_scale = 0.0
         dot_reticle_additional_scale = 0
 
         plasmap_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\pistol\\plasma_pistol\\plasma_pistol") + 0x14)
