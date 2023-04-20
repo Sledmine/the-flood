@@ -4,6 +4,7 @@ tag_space: 64M
 extend_limits: true
 scenarios:
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
+  - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
 commands:
   package:
     - rm -rf dist
