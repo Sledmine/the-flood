@@ -1,5 +1,7 @@
 -- Lua libraries
+local blam = require "blam"
 tagClasses = blam.tagClasses
+local findTag = blam.findTag
 
 local constants = {}
 
@@ -21,5 +23,15 @@ constants.sounds = {
 constants.projectiles = {
     raycastTag = blam.findTag("raycast", tagClasses.projectile)
 }
+
+function constants.get()
+
+constants.fonts = {
+    text = findTag("text", tagClasses.font),
+    title = findTag("title", tagClasses.font),
+    subtitle = findTag("subtitle", tagClasses.font),
+    --button = findTag("button", tagClasses.font)
+}
+end
 
 return constants
