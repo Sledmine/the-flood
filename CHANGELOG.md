@@ -4,14 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.4.1] - 2023-04-03
+## [4.0.1] - 2023-04-25
 ### Added
-- Font UI overriding by Lua using Chimera
-- Bugs fixed in some collisions of objects that could be pierced
+- Temporary player clip
 
 ### Changed
-- Buff projectile speed, aim assist and damaged on Disruptor
-- CQC mode on Magnum M6S (Semi-automatic shooting with greater dispersion by keeping the fire button pressed)
+- Bleed It Out - Cubemap on water puddle in cave area
+- Bleed It Out - Shader and textures for cliffs on BSP and sky
+- Bleed It Out - Reworked all blend maps
+- Bleed It Out - Lightmaps
 
 ### Fixed
-- Wrong menu header in pause menu screen
+- Wrong sprite sheet for particle in frag grenade
+- Bleed It Out - UV's on some greometry
+- Bleed It Out - Phantom BSP
