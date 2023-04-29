@@ -159,4 +159,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Player speed slightly decreased
 
 ### Fixed
-- Old sandbox restored with small adjustments (except sniper, spnkr, stalker)
+- Old sandbox restored with small adjustments (except sniper, SPNKR, stalker), thanks Lennox for being the killer sandbox
