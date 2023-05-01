@@ -69,3 +69,6 @@ six-shooter.ini
 *.db*
 *.log
 Desktop.ini
+data
+.gitignore
+tags
