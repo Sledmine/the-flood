@@ -25,5 +25,8 @@ being used from this.
 We have 2 maps by now and others on development too.
 
 ![treason](images/screenshots/treason.png)
+Treason
 ![bleed_it_out](images/screenshots/bleed.png)
+Bleed It Out
 ![bunker](images/screenshots/bunkerworld.png)
+Bunkerworld
