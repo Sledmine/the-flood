@@ -5,7 +5,7 @@ extend_limits: true
 scenarios:
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
   - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
-  - keymind\the_flood\levels\multiplayer\bridge\bridge_dev
+  - keymind/the_flood/levels/multiplayer/bridge/bridge_dev
 commands:
   package:
     - rm -rf dist
