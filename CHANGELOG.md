@@ -4,29 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.2.0] - 2023-07-02
+## [4.2.0] - 2023-07-04
 ### Added
-- New map Bridge
+- New map Last Voyage
+- Melee sound variation on storm rifle
 
 ### Fixed
-- Flashlight biped always turn on
+- Flashlight biped always turn on (it's that you dark souls?)
+- Treason, Bleed it Out / wind on all clusters
 
 ### Changed
 - Bleed It Out / new lightmaps
 - Bleed it Out / normalized lightmaps
 - Treason / normalized lightmaps 
 - ROF, aceleration, damage, error, heat generated and heat recovery for stationary turret
-
-
-## [4.1.2] - 2023-04-30
-### Added
-- fire sound on skull
-
-### Fixed
-
-### Changed
 - ROF, aceleration, damage, error, heat generated and heat recovery for warthog chaingun
-- ROF, aceleration, damage, error, heat generated and heat recovery for stationary turret
 
 ## [4.1.1] - 2023-04-29
 ### Added
