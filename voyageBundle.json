@@ -1,0 +1,22 @@
+{
+    "name": "Last Voyage",
+    "target": "lua53",
+    "include": [
+        "lua",
+        "lua/lua_modules/"
+    ],
+    "modules": [
+        "inspect",
+        "glue",
+        "blam",
+        "luna",
+        "multiplayer.data.network",
+        "multiplayer.features.fontOverride",
+        "multiplayer.features.core",
+        "multiplayer.features.constants",
+        "multiplayer.features.gameplay",
+        "multiplayer.features.dynamicCross"
+    ],
+    "main": "lua/multiplayer/last_voyage",
+    "output": "dist/last_voyage.lua"
+}
