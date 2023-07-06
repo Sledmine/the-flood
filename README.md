@@ -28,5 +28,5 @@ Treason
 ![treason](images/screenshots/treason.png)
 Bleed It Out
 ![bleed_it_out](images/screenshots/bleed.png)
-Infinite Succor (Work in progress)
+Last Voyage
 ![bridge](images/screenshots/bridge.png)
