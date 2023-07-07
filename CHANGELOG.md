@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.0] - 2023-07-??
+### Added
+- Plasma Rifle / melee and ready sounds
+- HUD for m247 heavy machine gun
+
+### Fixed
+- Treason / traspasable collision on trash dump
+- Plasma rifle fire sound glitch
+- biped unarmed idle animation
+
+### Changed
+- Disruptor / reduced supercombine damage 25 to 5
+- Disruptor / increased maximum ROF 3.75 to 4.286
+- Plasma Caster / reduced air gravity projectile 5 to 3
+- Plasma Rifle / increased initial velocity projectile 50 to 100
+- Plasma Rifle / increased final velocity projectile 35 to 75
+- Battle Rifle BR65H / increased initial-final velocity projectile 450 to 550
+- Reduced driver damage fraction on banshee, warthog and ghost
+- Lightmaps on treason, bleed it out and last voyage
+- Last Voyage / bsp structure big windows
+
 ## [4.2.1] - 2023-07-06
 ### Added
 - Bleed it out / hill spawns
