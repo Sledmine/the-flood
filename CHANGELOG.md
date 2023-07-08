@@ -8,11 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Plasma Rifle / melee and ready sounds
 - HUD for m247 heavy machine gun
+- Plasma rifle tracking variant available on fiesta
 
 ### Fixed
 - Treason / traspasable collision on trash dump
 - Plasma rifle fire sound glitch
 - biped unarmed idle animation
+- M247-HMG turret / fire sounds glitch
 
 ### Changed
 - Disruptor / reduced supercombine damage 25 to 5
