@@ -9,12 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plasma Rifle / melee and ready sounds
 - HUD for m247 heavy machine gun
 - Plasma rifle tracking variant available on fiesta
+- Flag animations on warthog passenger
 
 ### Fixed
 - Treason / traspasable collision on trash dump
 - Plasma rifle fire sound glitch
 - biped unarmed idle animation
 - M247-HMG turret / fire sounds glitch
+- Last Voyage / phantom bsp on centerplatform_xl scenery collision
 
 ### Changed
 - Disruptor / reduced supercombine damage 25 to 5
