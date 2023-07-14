@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.3.1] - 2023-07-13
 ### Added
+- Disruptor / can electrocute metal material on vehicles with half damage against bipeds
 
 ### Fixed
 
@@ -15,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plasma Caster / icreased air gravity projectile 3 to 3.5
 - increased rider damage fraction on banshee 0.12 to 0.18
 - increased rider damage fraction ghost and warthog 0.12 to 0.15
+- Storm Rifle / reduced heat generated per round 0.13 to 0.12
+
 
 ## [4.3.0] - 2023-07-13
 ### Added
