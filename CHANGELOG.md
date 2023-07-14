@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.1] - 2023-07-13
+### Added
+
+### Fixed
+
+### Changed
+- Disruptor / reduced supercombine damage 5 to 15
+- Disruptor / reduced maximum ROF 4.286 to 3.75
+- Plasma Caster / icreased air gravity projectile 3 to 3.5
+- increased rider damage fraction on banshee 0.12 to 0.18
+- increased rider damage fraction ghost and warthog 0.12 to 0.15
+
 ## [4.3.0] - 2023-07-13
 ### Added
 - Plasma Rifle / melee and ready sounds
