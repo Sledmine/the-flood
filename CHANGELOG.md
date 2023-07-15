@@ -58,6 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lightmaps on treason, bleed it out and last voyage
 - Last Voyage / bsp structure big windows
 
+
 ## [4.2.1] - 2023-07-06
 ### Added
 - Bleed it out / hill spawns
