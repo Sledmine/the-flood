@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disruptor / can electrocute metal material on vehicles with half damage against bipeds
 
 ### Fixed
+- Integrity of some tags (invader warnings)
 
 ### Changed
 - Disruptor / reduced supercombine damage 5 to 15
