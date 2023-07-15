@@ -13,6 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Disruptor / reduced supercombine damage 5 to 15
 - Disruptor / reduced maximum ROF 4.286 to 3.75
 - Plasma Caster / icreased air gravity projectile 3 to 3.5
+- Plasma Rifle / increased ROF from 6 to 7.5
+- Plasma Rifle / increased heat loss from 0.35 to 0.5
+- Plasma Rifle / increased heat recovery from 0.05 to 0.5
+- Plasma Rifle / increased heat per shot from 0.1 to 0.11
+- Plasma Rifle / increased autoaim angle & magnetism angle from 4 & 6 to 6 & 12 degrees
+- Plasma Rifle / increased tracking from 0 to 30
+- Plasma Rifle / decreased bolt speed from 50-25 to 25-15
+- Plasma Pistol / increased heat loss from 0.4 to 0.75
+- Plasma Pistol / increased heat per shot from 0.1 to 0.12
+- Plasma Pistol / increased tracking from 0 to 30
+- Plasma Pistol / decreased bolt speed from 50-25 to 25-15
 - increased rider damage fraction on banshee 0.12 to 0.18
 - increased rider damage fraction ghost and warthog 0.12 to 0.15
 
