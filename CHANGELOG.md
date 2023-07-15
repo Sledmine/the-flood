@@ -17,7 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - increased rider damage fraction on banshee 0.12 to 0.18
 - increased rider damage fraction ghost and warthog 0.12 to 0.15
 - Storm Rifle / reduced heat generated per round 0.13 to 0.12
-
+- Storm Rifle / increased velocity projectile 60%
+- Storm Rifle / reduced age generated per round 0.01 to 0.005
+- Storm Rifle / reduced error angle 25%
 
 ## [4.3.0] - 2023-07-13
 ### Added
