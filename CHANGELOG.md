@@ -4,17 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.3.1] - 2023-07-13
+## [4.3.1] - 2023-07-??
 ### Added
 - Disruptor / can electrocute metal material on vehicles with half damage against bipeds
+- Plasma Caster / reload smoke fx
 
 ### Fixed
 - Integrity of some tags (invader warnings)
 
 ### Changed
+- Adjusted some covenant weapon shaders
 - Disruptor / reduced supercombine damage 5 to 15
 - Disruptor / reduced maximum ROF 4.286 to 3.75
-- Plasma Caster / icreased air gravity projectile 3 to 3.5
+- Plasma Caster / new primary projectile bounce implementation
+- Plasma Caster / adjusted primary projectile friction on materials 
+- Plasma Caster / reduced autoaim angle 6 to 3
+- Plasma Caster / reduced magnetism angle 12 to 6
+- Plasma Caster / increased charging time 0.3 to 0.5
+- Plasma Caster / reduced heat recovery threshold 0.1 to 0.05
+- Plasma Caster / reduced camera pushback
+- Plasma Caster / reduced primary projectile aceleration scale 2 to 0.05
+- Plasma Caster / reduced charged single grenade projectile aceleration scale 2 to 0.05
+- Plasma Caster / reduced primary projectile air gravity 3.5 to 2
+- Plasma Caster / increased primary projectile final velocity 22.5 to 25.5
+- Plasma Caster / reduced primary projectile final velocity 3 to 2.55
+- Plasma Caster / increased primary projectile guied angular velocity 0 to 5
+- Plasma Caster / reduced secondary projectile initial velocity 45 to 28.5
+- Plasma Caster / reduced secondary projectile final velocity 30 to 16.5
+- Plasma Caster / reduced secondary projectile air gravity 0.35 to 0.3
 - Plasma Rifle / increased ROF from 6 to 7.5
 - Plasma Rifle / increased heat loss from 0.35 to 0.5
 - Plasma Rifle / increased heat recovery from 0.05 to 0.5
@@ -26,12 +43,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plasma Pistol / increased heat per shot from 0.1 to 0.12
 - Plasma Pistol / increased tracking from 0 to 30
 - Plasma Pistol / decreased bolt speed from 50-25 to 25-15
-- increased rider damage fraction on banshee 0.12 to 0.18
-- increased rider damage fraction ghost and warthog 0.12 to 0.15
 - Storm Rifle / reduced heat generated per round 0.13 to 0.12
 - Storm Rifle / increased velocity projectile 60%
 - Storm Rifle / reduced age generated per round 0.01 to 0.005
 - Storm Rifle / reduced error angle 25%
+- increased rider damage fraction on banshee 0.12 to 0.18
+- increased rider damage fraction ghost and warthog 0.12 to 0.15
 
 ## [4.3.0] - 2023-07-13
 ### Added
@@ -197,7 +214,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated storm rifle animations
 - Treason / Location for pistols and plasma rifles
 - Plasma Caster / You cannot shoot until after 1 second of reloading
-- Plasma Caster / After the reloaded shot you must wait 2 seconds to shoot again
+- Plasma Caster / After the charged shot you must wait 2 seconds to shoot again
 - Plasma Caster / Single shot explosion radius reduced from 2.8 to 1.8 WU (world units)
 - Plasma Caster / Shield damage multiplier reduced from 2 to 1.5 on single shot
 - Plasma Caster / Minimum damage area adjustment from 0.9 to 0.5 WU
