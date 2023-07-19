@@ -4,16 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.3.1] - 2023-07-??
+## [4.4.0] - 2023-07-??
 ### Added
 - Disruptor / can electrocute metal material on vehicles with half damage against bipeds
-- Plasma Caster / reload smoke fx
+- Plasma Caster / reload fx
+- Storm Rifle / ready var sounds
+- Plasma Pistol / posing sound
 
 ### Fixed
 - Integrity of some tags (invader warnings)
+- biped idle unarmed variations legs position
+- biped stand unarmed set
+- unarmed crosshair HUD
 
 ### Changed
-- Adjusted some covenant weapon shaders
 - Disruptor / reduced supercombine damage 5 to 15
 - Disruptor / reduced maximum ROF 4.286 to 3.75
 - Plasma Caster / new primary projectile bounce implementation
@@ -49,6 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Storm Rifle / reduced error angle 25%
 - increased rider damage fraction on banshee 0.12 to 0.18
 - increased rider damage fraction ghost and warthog 0.12 to 0.15
+- Adjusted some covenant weapon shaders
+- Carnage report background (placeholder)
 
 ## [4.3.0] - 2023-07-13
 ### Added
