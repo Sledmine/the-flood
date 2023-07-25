@@ -10,12 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plasma Caster / reload fx
 - Storm Rifle / ready var sounds
 - Plasma Pistol / posing sound
+- New map Impasse
+- Flag stand on all maps
 
 ### Fixed
 - Integrity of some tags (invader warnings)
 - biped idle unarmed variations legs position
 - biped stand unarmed set
 - unarmed crosshair HUD
+- Treason / traspasable collision on "indus_stuff_a" scenery (green container)
 
 ### Changed
 - Disruptor / reduced supercombine damage 5 to 15
