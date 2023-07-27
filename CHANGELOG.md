@@ -6,11 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.4.0] - 2023-07-??
 ### Added
+- New map Impasse
 - Disruptor / can electrocute metal material on vehicles with half damage against bipeds
 - Plasma Caster / reload fx
 - Storm Rifle / ready var sounds
 - Plasma Pistol / posing sound
-- New map Impasse
 - Flag stand on all maps
 
 ### Fixed
@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - biped idle unarmed variations legs position
 - biped stand unarmed set
 - unarmed crosshair HUD
+- Plasma Caster / reduced camera pushback
+- Deleted dyamic light and extra lights/flares on weapon pads
 - Treason / traspasable collision on "indus_stuff_a" scenery (green container)
 
 ### Changed
@@ -29,7 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plasma Caster / reduced magnetism angle 12 to 6
 - Plasma Caster / increased charging time 0.3 to 0.5
 - Plasma Caster / reduced heat recovery threshold 0.1 to 0.05
-- Plasma Caster / reduced camera pushback
 - Plasma Caster / reduced primary projectile aceleration scale 2 to 0.05
 - Plasma Caster / reduced charged single grenade projectile aceleration scale 2 to 0.05
 - Plasma Caster / reduced primary projectile air gravity 3.5 to 2
@@ -58,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - increased rider damage fraction ghost and warthog 0.12 to 0.15
 - Adjusted some covenant weapon shaders
 - Carnage report background (placeholder)
+
 
 ## [4.3.0] - 2023-07-13
 ### Added
