@@ -16,7 +16,7 @@ with the following line on the terminal:
 ```
 mercury install thefloodmp
 ```
-Or you can install using the new ![mercury ui](media\mercury_ui.mp4)
+Or you can install using the new Mercury UI ![Mercury UI](media\mercury_ui.gif)
 
 It also uses [Chimera](https://github.com/SnowyMouse/chimera), lua scripting is another function
 being used from this.
