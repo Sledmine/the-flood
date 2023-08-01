@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Banshee / flight and visual improvements
 - Warthog / new HUD
 - Bleed It Out / normal maps on terrain
-- Bleed It Out / Vegetation
+- Bleed It Out / Vegetation and scenerys
 
 ### Fixed
 - Integrity of some tags (invader warnings)
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plasma Caster / reduced camera pushback
 - Deleted dyamic light and extra lights/flares on weapon pads
 - Treason / traspasable collision on "indus_stuff_a" scenery (green container)
-- Bleed It Out / adjusted player clip for camp spots
+- Bleed It Out / adjusted player clip for camper spots
 - Last Voyage / erased flashlight flag on dynamic lights
 
 ### Changed
