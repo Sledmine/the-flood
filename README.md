@@ -16,7 +16,9 @@ with the following line on the terminal:
 ```
 mercury install thefloodmp
 ```
-Or you can install using the new Mercury UI ![Mercury UI](media/mercury_ui.gif)
+Or you can install the package using the new Mercury UI 
+
+![Mercury UI](media/mercury_ui.gif)
 
 It also uses [Chimera](https://github.com/SnowyMouse/chimera), lua scripting is another function
 being used from this.
@@ -27,9 +29,12 @@ We have 4 maps by now and others on development too.
 
 Treason
 ![treason](images/screenshots/treason.png)
+
 Bleed It Out
 ![bleed_it_out](images/screenshots/bleed.png)
+
 Last Voyage
 ![bridge](images/screenshots/bridge.png)
+
 Impasse
 ![bunkerworld](images/screenshots/bunkerworld.png)
