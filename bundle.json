@@ -1,5 +1,5 @@
 {
-    "name": "Treason",
+    "name": "The Flood Multiplayer",
     "target": "lua53",
     "include": [
         "lua",
@@ -17,6 +17,6 @@
         "multiplayer.features.gameplay",
         "multiplayer.features.dynamicCross"
     ],
-    "main": "lua/multiplayer/treason",
-    "output": "dist/treason.lua"
+    "main": "lua/multiplayer/the_flood_mp_client",
+    "output": "dist/the_flood_mp_client.lua"
 }
