@@ -6,15 +6,16 @@ scenarios:
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
   - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
   - keymind/the_flood/levels/multiplayer/bridge/last_voyage_dev
-  - keymind\halo_3\levels\multiplayer\bunkerworld\impasse_dev
+  - keymind/halo_3/levels/multiplayer/bunkerworld/impasse_dev
 commands:
   package:
     - rm -rf dist
     - mkdir -p dist
     - mercury luabundle
-    - mercury luabundle bleed
-    - mercury luabundle voyage
-    - cp dist/*.lua package/lua-map/
+    - cp dist/the_flood_mp_client.lua package/lua-map/treason.lua
+    - cp dist/the_flood_mp_client.lua package/lua-map/bleed_it_out.lua
+    - cp dist/the_flood_mp_client.lua package/lua-map/last_voyage.lua
+    - cp dist/the_flood_mp_client.lua package/lua-map/impasse.lua
     - mercury pack package/ dist/
     - rm package/lua-map/*.lua
   release:
