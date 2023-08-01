@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.4.0] - 2023-07-30
+## [4.4.0] - 2023-08-01
 ### Added
 - New map Impasse
 - New vehicle Wasp
@@ -14,15 +14,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plasma Pistol / posing sound
 - Flag stand on all maps
 - Banshee / flight and visual improvements
+- Warthog / new HUD
+- Bleed It Out / normal maps on terrain
+- Bleed It Out / Vegetation
 
 ### Fixed
 - Integrity of some tags (invader warnings)
-- biped idle unarmed variations legs position
-- biped stand unarmed set
-- unarmed crosshair HUD
+- Biped idle unarmed variation legs position
+- Biped stand unarmed set
+- Unarmed crosshair HUD
 - Plasma Caster / reduced camera pushback
 - Deleted dyamic light and extra lights/flares on weapon pads
 - Treason / traspasable collision on "indus_stuff_a" scenery (green container)
+- Bleed It Out / adjusted player clip for camp spots
+- Last Voyage / erased flashlight flag on dynamic lights
 
 ### Changed
 - Disruptor / reduced supercombine damage 5 to 15
@@ -67,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Banshee / weapon functionality
 - Bleed It Out / removed back covers on bases
 - Bleed It Out / wasp spawns on slayer, banshee spawns on CTF
+- Bleed It Out / lightmaps
 
 
 ## [4.3.0] - 2023-07-13
