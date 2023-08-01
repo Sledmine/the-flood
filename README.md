@@ -11,18 +11,19 @@ The story follows the perspective of the human soldiers barricaded at Installati
 The multiplayer section is comprised of original maps and remakes of aclaimed classics, and a rich sandbox built on the foundations of previous Halo titles.
 
 # Getting The Flood Multiplayer
-Get the latest version available using [Mercury](https://github.com/Sledmine/Mercury)
+Get the latest version available using [Mercury](https://github.com/Sledmine/Mercury/releases)
 with the following line on the terminal:
 ```
 mercury install thefloodmp
 ```
+Or you can install using the new Mercury UI (media\mercury_ui.mp4)
 
 It also uses [Chimera](https://github.com/SnowyMouse/chimera), lua scripting is another function
 being used from this.
 
 # Screenshots
 
-We have 2 maps by now and others on development too.
+We have 4 maps by now and others on development too.
 
 Treason
 ![treason](images/screenshots/treason.png)
@@ -30,3 +31,5 @@ Bleed It Out
 ![bleed_it_out](images/screenshots/bleed.png)
 Last Voyage
 ![bridge](images/screenshots/bridge.png)
+Impasse
+![bunkerworld](images/screenshots/bunkerworld.png)
