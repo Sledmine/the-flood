@@ -15,6 +15,6 @@
         "multiplayer.features.core",
         "multiplayer.features.gameplay"
     ],
-    "main": "lua/multiplayer/treason_server",
-    "output": "dist/treason_server.lua"
+    "main": "lua/multiplayer/the_flood_mp_server",
+    "output": "dist/the_flood_mp_server.lua"
 }
