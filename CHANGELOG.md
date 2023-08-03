@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.4.0] - 2023-08-01
+## [4.4.0] - 2023-08-02
 ### Added
 - New map Impasse
 - New vehicle Wasp
@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Warthog / new HUD
 - Bleed It Out / normal maps on terrain
 - Bleed It Out / Vegetation and scenerys
+- Vehicle pads on maps
 
 ### Fixed
 - Integrity of some tags (invader warnings)
@@ -32,8 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Disruptor / reduced supercombine damage 5 to 15
 - Disruptor / reduced maximum ROF 4.286 to 3.75
-- Optimization shaders for lightmaps on bleed it out
-- Reduced darken shadows on bleed it out
+- Bleed It Out / Optimization shaders for lightmaps
+- Bleed It Out / reduced darken shadows
+- Bleed It Out / removed back covers on bases
+- Bleed It Out / wasp spawns on slayer, banshee spawns on CTF
+- Bleed It Out / lightmaps
+- Bleed It Out / skybox
 - Plasma Caster / new primary projectile bounce implementation
 - Plasma Caster / adjusted primary projectile friction on materials 
 - Plasma Caster / reduced autoaim angle 6 to 3
@@ -70,9 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Carnage report background (placeholder)
 - Dynamic light radius on powerups
 - Banshee / weapon functionality
-- Bleed It Out / removed back covers on bases
-- Bleed It Out / wasp spawns on slayer, banshee spawns on CTF
-- Bleed It Out / lightmaps
+- Standard grass tonality
+- Material effect collision on player clip with vehicles
 
 @The Flood Downloads
  
