@@ -5,19 +5,29 @@ extend_limits: true
 scenarios:
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
   - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
+  - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_ia
   - keymind/the_flood/levels/multiplayer/bridge/last_voyage_dev
   - keymind/halo_3/levels/multiplayer/bunkerworld/impasse_dev
 commands:
   package:
     - rm -rf dist
     - mkdir -p dist
-    - mercury luabundle
+    - mercury luabundle && mercury luabundle server
     - cp dist/the_flood_mp_client.lua package/lua-map/treason.lua
     - cp dist/the_flood_mp_client.lua package/lua-map/bleed_it_out.lua
     - cp dist/the_flood_mp_client.lua package/lua-map/last_voyage.lua
     - cp dist/the_flood_mp_client.lua package/lua-map/impasse.lua
+    - cp dist/the_flood_mp_server.lua package/lua-sapp/the_flood_mp_server.lua
     - mercury pack package/ dist/
     - rm package/lua-map/*.lua
+  structbunker:
+    - h1a_tool structure keymind\halo_3\levels\multiplayer\bunkerworld bunkerworld 1
+    - invader normalize-lightmaps keymind\halo_3\levels\multiplayer\bunkerworld\bunkerworld
+    - harvest_h1a_tool_lm lightmaps keymind\halo_3\levels\multiplayer\bunkerworld\bunkerworld_dev bunkerworld 0.9 0.11111
+  structbleed:
+    - h1a_tool structure keymind\the_flood\levels\multiplayer\bleed_it_out b_gulch
+    - invader normalize-lightmaps keymind\the_flood\levels\multiplayer\bleed_it_out\b_gulch
+    - harvest_h1a_tool_lm lightmaps keymind\the_flood\levels\multiplayer\bleed_it_out\bleed_light b_gulch 0.9 0.777777 -noassert  
   release:
     - mercury build --release --output package/game-maps/
     - mercury build package
