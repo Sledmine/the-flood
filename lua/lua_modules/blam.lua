@@ -65,12 +65,16 @@ local addressList = {
     firstPerson = 0x40000EB8, -- from aLTis
     objectTable = 0x400506B4,
     deviceGroupsTable = 0x00816110,
-    widgetsInstance = 0x6B401C
+    widgetsInstance = 0x6B401C,
+    -- syncedNetworkObjects = 0x004F7FA2
+    syncedNetworkObjects = 0x006226F0 -- pointer, from Vulpes
 }
 
 -- Server side addresses adjustment
 if (api_version or server_type == "sapp") then
     addressList.deviceGroupsTable = 0x006E1C50
+    addressList.objectTable = 0x4005062C
+    addressList.syncedNetworkObjects = 0x00598020 -- not pointer cause cheat engine sucks
 end
 
 -- Tag classes values
@@ -291,6 +295,8 @@ local dPadValues = {
     up = 765
 }
 
+local null = 0xFFFFFFFF
+
 -- Global variables
 
 ---	This is the current gametype that is running. If no gametype is running, this will be set to nil
@@ -330,6 +336,8 @@ backupFunctions.get_global = _G.get_global
 -- backupFunctions.set_global = _G.set_global
 backupFunctions.get_tag = _G.get_tag
 backupFunctions.set_callback = _G.set_callback
+backupFunctions.set_timer = _G.set_timer
+backupFunctions.stop_timer = _G.stop_timer
 
 backupFunctions.spawn_object = _G.spawn_object
 backupFunctions.delete_object = _G.delete_object
@@ -532,7 +540,7 @@ end
 
 ---Output text to the console, optional text colors in decimal format.<br>
 ---Avoid sending console messages if console_is_open() is true to avoid annoying the player.
----@param message string
+---@param message string | number
 ---@param red? number
 ---@param green? number
 ---@param blue? number
@@ -574,7 +582,7 @@ function set_callback(event, callback)
         error("SAPP does not support frame event")
     elseif event == "preframe" then
         error("SAPP does not support preframe event")
-    elseif event == "map load" then
+    elseif event == "map_load" then
         register_callback(cb["EVENT_GAME_START"], callback)
     elseif event == "precamera" then
         error("SAPP does not support precamera event")
@@ -598,7 +606,23 @@ function set_callback(event, callback)
     end
 end
 
-if (api_version) then
+---Register a timer to be called every intervalMilliseconds.<br>
+---The callback function will be called with the arguments passed after the callbackName.<br>
+---
+---**WARNING:** SAPP will not return a timerId, it will return nil instead so timers can not be stopped.
+---@param intervalMilliseconds number
+---@param globalFunctionCallbackName string
+---@vararg any
+---@return number?
+function set_timer(intervalMilliseconds, globalFunctionCallbackName, ...)
+    return timer(intervalMilliseconds, globalFunctionCallbackName, ...)
+end
+
+function stop_timer(timerId)
+    error("SAPP does not support stopping timers")
+end
+
+if api_version then
     -- Provide global server type variable on SAPP
     server_type = "sapp"
     print("Compatibility with Chimera Lua API has been loaded!")
@@ -610,6 +634,8 @@ else
     -- set_global = -- backupFunctions.set_global
     get_tag = backupFunctions.get_tag
     set_callback = backupFunctions.set_callback
+    set_timer = backupFunctions.set_timer
+    stop_timer = backupFunctions.stop_timer
     spawn_object = backupFunctions.spawn_object
     delete_object = backupFunctions.delete_object
     get_object = backupFunctions.get_object
@@ -697,16 +723,18 @@ local function tagClassFromInt(tagClassInt)
     return nil
 end
 
---- Return a list of all the objects currently in the map
----@return table
+--- Return a list of object indexes that are currently spawned, indexed by their object id.
+---@return number[]
 function blam.getObjects()
-    local currentObjectsList = {}
-    for i = 0, 2047 do
-        if (blam.getObject(i)) then
-            currentObjectsList[#currentObjectsList + 1] = i
+    local objects = {}
+    for objectIndex = 0, 2047 do
+        local object, objectId = blam.getObject(objectIndex)
+        if object and objectId then
+            objects[objectId] = objectIndex
+            -- objects[objectIndex] = objectId
         end
     end
-    return currentObjectsList
+    return objects
 end
 
 -- Local reference to the original console_out function
@@ -1144,8 +1172,11 @@ local deviceGroupsTableStructure = {
 ---@field isCollideable boolean Enable/disable object collision, does not work with bipeds or vehicles
 ---@field hasNoCollision boolean Enable/disable object collision, causes animation problems
 ---@field model number Gbxmodel tag ID
+---@field scale number Object scale factor
 ---@field health number Current health of the object
+---@field maxHealth number Maximum health of the object
 ---@field shield number Current shield of the object
+---@field maxShield number Maximum shield of the object
 ---@field colorAUpperRed number Red color channel for A modifier
 ---@field colorAUpperGreen number Green color channel for A modifier
 ---@field colorAUpperBlue number Blue color channel for A modifier
@@ -1191,7 +1222,7 @@ local deviceGroupsTableStructure = {
 ---@field team number Object multiplayer team
 ---@field nameIndex number Index of object name in the scenario tag
 ---@field playerId number Current player id if the object
----@field parentId number Current parent id of the object
+---@field parentId number Current parent id of the object, needs testing
 ---//@field isHealthEmpty boolean Is the object health depleted, also marked as "dead"
 ---@field isApparentlyDead boolean Is the object apparently dead
 ---@field isSilentlyKilled boolean Is the object really dead
@@ -1207,6 +1238,7 @@ local deviceGroupsTableStructure = {
 ---@field regionPermutation6 number
 ---@field regionPermutation7 number
 ---@field regionPermutation8 number
+---@field parentObjectId number
 
 -- blamObject structure
 local objectStructure = {
@@ -1225,8 +1257,11 @@ local objectStructure = {
     isOutSideMap = {type = "bit", offset = 0x12, bitLevel = 5},
     isCollideable = {type = "bit", offset = 0x10, bitLevel = 24},
     model = {type = "dword", offset = 0x34},
+    scale = {type = "float", offset = 0xB0},
     health = {type = "float", offset = 0xE0},
+    maxHealth = {type = "float", offset = 0xD8},
     shield = {type = "float", offset = 0xE4},
+    maxShield = {type = "float", offset = 0xDC},
     ---@deprecated
     redA = {type = "float", offset = 0x1B8},
     ---@deprecated
@@ -1296,7 +1331,8 @@ local objectStructure = {
     regionPermutation5 = {type = "byte", offset = 0x184},
     regionPermutation6 = {type = "byte", offset = 0x185},
     regionPermutation7 = {type = "byte", offset = 0x186},
-    regionPermutation8 = {type = "byte", offset = 0x187}
+    regionPermutation8 = {type = "byte", offset = 0x187},
+    parentObjectId = {type = "dword", offset = 0x11C}
 }
 
 ---@class biped : blamObject
@@ -1331,6 +1367,10 @@ local objectStructure = {
 ---@field walkingState number Biped walking state, 0 = not walking, 1 = walking, 2 = stoping walking, 3 = stationary
 ---@field motionState number Biped motion state, 0 = standing , 1 = walking , 2 = jumping/falling
 ---@field mostRecentDamagerPlayer number Id of the player that caused the most recent damage to this biped
+---@field firstWeaponObjectId number First weapon object id
+---@field secondWeaponObjectId number Second weapon object id
+---@field thirdWeaponObjectId number Third weapon object id
+---@field fourthWeaponObjectId number Fourth weapon object id
 
 -- Biped structure (extends object structure)
 local bipedStructure = extendStructure(objectStructure, {
@@ -1355,7 +1395,7 @@ local bipedStructure = extendStructure(objectStructure, {
     shooting = {type = "float", offset = 0x284},
     weaponSlot = {type = "byte", offset = 0x2A1},
     zoomLevel = {type = "byte", offset = 0x320},
-    invisibleScale = {type = "byte", offset = 0x37C},
+    invisibleScale = {type = "float", offset = 0x37C},
     primaryNades = {type = "byte", offset = 0x31E},
     secondaryNades = {type = "byte", offset = 0x31F},
     landing = {type = "byte", offset = 0x508},
@@ -1364,7 +1404,11 @@ local bipedStructure = extendStructure(objectStructure, {
     vehicleSeatIndex = {type = "word", offset = 0x2F0},
     walkingState = {type = "char", offset = 0x503},
     motionState = {type = "byte", offset = 0x4D2},
-    mostRecentDamagerPlayer = {type = "dword", offset = 0x43C}
+    mostRecentDamagerPlayer = {type = "dword", offset = 0x43C},
+    firstWeaponObjectId = {type = "dword", offset = 0x2F8},
+    secondWeaponObjectId = {type = "dword", offset = 0x2FC},
+    thirdWeaponObjectId = {type = "dword", offset = 0x300},
+    fourthWeaponObjectId = {type = "dword", offset = 0x304}
 })
 
 -- Tag data header structure
@@ -1877,10 +1921,21 @@ local modelAnimationsStructure = {
 ---@class weapon : blamObject
 ---@field pressedReloadKey boolean Is weapon trying to reload
 ---@field isWeaponPunching boolean Is weapon playing melee or grenade animation
+---@field carrierObjectId number Object ID of the weapon owner
+---@field isInInventory boolean Is weapon in inventory
+---@field primaryTriggerState number Primary trigger state of the weapon
+---@field totalAmmo number Total ammo of the weapon
+---@field loadedAmmo number Loaded ammo of the weapon   
 
 local weaponStructure = extendStructure(objectStructure, {
     pressedReloadKey = {type = "bit", offset = 0x230, bitLevel = 3},
-    isWeaponPunching = {type = "bit", offset = 0x230, bitLevel = 4}
+    isWeaponPunching = {type = "bit", offset = 0x230, bitLevel = 4},
+    ownerObjectId = {type = "dword", offset = 0x11C}, -- deprecated
+    carrierObjectId = {type = "dword", offset = 0x11C},
+    isInInventory = {type = "bit", offset = 0x1F4, bitLevel = 0},
+    primaryTriggerState = {type = "byte", offset = 0x261},
+    totalAmmo = {type = "word", offset = 0x2B6},
+    loadedAmmo = {type = "word", offset = 0x2B8}
 })
 
 ---@class weaponTag
@@ -2042,22 +2097,26 @@ local globalsTagStructure = {
 local firstPersonStructure = {weaponObjectId = {type = "dword", offset = 0x10}}
 
 ---@class bipedTag
----@field disableCollision number Disable collision of this biped tag
+---@field model number Gbxmodel tag Id of this biped tag
+---@field disableCollision boolean Disable collision of this biped tag
 
-local bipedTagStructure = {disableCollision = {type = "bit", offset = 0x2F4, bitLevel = 5}}
+local bipedTagStructure = {
+    model = {type = "dword", offset = 0x34},
+    disableCollision = {type = "bit", offset = 0x2F4, bitLevel = 5}
+}
 
 ---@class deviceMachine : blamObject
 ---@field powerGroupIndex number Power index from the device groups table
 ---@field power number Position amount of this device machine
 ---@field powerChange number Power change of this device machine
----@field positonGroupIndex number Power index from the device groups table
+---@field positionGroupIndex number Power index from the device groups table
 ---@field position number Position amount of this device machine
 ---@field positionChange number Position change of this device machine
 local deviceMachineStructure = extendStructure(objectStructure, {
     powerGroupIndex = {type = "word", offset = 0x1F8},
     power = {type = "float", offset = 0x1FC},
     powerChange = {type = "float", offset = 0x200},
-    positonGroupIndex = {type = "word", offset = 0x204},
+    positionGroupIndex = {type = "word", offset = 0x204},
     position = {type = "float", offset = 0x208},
     positionChange = {type = "float", offset = 0x20C}
 })
@@ -2127,11 +2186,13 @@ blam.tagDataHeader = createObject(addressList.tagDataHeader, tagDataHeaderStruct
 -- Add utilities to library
 blam.dumpObject = dumpObject
 blam.consoleOutput = consoleOutput
+blam.null = null
 
---- Get if a value equals a null value in game terms
+--- Get if given value equals a null value in game engine terms
+---@param value any
 ---@return boolean
 function blam.isNull(value)
-    if (value == 0xFF or value == 0xFFFF or value == 0xFFFFFFFF or value == nil) then
+    if value == 0xFF or value == 0xFFFF or value == null or value == nil then
         return true
     end
     return false
@@ -2273,39 +2334,40 @@ function blam.getTag(tagIdOrTagPath, tagClass, ...)
 end
 
 --- Create a player object given player entry table address
+---@param address? number
 ---@return player?
 function blam.player(address)
-    if (isValid(address)) then
+    if address and isValid(address) then
         return createObject(address, playerStructure)
     end
     return nil
 end
 
 --- Create a blamObject given address
----@param address number
+---@param address? number
 ---@return blamObject?
 function blam.object(address)
-    if (isValid(address)) then
+    if address and isValid(address) then
         return createObject(address, objectStructure)
     end
     return nil
 end
 
 --- Create a Projectile object given address
----@param address number
+---@param address? number
 ---@return projectile?
 function blam.projectile(address)
-    if (isValid(address)) then
+    if address and isValid(address) then
         return createObject(address, projectileStructure)
     end
     return nil
 end
 
 --- Create a Biped object from a given address
----@param address number
+---@param address? number
 ---@return biped?
 function blam.biped(address)
-    if (isValid(address)) then
+    if address and isValid(address) then
         return createObject(address, bipedStructure)
     end
     return nil
@@ -2451,10 +2513,10 @@ function blam.modelAnimations(tag)
 end
 
 --- Create a Weapon object from the given object address
----@param address number
+---@param address? number
 ---@return weapon?
 function blam.weapon(address)
-    if (isValid(address)) then
+    if address and isValid(address) then
         return createObject(address, weaponStructure)
     end
     return nil
@@ -2510,10 +2572,10 @@ function blam.firstPerson(address)
 end
 
 --- Create a Device Machine object from a given address
----@param address number
+---@param address? number
 ---@return deviceMachine?
 function blam.deviceMachine(address)
-    if (isValid(address)) then
+    if address and isValid(address) then
         return createObject(address, deviceMachineStructure)
     end
     return nil
@@ -2573,7 +2635,7 @@ end
 ---@return number?
 function blam.getDeviceGroup(index)
     -- Get object address
-    if (index) then
+    if index then
         -- Get objects table
         local table = createObject(read_dword(addressList.deviceGroupsTable),
                                    deviceGroupsTableStructure)
@@ -2585,7 +2647,53 @@ function blam.getDeviceGroup(index)
     return nil
 end
 
-blam.rcon = {}
+local syncedObjectsTable = {
+    maximumObjectsCount = {type = "dword", offset = 0x0},
+    initialized = {type = "byte", offset = 0xC},
+    objectsCount = {type = "dword", offset = 0x18},
+    firstElementAddress = {type = "dword", offset = 0x28}
+}
+
+--- Return an element from the synced objects table
+---@param index number
+---@return number?
+function blam.getObjectIdBySincedIndex(index)
+    if index then
+        local tableAddress
+        if server_type == "sapp" then
+            tableAddress = addressList.syncedNetworkObjects
+        else
+            tableAddress = read_dword(addressList.syncedNetworkObjects)
+            if tableAddress == 0 then
+                console_out("Synced objects table is not accesible yet.")
+                return nil
+            end
+        end
+
+        local syncedObjectsTable = createObject(tableAddress, syncedObjectsTable)
+
+        if syncedObjectsTable.objectsCount == 0 then
+            return nil
+        end
+        if not syncedObjectsTable.initialized == 1 then
+            return nil
+        end
+        -- For some reason fist element entry is always used, so we need to substract 1
+        if index >= syncedObjectsTable.maximumObjectsCount - 1 then
+            return nil
+        end
+
+        local entryOffset = 4 * index
+        -- Ignore first entry, it's always used so add 4 bytes offset
+        local entryAddress = syncedObjectsTable.firstElementAddress + entryOffset + 0x4
+        local objectId = read_dword(entryAddress)
+        if blam.isNull(objectId) then
+            return nil
+        end
+        return objectId
+    end
+    return nil
+end
 
 ---@class blamRequest
 ---@field requestString string
@@ -2700,7 +2808,7 @@ function blam.rcon.patch()
         safe_write(false)
         -- Read current rcon in the server
         local serverRcon = read_string(passwordAddress)
-        if (serverRcon) then
+        if serverRcon then
             console_out("Server rcon password is: \"" .. serverRcon .. "\"")
         else
             console_out("Error, at getting server rcon, please set and enable rcon on the server.")
@@ -2743,7 +2851,7 @@ function blam.findTagsList(partialTagPath, searchTagType)
     for tagIndex = 0, blam.tagDataHeader.count - 1 do
         local tag = blam.getTag(tagIndex)
         if (tag and tag.path:find(partialTagPath, 1, true) and tag.class == searchTagType) then
-            if (not tagsList) then
+            if not tagsList then
                 tagsList = {}
             end
             tagsList[#tagsList + 1] = tag
@@ -2753,10 +2861,11 @@ function blam.findTagsList(partialTagPath, searchTagType)
 end
 
 local fmod = math.fmod
+--- Return the index of an id number
+---@param id number
 function blam.getIndexById(id)
     if id then
-        local index = fmod(id, 0x10000)
-        return index
+        return fmod(id, 0x10000)
     end
     return nil
 end
