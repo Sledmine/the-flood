@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.4.0] - 2023-08-02
+## [4.4.0] - 2023-08-04
 ### Added
 - New map Impasse
 - New vehicle Wasp
@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Banshee / flight and visual improvements
 - Warthog / new HUD
 - Bleed It Out / normal maps on terrain
-- Bleed It Out / Vegetation and scenerys
+- Bleed It Out / vegetation and scenerys
+- Bleed It Out / water cave collision
 - Vehicle pads on maps
 
 ### Fixed
@@ -29,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Treason / traspasable collision on "indus_stuff_a" scenery (green container)
 - Bleed It Out / adjusted player clip for camper spots
 - Last Voyage / erased flashlight flag on dynamic lights
+- Reduced damage acceleration on vehicles
 
 ### Changed
 - Disruptor / reduced supercombine damage 5 to 15
