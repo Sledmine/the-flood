@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bleed It Out / adjusted player clip for camper spots
 - Last Voyage / erased flashlight flag on dynamic lights
 - Reduced damage acceleration on vehicles
+- Crouch missile set animations
 
 ### Changed
 - Disruptor / reduced supercombine damage 5 to 15
