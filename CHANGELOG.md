@@ -80,8 +80,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Banshee / weapon functionality
 - Standard grass tonality
 - Material effect collision on player clip with vehicles
-
-@The Flood Downloads
  
 ## [4.3.0] - 2023-07-13
 ### Added
