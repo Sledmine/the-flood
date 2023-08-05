@@ -80,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Banshee / weapon functionality
 - Standard grass tonality
 - Material effect collision on player clip with vehicles
- 
+
 ## [4.3.0] - 2023-07-13
 ### Added
 - Plasma Rifle / melee and ready sounds
@@ -105,7 +105,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reduced driver damage fraction on banshee, warthog and ghost
 - Lightmaps on treason, bleed it out and last voyage
 - Last Voyage / bsp structure big windows
-
 
 ## [4.2.1] - 2023-07-06
 ### Added
