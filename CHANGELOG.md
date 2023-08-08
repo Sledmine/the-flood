@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.4.1] - 2023-08-??
+### Added
+`Bleed It Out map`
+- New scenerys
+- New vehicle (mounted machinegun)
+
+### Fixed
+`Impasse map`
+- Player clip colision projectiles
+
+### Changed
+- Not all vehicles will spawn on maps by default
+`Wasp weapon`
+- Increased autoaim angle 5 to 6
+- Increased magnetism angle 10 to 12
+- Increased rocket damage on 10%
+- Rocket enemy tracking
+
 ## [4.4.0] - 2023-08-04
 ### Added
 - New map Impasse
@@ -80,7 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Banshee / weapon functionality
 - Standard grass tonality
 - Material effect collision on player clip with vehicles
- 
+
 ## [4.3.0] - 2023-07-13
 ### Added
 - Plasma Rifle / melee and ready sounds
