@@ -15,7 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Player clip colision projectiles
 
 ### Changed
-- Not all vehicles will spawn on maps by default
+- Not all vehicles will spawn on maps by default 
+
 `Wasp weapon`
 - Increased autoaim angle 5 to 6
 - Increased magnetism angle 10 to 12
