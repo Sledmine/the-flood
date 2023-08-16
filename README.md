@@ -27,6 +27,9 @@ being used from this.
 
 We have 4 maps by now and others on development too.
 
+Currently version `4.4.0`
+![updatemp](images/screenshots/update_mp.png)
+
 Treason
 ![treason](images/screenshots/treason.png)
 
