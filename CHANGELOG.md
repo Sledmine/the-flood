@@ -14,12 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Projectile maximum distance for stalker rifle
 - Time spawn for weapons on all maps
-`Impasse map`
-- Player clip colision projectiles
-
+- Player clip colision projectiles on `Impasse map`
 
 ### Changed
-- Not all vehicles will spawn on maps by default 
+- Not all vehicles will spawn on maps by default
 
 `Wasp weapon`
 - Increased autoaim angle 5 to 6
