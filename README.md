@@ -27,16 +27,16 @@ being used from this.
 
 We have 4 maps by now and others on development too.
 
-Currently version `4.4.0`
+### Currently version `4.4.0`
 ![updatemp](images/screenshots/update_mp.png)
 
-Treason
+### Treason
 ![treason](images/screenshots/treason.png)
 
-Bleed It Out
+### Bleed It Out
 ![bleed_it_out](images/screenshots/bleed.png)
 
-Last Voyage
+### Last Voyage
 ![bridge](images/screenshots/bridge.png)
 
 Impasse
