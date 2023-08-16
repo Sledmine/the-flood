@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.4.1] - 2023-08-??
 ### Added
 - New weapon Skewer
+
 `Bleed It Out map`
 - New scenerys
 - New vehicle (mounted machinegun)
@@ -14,7 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Projectile maximum distance for stalker rifle
 - Time spawn for weapons on all maps
-- Player clip colision projectiles on `Impasse map`
+
+`Impasse map`
+- Player clip colision projectiles on 
 
 ### Changed
 - Not all vehicles will spawn on maps by default
