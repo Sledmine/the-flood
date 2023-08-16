@@ -10,6 +10,10 @@ The story follows the perspective of the human soldiers barricaded at Installati
 
 The multiplayer section is comprised of original maps and remakes of aclaimed classics, and a rich sandbox built on the foundations of previous Halo titles.
 
+### Join to our [Discord](https://discord.gg/scGaaAFqm8) server to get more detailed info
+
+We constantly make updates.
+
 # Getting The Flood Multiplayer
 Get the latest version available using [Mercury](https://github.com/Sledmine/Mercury/releases)
 with the following line on the terminal:
@@ -20,8 +24,7 @@ Or you can install the package using the new Mercury UI
 
 ![Mercury UI](media/mercury_ui.gif)
 
-It also uses [Chimera](https://github.com/SnowyMouse/chimera), lua scripting is another function
-being used from this.
+This mod need [Chimera](https://github.com/SnowyMouse/chimera) to work, lua scripting is another function being used from this. (Mercury installs chimera automatically)
 
 # Screenshots
 
@@ -39,5 +42,5 @@ We have 4 maps by now and others on development too.
 ### Last Voyage
 ![bridge](images/screenshots/bridge.png)
 
-Impasse
-![bunkerworld](images/screenshots/bunkerworld.png)
+### Impasse
+![impasse](images/screenshots/bunkerworld.png)
