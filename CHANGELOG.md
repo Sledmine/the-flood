@@ -4,25 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.4.1] - 2023-08-??
+## [4.5.0] - 2023-08-??
 ### Added
-- New weapon Skewer
-
-`Bleed It Out map`
+- New dynamic crosshairs
+- New weapon Skewer  
+`BLEED IT OUT MAP`
 - New scenerys
 - New vehicle (mounted machinegun)
 
 ### Fixed
-- Projectile maximum distance for stalker rifle
-- Time spawn for weapons on all maps
-
-`Impasse map`
-- Player clip colision projectiles on 
+- Increased projectile maximum distance for stalker rifle 40 to 800 wu
+- Spawn time for weapons on all maps  
+`IMPASSE MAP`
+- Player clip colision projectiles 
 
 ### Changed
-- Not all vehicles will spawn on maps by default
-
-`Wasp weapon`
+- Adjusted some weapon icons on HUD 
+- Not all vehicles will spawn on maps by default  
+`PLASMA CASTER WEAPON`
+- Implemented new primary projectile system on plasma caster (currently doesn't count your kill)
+- Increased maximum range projectile 40 to 350  
+`LAST VOYAGE MAP`
+- Adjusted 4 fusion coil spawns (2 for each side)  
+`WASP WEAPON`
 - Increased autoaim angle 5 to 6
 - Increased magnetism angle 10 to 12
 - Increased rocket damage on 10%
