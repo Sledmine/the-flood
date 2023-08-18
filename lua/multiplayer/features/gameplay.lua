@@ -4,7 +4,6 @@
 -- Set of different treason gameplay features
 ------------------------------------------------------------------------------
 -- Lua libraries
-local core = require "multiplayer.features.core"
 local const = require "multiplayer.features.constants"
 local glue = require "glue"
 local _, harmony = pcall(require, "mods.harmony")
@@ -182,6 +181,8 @@ function gameplay.regenerateHealth(playerIndex)
         end
     end
 end
+
+
 
 -- Shake screen effect when biped is melee, not working yet
 -- function gameplay.meleeScreen()
