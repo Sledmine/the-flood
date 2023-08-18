@@ -11,6 +11,7 @@ tagClasses = blam.tagClasses
 objectClasses = blam.objectClasses
 local gameplay = require "multiplayer.features.gameplay"
 local dynamicCross = require "multiplayer.features.dynamicCross"
+--local dynamicCrossV2 = require "multiplayer.features.dynamicCrossV2"
 
 function OnRconMessage(message)
     return blam.rcon.handle(message)
@@ -18,6 +19,7 @@ end
 
 function OnTick()
     dynamicCross.dynamicReticles()
+    --dynamicCrossV2.dynamicReticles()
     --gameplay.rotateWeapons()
     gameplay.swapFirstPerson()
     gameplay.hudExtensions()
@@ -28,7 +30,7 @@ function OnTick()
 end
 
 function OnFrame()
-    local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 0
+    local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 1
     if isPlayerOnMenu then
         return
     end
@@ -39,6 +41,7 @@ function OnFrame()
     draw_text("thefloodmp-4.4.0", bounds.left, bounds.top, bounds.right, bounds.bottom, font, align,
               table.unpack(textColor))
 end
+
 
 set_callback("tick", "OnTick")
 set_callback("preframe", "OnFrame")
