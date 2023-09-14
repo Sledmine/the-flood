@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.5.0] - 2023-08-??
+## [4.4.1] - 2023-08-26
 ### Added
+- New player biped (customizable vía insurrection)
+- Multiplayer announcer sounds
 - New dynamic crosshairs
 - New weapon Skewer  
 `BLEED IT OUT MAP`
@@ -13,24 +15,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New vehicle (mounted machinegun)
 
 ### Fixed
+- Hill controlled
 - Increased projectile maximum distance for stalker rifle 40 to 800 wu
 - Spawn time for weapons on all maps  
 `IMPASSE MAP`
 - Player clip colision projectiles 
 
 ### Changed
+- Texture size optimizations
+- Enhanced model and shaders on warthog
 - Adjusted some weapon icons on HUD 
 - Not all vehicles will spawn on maps by default  
 `PLASMA CASTER WEAPON`
-- Implemented new primary projectile system on plasma caster (currently doesn't count your kill)
+- Implemented new primary projectile system (it doesn't counted your kill)
 - Increased maximum range projectile 40 to 350  
 `LAST VOYAGE MAP`
-- Adjusted 4 fusion coil spawns (2 for each side)  
-`WASP WEAPON`
-- Increased autoaim angle 5 to 6
-- Increased magnetism angle 10 to 12
-- Increased rocket damage on 10%
-- Rocket enemy tracking
+- Adjusted 4 fusion coil spawns (2 for each side)
+- Enhanced environment and scenery textures/shaders  
+`IMPASSE MAP`
+- Enhanced silo and satelite textures/shaders  
+`WASP`
+- Enhanced textures/shaders 
+- Increased weapon autoaim angle 5 to 6
+- Increased weapon magnetism angle 10 to 12
+- Increased weapon rocket damage on 10%
+- Rocket enemy tracking 0 to 25
 
 ## [4.4.0] - 2023-08-04
 ### Added
