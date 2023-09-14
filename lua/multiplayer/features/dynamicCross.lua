@@ -486,13 +486,17 @@ function dynamicCross.dynamicReticles()
                     end
                     local heat = read_float(object + 0x23C)
                     local reticle_address = read_dword(WEAPON_HUDS[skewer_tag] + 0x88)
+                    local zoom_scale = zoom
+                    if zoom == 2 then
+                        zoom_scale = zoom
+                    end
                     for j = 0, 5 do
                         local struct = reticle_address + j * 104
                         write_byte(struct, 0)
                         local reticle_overlay_address = read_dword(struct + 0x38)
                         local aditionalpos = skewer_reticle_initial_pos + heat * skewer_reticle_additional_pos --* zoom_scale
-                        local scalemask = skewer_zoom_mask_initial_scale + heat * skewer_zoom_mask_additional_scale
-                        local scalezoomscope = skewer_zoom_scope_initial_scale + heat * skewer_zoom_scope_additional_scale
+                        local scalemask = skewer_zoom_mask_initial_scale + heat * skewer_zoom_mask_additional_scale --* zoom_scale
+                        local scalezoomscope = skewer_zoom_scope_initial_scale + heat * skewer_zoom_scope_additional_scale --* zoom_scale
                         --local scalezoomlevels = skewer_zoom_levels_initial_scale + heat * skewer_zoom_levels_additional_scale
                         if j == 0 then
                             write_float(reticle_overlay_address + 0x04, scalemask)
