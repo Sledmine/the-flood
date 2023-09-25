@@ -10,36 +10,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multiplayer announcer sounds
 - New dynamic crosshairs
 - New weapon Skewer  
-`BLEED IT OUT MAP`
-- New scenerys
-- New vehicle (mounted machinegun)
+- New scenerys (BLEED IT OUT)
+- New vehicle mounted machinegun (BLEED IT OUT)
 
 ### Fixed
 - Hill controlled
 - Increased projectile maximum distance for stalker rifle 40 to 800 wu
 - Spawn time for weapons on all maps  
-`IMPASSE MAP`
-- Player clip colision projectiles 
+- Player clip colision projectiles (IMPASSE)
 
 ### Changed
 - Texture size optimizations
 - Enhanced model and shaders on warthog
 - Adjusted some weapon icons on HUD 
 - Not all vehicles will spawn on maps by default  
-`PLASMA CASTER WEAPON`
-- Implemented new primary projectile system (it doesn't counted your kill)
-- Increased maximum range projectile 40 to 350  
-`LAST VOYAGE MAP`
-- Adjusted 4 fusion coil spawns (2 for each side)
-- Enhanced environment and scenery textures/shaders  
-`IMPASSE MAP`
-- Enhanced silo and satelite textures/shaders  
-`WASP`
-- Enhanced textures/shaders 
-- Increased weapon autoaim angle 5 to 6
-- Increased weapon magnetism angle 10 to 12
-- Increased weapon rocket damage on 10%
-- Rocket enemy tracking 0 to 25
+- Implemented new primary projectile system on plasma caster (it doesn't counted your kill)
+- Increased maximum range projectile 40 to 350 on plasma caster
+- Adjusted 4 fusion coil spawns (2 for each side) - (LAST VOYAGE)
+- Enhanced environment and scenery textures/shaders (LAST VOYAGE)
+- Enhanced silo and satelite textures/shaders (IMPASSE)
+- Enhanced textures/shaders (WASP)
+- Increased weapon autoaim angle 5 to 6 (WASP)
+- Increased weapon magnetism angle 10 to 12 (WASP)
+- Increased weapon rocket damage on 10% (WASP)
+- Rocket enemy tracking 0 to 25 (WASP)
 
 ## [4.4.0] - 2023-08-04
 ### Added
