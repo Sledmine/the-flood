@@ -30,7 +30,7 @@ This mod need [Chimera](https://github.com/SnowyMouse/chimera) to work, lua scri
 
 We have 4 maps by now and others on development too.
 
-### Currently version `4.4.0`
+### Currently version `4.5.0`
 ![updatemp](images/screenshots/update_mp.png)
 
 ### Treason
