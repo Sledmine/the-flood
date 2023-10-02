@@ -35,10 +35,10 @@ function OnFrame()
         return
     end
     local font = "smaller"
-    local align = "center"
-    local bounds = {left = 0, top = 460, right = 640, bottom = 480}
+    local align = "right"
+    local bounds = {left = 0, top = 460, right = 632, bottom = 480}
     local textColor = {1.0, 0.45, 0.72, 1.0}
-    draw_text("thefloodmp-4.5.0", bounds.left, bounds.top, bounds.right, bounds.bottom, font, align,
+    draw_text("thefloodmp-4.5.1", bounds.left, bounds.top, bounds.right, bounds.bottom, font, align,
               table.unpack(textColor))
 end
 
