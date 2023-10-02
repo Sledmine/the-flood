@@ -16,6 +16,7 @@ commands:
     - cp dist/the_flood_mp_client.lua package/lua-map/bleed_it_out.lua
     - cp dist/the_flood_mp_client.lua package/lua-map/last_voyage.lua
     - cp dist/the_flood_mp_client.lua package/lua-map/impasse.lua
+    - cp dist/the_flood_mp_client.lua package/lua-map/aqueduct.lua
     - cp dist/the_flood_mp_server.lua package/lua-sapp/the_flood_mp_server.lua
     - mercury pack package/ dist/
     - rm package/lua-map/*.lua
