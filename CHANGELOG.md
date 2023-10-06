@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.5.1] - 2023-10-xx
 ### Added
 - New map Aqueduct
+- More weapon sounds on animations
 
 ### Fixed
 
