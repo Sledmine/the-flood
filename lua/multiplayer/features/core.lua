@@ -123,12 +123,12 @@ local raycastCoords = {}
 
 local currentWaypointsIndexes = {}
 
-function core.deleteWaypoint(index)
+function core.deleteWaypoint(index, playerIndex)
     local index = tonumber(index)
     if index then
         local deactivateWaypoint =
-            [[(deactivate_nav_point_flag (unit (list_get (players) 0)) waypoint_%s)]]
-        execute_script(deactivateWaypoint:format(index))
+            [[(deactivate_nav_point_flag (unit (list_get (players) %s)) waypoint_%s)]]
+        execute_script(deactivateWaypoint:format(playerIndex, index))
         raycastCoords[index] = nil
         currentWaypointsIndexes[index] = nil
     end
@@ -147,23 +147,36 @@ function core.createWaypoint(x, y, z, type, duration)
     for i = 1, 4 do
         if not currentWaypointsIndexes[i] then
             currentWaypointsIndexes[i] = true
-            index = i
+            waypointIndex = i
             break
         end
     end
-    if index then
-        if not raycastCoords[index] then
-            local activateWaypoint =
-                [[(activate_nav_point_flag %s (unit (list_get (players) 0)) waypoint_%s 0)]]
-            execute_script(activateWaypoint:format(type or "default", index))
+    if waypointIndex then
+        if not raycastCoords[waypointIndex] then
+            local playerIndex = 0
+            local localPlayer = blam.player(get_player())
+            if not localPlayer then
+                return false
+            end
+            for i = 0, 15 do
+                local player = blam.player(get_player(i))
+                if player and player.index ~= localPlayer.index then
+                    playerIndex = player.index
+                end
+            end
+            local activateWaypoint = "(activate_nav_point_flag %s (unit (list_get (players) %s)) waypoint_%s 0)"
+            local hscCommand = activateWaypoint:format(type or "default", playerIndex, waypointIndex)
+            console_out("Creating waypoint at: " .. x .. ", " .. y .. ", " .. z)
+            execute_script(hscCommand)
+            console_out(hscCommand)
             local scenario = blam.scenario(0)
             local flags = scenario.cutsceneFlags
-            flags[index].x = x
-            flags[index].y = y
-            flags[index].z = z
+            flags[waypointIndex].x = x
+            flags[waypointIndex].y = y
+            flags[waypointIndex].z = z
             scenario.cutsceneFlags = flags
-            raycastCoords[index] = {x = x, y = y, z = z}
-            set_timer(duration or 2000, "DeleteWaypoint", index)
+            raycastCoords[waypointIndex] = {x = x, y = y, z = z}
+            set_timer(duration or 2000, "DeleteWaypoint", waypointIndex, playerIndex)
             return true
         end
     end
@@ -173,7 +186,7 @@ end
 function core.calculateRaycast(player)
     local rayX = player.x + player.xVel + player.cameraX * const.raycastOffset
     local rayY = player.y + player.yVel + player.cameraY * const.raycastOffset
-    local rayZ = player.z + player.zVel + player.cameraZ * const.raycastOffset + 0.5
+    local rayZ = player.z + player.zVel + player.cameraZ * const.raycastOffset
     return rayX, rayY, rayZ
 end
 
