@@ -5,27 +5,6 @@ local core = {}
 
 local const = require "multiplayer.features.constants"
 
---- Find the path, index and id of a tag given partial name and tag type
----@param partialName string
----@param searchTagType string
----@return tag tag
-function core.findTag(partialName, searchTagType)
-    for tagIndex = 0, blam.tagDataHeader.count - 1 do
-        local tag = blam.getTag(tagIndex)
-        if (tag and tag.path:find(partialName) and tag.class == searchTagType) then
-            return {
-                id = tag.id,
-                path = tag.path,
-                index = tag.index,
-                class = tag.class,
-                indexed = tag.indexed,
-                data = tag.data
-            }
-        end
-    end
-    return nil
-end
-
 ---@class vector3D
 ---@field x number
 ---@field y number
@@ -82,33 +61,6 @@ function core.rotateObject(objectId, yaw, pitch, roll)
     object.v2Z = yawVector.z
 end
 
---- Send a request to the server throug rcon
----@return boolean success
----@return string request
-function core.sendRequest(request, playerIndex)
-    dprint("-> [ Sending request ]")
-    dprint("Request: " .. request)
-    if (server_type == "local") then
-        OnRcon(request)
-        return true, request
-    elseif (server_type == "dedicated") then
-        -- Player is connected to a server
-        local fixedRequest = "rcon forge '" .. request .. "'"
-        execute_script(fixedRequest)
-        return true, fixedRequest
-    elseif (server_type == "sapp") then
-        dprint("Server request: " .. request)
-        -- We want to broadcast to every player in the server
-        if (not playerIndex) then
-            grprint(request)
-        else
-            -- We are looking to send data to a specific player
-            rprint(playerIndex, request)
-        end
-        return true, request
-    end
-    return false
-end
 
 function core.secondsToTicks(seconds)
     return 30 * seconds
@@ -186,7 +138,9 @@ end
 function core.calculateRaycast(player)
     local rayX = player.x + player.xVel + player.cameraX * const.raycastOffset
     local rayY = player.y + player.yVel + player.cameraY * const.raycastOffset
-    local rayZ = player.z + player.zVel + player.cameraZ * const.raycastOffset
+    -- As we are using biped camera position, we need to add offset to the Z raycast
+    -- to make it match view port camera position
+    local rayZ = player.z + player.zVel + player.cameraZ * const.raycastOffset + 0.54
     return rayX, rayY, rayZ
 end
 
