@@ -12,7 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Changed
-
+- (Caster) reduced bounce projectile guied angular velocity 5 to 2
+- (Caster) reduced bounce projectile initial velocity 25.5 to 9 wu
+- (Caster) increased bounce projectile final velocity 2.55 to 9 wu
+- (Caster) reduced bounce projectile air gravity 2 to 0.5
+- (Caster) reduced inmediately projectile initial velocity 4.5 to 3.3 wu
+- (Caster) increased inmediately projectile final velocity 0.45 to 3.3 wu
+- (Caster) increased inmediately projectile timer 0.15 to 0.18 secs
+- (Caster) detonation increased radius 0.5 - 1.8 to 0.8 - 2.1 wu
+- (Caster) detonation damage category plasma to grenade 
+- (Caster) detonation increased damage upper bound 50 to 55, lower bound 17.5 to 20
+- (Caster) reduced charged projectile initial and final velocity to half
+- (Caster) increased charged projectile guied angular velocity 0 to 30
 
 ## [4.5.0] - 2023-09-24
 ### Added
