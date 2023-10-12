@@ -3,7 +3,7 @@
 -- Sledmine, JerryBrick
 -- Easier memory handle and provides standard functions for scripting
 ------------------------------------------------------------------------------
-local blam = {_VERSION = "1.7.0"}
+local blam = {_VERSION = "1.8.0"}
 
 ------------------------------------------------------------------------------
 -- Useful functions for internal usage
@@ -242,6 +242,15 @@ local unitTeamClasses = {
     unused7 = 7,
     unused8 = 8,
     unused9 = 9
+}
+
+-- Object network role classes
+---@enum objectNetworkRoleClasses
+local objectNetworkRoleClasses = {
+    master = 0,
+    puppet = 1,
+    locallyControlledPuppet = 2,
+    localOnly = 3
 }
 
 -- Standard console colors
@@ -549,6 +558,16 @@ function console_out(message, red, green, blue)
     cprint(message)
 end
 
+---Output text to console as debug message.
+---
+---This function will only output text if the debug mode is enabled.
+---@param message string
+function console_debug(message)
+    if DebugMode then
+        console_out(message)
+    end
+end
+
 ---Return true if the player has the console open, always returns true on SAPP.
 ---@return boolean
 function console_is_open()
@@ -582,7 +601,7 @@ function set_callback(event, callback)
         error("SAPP does not support frame event")
     elseif event == "preframe" then
         error("SAPP does not support preframe event")
-    elseif event == "map_load" then
+    elseif event == "map load" then
         register_callback(cb["EVENT_GAME_START"], callback)
     elseif event == "precamera" then
         error("SAPP does not support precamera event")
@@ -1161,6 +1180,7 @@ local deviceGroupsTableStructure = {
 ---@class blamObject
 ---@field address number
 ---@field tagId number Object tag ID
+---@field networkRoleClass number Object network role class
 ---@field isGhost boolean Set object in some type of ghost mode
 ---@field isOnGround boolean Is the object touching ground
 ---@field ignoreGravity boolean Make object to ignore gravity
@@ -1243,6 +1263,7 @@ local deviceGroupsTableStructure = {
 -- blamObject structure
 local objectStructure = {
     tagId = {type = "dword", offset = 0x0},
+    networkRoleClass = {type = "dword", offset = 0x4},
     isGhost = {type = "bit", offset = 0x10, bitLevel = 0},
     isOnGround = {type = "bit", offset = 0x10, bitLevel = 1},
     ignoreGravity = {type = "bit", offset = 0x10, bitLevel = 2},
@@ -1742,6 +1763,18 @@ local weaponHudInterfaceStructure = {
 ---@field vX number
 ---@field vY number
 
+---@class scenarioScenery
+---@field typeIndex number
+---@field nameIndex string
+---@field notPlaced boolean
+---@field desiredPermutation number
+---@field x number
+---@field y number
+---@field z number
+---@field yaw number
+---@field pitch number
+---@field roll number
+
 ---@class scenario
 ---@field sceneryPaletteCount number Number of sceneries in the scenery palette
 ---@field sceneryPaletteList table Tag ID list of scenerys in the scenery palette
@@ -1755,6 +1788,8 @@ local weaponHudInterfaceStructure = {
 ---@field netgameFlagsList table List of netgame equipments
 ---@field objectNamesCount number Count of the object names in the scenario
 ---@field objectNames string[] List of all the object names in the scenario
+---@field sceneriesCount number Count of all the sceneries in the scenario
+---@field sceneries scenarioScenery[] List of all the sceneries in the scenario
 ---@field cutsceneFlagsCount number Count of all the cutscene flags in the scenario
 ---@field cutsceneFlags cutsceneFlag[] List of all the cutscene flags in the scenario
 
@@ -1834,6 +1869,24 @@ local scenarioStructure = {
         elementsType = "string",
         jump = 36,
         noOffset = true
+    },
+    sceneriesCount = {type = "dword", offset = 0x210},
+    sceneries = {
+        type = "table",
+        offset = 0x214,
+        jump = 0x48,
+        rows = {
+            typeIndex = {type = "word", offset = 0x0},
+            nameIndex = {type = "word", offset = 0x2},
+            notPlaced = {type = "bit", offset = 0x4, bitLevel = 0},
+            desiredPermutation = {type = "byte", offset = 0x6},
+            x = {type = "float", offset = 0x8},
+            y = {type = "float", offset = 0xC},
+            z = {type = "float", offset = 0x10},
+            yaw = {type = "float", offset = 0x14},
+            pitch = {type = "float", offset = 0x18},
+            roll = {type = "float", offset = 0x1C}
+        }
     },
     cutsceneFlagsCount = {type = "dword", offset = 0x4E4},
     cutsceneFlags = {
@@ -1953,6 +2006,7 @@ local weaponTagStructure = {model = {type = "dword", offset = 0x34}}
 -- @field z number
 
 ---@class modelRegion
+---@field name string
 ---@field permutationCount number
 -- @field markersList modelMarkers[]
 
@@ -1984,13 +2038,15 @@ local modelStructure = {
     regionList = {
         type = "table",
         offset = 0xC8,
-        jump = 76,
+        -- jump = 0x50,
+        jump = 0x4C,
         rows = {
-            permutationCount = {type = "dword", offset = 0x40}
-            --[[permutationsList = {
+            name = {type = "string", offset = 0x0},
+            permutationCount = {type = "dword", offset = 0x40},
+            permutationsList = {
                 type = "table",
-                offset = 0x16C,
-                jump = 0x0,
+                offset = 0x44,
+                jump = 0x58,
                 rows = {
                     name = {type = "string", offset = 0x0},
                     markersList = {
@@ -2003,7 +2059,7 @@ local modelStructure = {
                         }
                     }
                 }
-            }]]
+            }
         }
     }
 }
@@ -2037,12 +2093,35 @@ local projectileStructure = extendStructure(objectStructure, {
 ---@field host number Check if player is host, 0 when host, null when not
 ---@field name string Name of this player
 ---@field team number Team color of this player, 0 when red, 1 when on blue team
+---@field interactionObjectId number Object ID of the object this player is interacting with
+---@field interactonObjectType number Type of the object this player is interacting with
+---@field interactionObjectSeat number Seat of the object this player is interacting with
+---@field respawnTime number Time in ticks until this player respawns
+---@field respawnGrowthTime number Time in ticks until this player respawns
 ---@field objectId number Return the objectId associated to this player
+---@field lastObjectId number Return the last objectId associated to this player
+---@field lastFireTime number Return the last fire time associated to this player
+---@field name2 string Name of this player
 ---@field color number Color of the player, only works on "Free for All" gametypes
+---@field machineIndex number Machine index of this player
+---@field controllerIndex number Controller index of this player
+---@field team2 number Team color of this player, 0 when red, 1 when on blue team
 ---@field index number Local index of this player 0-15
+---@field invisibilityTime number Time in ticks until this player is invisible
 ---@field speed number Current speed of this player
----@field ping number Ping amount from server of this player in milliseconds
+---@field teleporterFlagId number Unknown
+---@field objectiveMode number Unknown
+---@field objectivePlayerId number Unknown
+---@field targetPlayerId number Player id the player is looking at
+---@field targetTime number Some timer for fading in the name of the player being looked at
+---@field lastDeathTime number Time in ticks since this player last died
+---@field slayerTargetPlayerId number Unknown
+---@field oddManOut number Is player odd man out
+---@field killStreak number Current kill streak of this player
+---@field multiKill number Current multi kill of this player
+---@field lastKillTime number Time in ticks since this player last killed
 ---@field kills number Kills quantity done by this player
+---@field ping number Ping amount from server of this player in milliseconds
 ---@field assists number Assists count of this player
 ---@field betraysAndSuicides number Betrays plus suicides count of this player
 ---@field deaths number Deaths count of this player
@@ -2052,13 +2131,46 @@ local playerStructure = {
     id = {type = "word", offset = 0x0},
     host = {type = "word", offset = 0x2},
     name = {type = "ustring", forced = true, offset = 0x4},
+    unknown = {type = "byte", offset = 0x1C},
     team = {type = "byte", offset = 0x20},
+    unknown2 = {type = "byte", offset = 0x21},
+    unknown3 = {type = "byte", offset = 0x22},
+    unknown4 = {type = "byte", offset = 0x23},
+    interactionObjectId = {type = "dword", offset = 0x24},
+    interactionObjectType = {type = "word", offset = 0x28},
+    interactionObjectSeat = {type = "word", offset = 0x2A},
+    respawnTime = {type = "dword", offset = 0x2C},
+    respawnGrowthTime = {type = "dword", offset = 0x30},
     objectId = {type = "dword", offset = 0x34},
+    lastObjectId = {type = "dword", offset = 0x38},
+    unknown5 = {type = "dword", offset = 0x3C},
+    unknown6 = {type = "dword", offset = 0x40},
+    lastFireTime = {type = "dword", offset = 0x44},
+    name2 = {type = "ustring", forced = true, offset = 0x48},
     color = {type = "word", offset = 0x60},
+    unknown7 = {type = "word", offset = 0x62},
+    machineIndex = {type = "byte", offset = 0x64},
+    controllerIndex = {type = "byte", offset = 0x65},
+    team2 = {type = "byte", offset = 0x66},
     index = {type = "byte", offset = 0x67},
+    invisibilityTime = {type = "word", offset = 0x68},
+    unknown8 = {type = "word", offset = 0x6A},
     speed = {type = "float", offset = 0x6C},
-    ping = {type = "dword", offset = 0xDC},
+    teleporterFlagId = {type = "dword", offset = 0x70}, -- Unknown
+    objectiveMode = {type = "dword", offset = 0x74}, -- Unknown
+    objectivePlayerId = {type = "dword", offset = 0x78}, -- Unknown
+    targetPlayerId = {type = "dword", offset = 0x7C}, -- Player id the player is looking at?
+    targetTime = {type = "dword", offset = 0x80}, -- Some timer for fading in the name of the player being looked at?
+    lastDeathTime = {type = "dword", offset = 0x84},
+    slayerTargetPlayerId = {type = "dword", offset = 0x88},
+    oddManOut = {type = "dword", offset = 0x8C}, -- Player is odd man out
+    unknown9 = {type = "dword", offset = 0x90},
+    unknown10 = {type = "word", offset = 0x94},
+    killStreak = {type = "word", offset = 0x96},
+    multiKill = {type = "word", offset = 0x98},
+    lastKillTime = {type = "word", offset = 0x9A},
     kills = {type = "word", offset = 0x9C},
+    ping = {type = "dword", offset = 0xDC},
     assists = {type = "word", offset = 0XA4},
     betraysAndSuicides = {type = "word", offset = 0xAC},
     deaths = {type = "word", offset = 0xAE},
@@ -2170,6 +2282,7 @@ blam.netgameFlagClasses = netgameFlagClasses
 blam.gameTypeClasses = gameTypeClasses
 blam.multiplayerTeamClasses = multiplayerTeamClasses
 blam.unitTeamClasses = unitTeamClasses
+blam.objectNetworkRoleClasses = objectNetworkRoleClasses
 
 ---@class tagDataHeader
 ---@field array any
@@ -2870,6 +2983,157 @@ function blam.getIndexById(id)
         return fmod(id, 0x10000)
     end
     return nil
+end
+
+---@class vector3D
+---@field x number
+---@field y number
+---@field z number
+
+---Returns game rotation vectors from euler angles, return optional rotation matrix, based on
+---[source.](https://www.mecademic.com/en/how-is-orientation-in-space-represented-with-euler-angles)
+--- @param yaw number
+--- @param pitch number
+--- @param roll number
+--- @return vector3D, vector3D, table
+local function eulerToRotation(yaw, pitch, roll)
+    local yaw = math.rad(yaw)
+    local pitch = math.rad(-pitch) -- Negative pitch due to Sapien handling anticlockwise pitch
+    local roll = math.rad(roll)
+    local matrix = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}
+
+    -- Roll, Pitch, Yaw = a, b, y
+    local cosA = math.cos(roll)
+    local sinA = math.sin(roll)
+    local cosB = math.cos(pitch)
+    local sinB = math.sin(pitch)
+    local cosY = math.cos(yaw)
+    local sinY = math.sin(yaw)
+
+    matrix[1][1] = cosB * cosY
+    matrix[1][2] = -cosB * sinY
+    matrix[1][3] = sinB
+    matrix[2][1] = cosA * sinY + sinA * sinB * cosY
+    matrix[2][2] = cosA * cosY - sinA * sinB * sinY
+    matrix[2][3] = -sinA * cosB
+    matrix[3][1] = sinA * sinY - cosA * sinB * cosY
+    matrix[3][2] = sinA * cosY + cosA * sinB * sinY
+    matrix[3][3] = cosA * cosB
+
+    local rollVector = {x = matrix[1][1], y = matrix[2][1], z = matrix[3][1]}
+    local yawVector = {x = matrix[1][3], y = matrix[2][3], z = matrix[3][3]}
+    return rollVector, yawVector, matrix
+end
+
+--- Get euler angles rotation from game rotation vectors
+--- @param rollVector vector3D
+--- @param yawVector vector3D
+--- @return number, number, number, table
+local function rotationToEuler(rollVector, yawVector)
+    -- Calculate the roll angle (around x-axis)
+    ---@diagnostic disable-next-line: deprecated
+    local roll = (math.atan2 or math.atan)(rollVector.y, rollVector.z)
+
+    -- Calculate the yaw angle (around z-axis)
+    ---@diagnostic disable-next-line: deprecated
+    local yaw = (math.atan2 or math.atan)(yawVector.x, yawVector.y)
+
+    -- Calculate the pitch angle (around y-axis)
+    local pitch = math.asin(-yawVector.z)
+
+    -- Create the rotation matrix
+    local cosRoll = math.cos(roll)
+    local sinRoll = math.sin(roll)
+    local cosYaw = math.cos(yaw)
+    local sinYaw = math.sin(yaw)
+    local cosPitch = math.cos(pitch)
+    local sinPitch = math.sin(pitch)
+
+    local matrix = {
+        {
+            cosYaw * cosRoll - sinYaw * sinPitch * sinRoll,
+            -cosYaw * sinRoll - sinYaw * sinPitch * cosRoll,
+            sinYaw * cosPitch
+        },
+        {
+            sinYaw * cosRoll + cosYaw * sinPitch * sinRoll,
+            -sinYaw * sinRoll + cosYaw * sinPitch * cosRoll,
+            -cosYaw * cosPitch
+        },
+        {cosPitch * sinRoll, cosPitch * cosRoll, sinPitch}
+    }
+
+    return math.deg(yaw), -math.deg(pitch), math.deg(roll), matrix
+end
+
+-- @param rollVector table
+-- @param yawVector table
+-- @return number, number, number, table
+local function rotationToEulerAbsolute(rollVector, yawVector)
+    ---@diagnostic disable-next-line: deprecated
+    local roll = (math.atan2 or math.atan)(rollVector.y, rollVector.z)
+
+    -- Calculate the yaw angle (around z-axis)
+    ---@diagnostic disable-next-line: deprecated
+    local yaw = (math.atan2 or math.atan)(yawVector.x, yawVector.y)
+
+    -- Calculate the pitch angle (around y-axis)
+    local pitch = math.asin(-yawVector.z)
+
+    -- Create the rotation matrix
+    local cosRoll = math.cos(roll)
+    local sinRoll = math.sin(roll)
+    local cosYaw = math.cos(yaw)
+    local sinYaw = math.sin(yaw)
+    local cosPitch = math.cos(pitch)
+    local sinPitch = math.sin(pitch)
+
+    local matrix = {
+        {
+            cosYaw * cosRoll - sinYaw * sinPitch * sinRoll,
+            -cosYaw * sinRoll - sinYaw * sinPitch * cosRoll,
+            sinYaw * cosPitch
+        },
+        {
+            sinYaw * cosRoll + cosYaw * sinPitch * sinRoll,
+            -sinYaw * sinRoll + cosYaw * sinPitch * cosRoll,
+            -cosYaw * cosPitch
+        },
+        {cosPitch * sinRoll, cosPitch * cosRoll, sinPitch}
+    }
+
+    -- Calculate absolute angles (0 to 360 degrees)
+    local absYaw = (yaw >= 0) and math.deg(yaw) or math.deg(yaw) + 360
+    local absPitch = (pitch >= 0) and math.deg(pitch) or math.deg(pitch) + 360
+    local absRoll = (roll >= 0) and math.deg(roll) or math.deg(roll) + 360
+
+    return absYaw, absPitch, absRoll, matrix
+end
+
+--- Get euler angles rotation from game rotation vectors
+---
+--- EXPERIMENTAL, values may not be accurate to rotation from Sapien
+---@param rollVector vector3D
+---@param yawVector vector3D
+function blam.getRotationFromVectors(rollVector, yawVector)
+    return rotationToEuler(rollVector, yawVector)
+end
+
+--- Rotate object into desired angles
+---@param objectId number
+---@param yaw number
+---@param pitch number
+---@param roll number
+function blam.rotateObject(objectId, yaw, pitch, roll)
+    local rollVector, yawVector, matrix = eulerToRotation(yaw, pitch, roll)
+    local object = blam.object(get_object(objectId))
+    assert(object, "Object not found")
+    object.vX = rollVector.x
+    object.vY = rollVector.y
+    object.vZ = rollVector.z
+    object.v2X = yawVector.x
+    object.v2Y = yawVector.y
+    object.v2Z = yawVector.z
 end
 
 return blam
