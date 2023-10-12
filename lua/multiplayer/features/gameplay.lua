@@ -6,7 +6,10 @@
 -- Lua libraries
 local const = require "multiplayer.features.constants"
 local glue = require "glue"
-local _, harmony = pcall(require, "mods.harmony")
+local _, harmony
+if not blam.isGameSAPP() then
+    _, harmony = pcall(require, "mods.harmony")
+end
 local network = require "multiplayer.data.network"
 local core = require "multiplayer.features.core"
 
@@ -24,8 +27,8 @@ blam.rcon.event("CreateWaypoint", function(message, playerIndex)
             end
         end
     else
-        local x, y, z = network.parseWaypoint(message)
-        core.createWaypoint(x, y, z)
+        local x, y, z, type = network.parseWaypoint(message)
+        core.createWaypoint(x, y, z, type)
     end
 end)
 
@@ -70,9 +73,9 @@ function gameplay.swapFirstPerson()
                         local tagPathSplit = glue.string.split(bipedTag.path, "\\")
                         local bipedName = tagPathSplit[#tagPathSplit]
                         local fpModelTagId = blam.getTag(
-                                                 [[keymind\halo_infinite\characters\unsc\odst\mirage_core\fp_arms\default\default]],                                                 
+                                                 [[keymind\halo_infinite\characters\unsc\odst\mirage_core\fp_arms\default\default]],
                                                  tagClasses.gbxmodel).id
-                        local fpTag = core.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
+                        local fpTag = blam.findTag(bipedName .. "_fp", tagClasses.gbxmodel)
                         if (fpTag) then
                             fpModelTagId = fpTag.id
                         end
@@ -182,8 +185,6 @@ function gameplay.regenerateHealth(playerIndex)
     end
 end
 
-
-
 -- Shake screen effect when biped is melee, not working yet
 -- function gameplay.meleeScreen()
 
@@ -237,11 +238,16 @@ function gameplay.pingObjectives()
         return
     end
     local player = blam.biped(get_dynamic_player())
-    if player and blam.isNull(player.vehicleObjectId) then
+    if not player then
+        return
+    end
+    if blam.isNull(player.vehicleObjectId) then
         if not raycastId then
             if player.actionKey then
                 local rayX, rayY, rayZ = core.calculateRaycast(player)
-                raycastId = spawn_object(const.projectiles.raycastTag.id, rayX, rayY, rayZ)
+                local raycastTagId = const.projectiles.raycastTag.id
+                --wraycastTagId = blam.findTag("plasma_grenade", tagClasses.projectile).id
+                raycastId = spawn_object(raycastTagId, rayX, rayY, rayZ)
                 local ray = blam.projectile(get_object(raycastId))
                 if ray then
                     ray.xVel = player.cameraX * const.raycastOffset * const.raycastVelocity
@@ -252,37 +258,42 @@ function gameplay.pingObjectives()
                     ray.roll = player.cameraZ * const.raycastOffset
                 end
             end
-        else
-            local ray = blam.projectile(get_object(raycastId))
-            if not ray then
-                raycastId = nil
-            else
-                -- Play the ping sound
-                harmony.menu.play_sound(const.sounds.uiFGrenadePath)
+            return
+        end
 
-                -- Lock the player from creating new objectives
-                canCreateNewObjective = false
-                AllowCreateNewObjective = function()
-                    canCreateNewObjective = true
-                    return false
-                end
-                set_timer(2000, "AllowCreateNewObjective")
+        local ray = blam.projectile(get_object(raycastId))
+        if not ray then
+            raycastId = nil
+            return
+        end
+        -- Play the ping sound
+        harmony.menu.play_sound(const.sounds.uiFGrenadePath)
 
-                -- Create the waypoint
-                local x = ray.x
-                local y = ray.y
-                local z = ray.z
-                if not blam.isNull(ray.attachedToObjectId) then
-                    local object = blam.object(get_object(ray.attachedToObjectId))
-                    if object then
-                        x = object.x
-                        y = object.y
-                        z = object.z
-                    end
+        -- Lock the player from creating new objectives
+        canCreateNewObjective = false
+        AllowCreateNewObjective = function()
+            canCreateNewObjective = true
+            return false
+        end
+        set_timer(2000, "AllowCreateNewObjective")
+
+        -- Create the waypoint
+        local type = "default"
+        local x = ray.x
+        local y = ray.y
+        local z = ray.z
+        if not blam.isNull(ray.attachedToObjectId) then
+            local object = blam.object(get_object(ray.attachedToObjectId))
+            if object then
+                x = object.x
+                y = object.y
+                z = object.z + 0.5
+                if object.class == objectClasses.weapon then
+                    type = "weapon"
                 end
-                blam.rcon.dispatch("CreateWaypoint", network.genWaypoint(x, y, z + 0.5))
             end
         end
+        blam.rcon.dispatch("CreateWaypoint", network.genWaypoint(x, y, z, type))
     end
 end
 

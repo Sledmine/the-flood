@@ -12,6 +12,7 @@ objectClasses = blam.objectClasses
 local gameplay = require "multiplayer.features.gameplay"
 local dynamicCross = require "multiplayer.features.dynamicCross"
 --local dynamicCrossV2 = require "multiplayer.features.dynamicCrossV2"
+DebugMode = false
 
 function OnRconMessage(message)
     return blam.rcon.handle(message)
@@ -25,7 +26,7 @@ function OnTick()
     gameplay.hudExtensions()
     gameplay.regenerateHealth()
     gameplay.hudUpgrades()
-    --gameplay.pingObjectives()
+    gameplay.pingObjectives()
     -- meleeScreen()
 end
 
