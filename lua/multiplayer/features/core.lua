@@ -118,10 +118,8 @@ function core.createWaypoint(x, y, z, type, duration)
             end
             local activateWaypoint = "(activate_nav_point_flag %s (unit (list_get (players) %s)) waypoint_%s 0)"
             local hscCommand = activateWaypoint:format(type or "default", playerIndex, waypointIndex)
-            console_out("Creating waypoint at: " .. x .. ", " .. y .. ", " .. z)
             execute_script(hscCommand)
-            console_out(hscCommand)
-            local scenario = blam.scenario(0)
+            local scenario = assert(blam.scenario(0), "Unable to get scenario")
             local flags = scenario.cutsceneFlags
             flags[waypointIndex].x = x
             flags[waypointIndex].y = y
