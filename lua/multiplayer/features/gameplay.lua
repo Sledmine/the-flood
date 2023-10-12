@@ -285,9 +285,9 @@ function gameplay.pingObjectives()
         if not blam.isNull(ray.attachedToObjectId) then
             local object = blam.object(get_object(ray.attachedToObjectId))
             if object then
-                x = object.x
-                y = object.y
-                z = object.z + 0.5
+                x = ray.x + object.x
+                y = ray.y + object.y
+                z = ray.z + object.z + 0.5
                 if object.class == objectClasses.weapon then
                     type = "weapon"
                 end
