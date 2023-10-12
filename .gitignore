@@ -48,18 +48,18 @@ luac.out
 
 # Distribution and script files
 # Do not upload dist scripts as they should be handle by Mercury to avoid code mismatching
-dist/*
-temp/*
+/dist/*
+/temp/*
 package/game-maps/*.map
 #WTF
 lua/lua_modules/offsets.lua
 
 # Map project files
-tags/*
-data/*
+/tags/*
+/data/*
 /maps
-project/*
-hek/*
+/project/*
+/hek/*
 gamestate.txt
 debug.txt
 six-shooter.ini
@@ -69,6 +69,4 @@ six-shooter.ini
 *.db*
 *.log
 Desktop.ini
-data
 .gitignore
-tags
