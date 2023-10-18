@@ -246,7 +246,7 @@ function gameplay.pingObjectives()
             if player.actionKey then
                 local rayX, rayY, rayZ = core.calculateRaycast(player)
                 local raycastTagId = const.projectiles.raycastTag.id
-                --wraycastTagId = blam.findTag("plasma_grenade", tagClasses.projectile).id
+                --raycastTagId = blam.findTag("plasma_grenade", tagClasses.projectile).id
                 raycastId = spawn_object(raycastTagId, rayX, rayY, rayZ)
                 local ray = blam.projectile(get_object(raycastId))
                 if ray then
@@ -282,12 +282,13 @@ function gameplay.pingObjectives()
         local x = ray.x
         local y = ray.y
         local z = ray.z
-        if not blam.isNull(ray.attachedToObjectId) then
-            local object = blam.object(get_object(ray.attachedToObjectId))
+        local attachedToId = ray.attachedToObjectId
+        if not blam.isNull(attachedToId) then
+            local object = blam.object(get_object(attachedToId))
             if object then
-                x = ray.x + object.x
-                y = ray.y + object.y
-                z = ray.z + object.z + 0.5
+                x = x + object.x
+                y = y + object.y
+                z = z + object.z + 0.5
                 if object.class == objectClasses.weapon then
                     type = "weapon"
                 end
