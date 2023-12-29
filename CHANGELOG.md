@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.5.1] - 2023-10-xx
+## [4.5.5] - 2023-10-xx
 ### Added
 - New map Aqueduct
 - More weapon sounds on animations
 
 ### Fixed
+- Increased mip map count on terrain textures
 
 ### Changed
 - (Caster) reduced bounce projectile guied angular velocity 5 to 2
@@ -23,13 +24,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (Caster) detonation increased damage upper bound 50 to 55, lower bound 17.5 to 20
 - (Caster) reduced charged projectile initial and final velocity to half
 - (Caster) increased charged projectile guied angular velocity 0 to 15
+- (Caster) reduced charged projectile air gravity 0.3 to 0.1
 - (Coil) Increased damage explosion on 16%
-- (Coil) Increased charging time 0.35 to 0.6
+- (Coil) Increased charging time 0.35 to 0.45
 - (Coil) Increased air gravity 1 to 1.25
 - (Coil) adjusted first person weapon offset projectile
 - (Skewer) adjusted first person weapon offset projectile
 - (Skewer) reduced air gravity 4 to 0.7
 - (Skewer) reduced projectile initial velocity 90 to 60 and final velocity 9 to 6 wu
+- (Bleed It Out) returned banshee and wasp spawns by default on slayer (Just in this update)
 
 ## [4.5.0] - 2023-09-24
 ### Added
