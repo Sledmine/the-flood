@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Increased mip map count on terrain textures
+- (LMG Saw ) change color on rubber shader
+- (Disruptor) shader causing flickering transparent textures
 
 ### Changed
 - (Caster) reduced bounce projectile guied angular velocity 5 to 2
