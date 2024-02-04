@@ -55,11 +55,12 @@ package/game-maps/*.map
 lua/lua_modules/offsets.lua
 
 # Map project files
-/tags/*
-/data/*
-/maps
-/project/*
-/hek/*
+data/
+data
+tags/
+tags
+hek/
+maps
 gamestate.txt
 debug.txt
 six-shooter.ini
