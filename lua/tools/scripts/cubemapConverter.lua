@@ -68,12 +68,12 @@ local function convertStandardSegmentsToHaloCE()
         local success, message = os.rename(segment, newSegment)
         if not success then
             print(message)
-            return
+            os.exit(1)
         end
         local success, message = os.execute("cp " .. backupSegment .. " " .. segment)
         if not success then
             print(message)
-            return
+            os.exit(1)
         end
     end
 end
