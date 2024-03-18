@@ -64,13 +64,18 @@ local function convertStandardSegmentsToHaloCE()
     for i, v in ipairs(standardCubemapToHaloCE) do
         local segment = output .. "/" .. v[1] .. ".png"
         local newSegment = output .. "/" .. v[2] .. ".png"
-        local backupSegment = output .. "/11.png"
+        local tempSegment = output .. "/temp.png"
+        local success, message = os.rename(newSegment, tempSegment)
+        if not success then
+            print(message)
+            os.exit(1)
+        end
         local success, message = os.rename(segment, newSegment)
         if not success then
             print(message)
             os.exit(1)
         end
-        local success, message = os.execute("cp " .. backupSegment .. " " .. segment)
+        local success, message = os.rename(tempSegment, segment)
         if not success then
             print(message)
             os.exit(1)
