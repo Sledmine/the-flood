@@ -1,12 +1,21 @@
+package.path = package.path .. ";lua/tools/scripts/modules/?.lua"
 local fs = require "lua.tools.scripts.modules.fs"
 local argparse = require "lua.tools.scripts.modules.argparse"
 local luna = require "lua.modules.luna"
+
+---@class CubemapConverterArgs
+---@field cubemap string
+---@field size number
+---@field sequences boolean
+---@field standard boolean
 
 local parser = argparse("Cubemap Converter", "Convert a cubemap to different formats")
 parser:argument("cubemap", "The cubemap to convert")
 parser:option("--size", "The size of the cubemap faces"):convert(tonumber)
 parser:flag("--sequences", "Convert the cubemap to a sequence of images for Halo CE")
 parser:flag("--standard", "Convert the cubemap from a standard format to a Halo CE format")
+
+---@type CubemapConverterArgs
 local args = parser:parse()
 
 local function getCubemapSize(cubemap)
