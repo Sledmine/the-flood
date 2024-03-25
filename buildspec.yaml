@@ -6,7 +6,6 @@ scenarios:
   - keymind/the_flood/levels/multiplayer/aqueduct/aqueduct_dev
   - keymind/the_flood/levels/multiplayer/foundation/treason_dev
   - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
-  - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out
   - keymind/the_flood/levels/multiplayer/bridge/last_voyage_dev
   - keymind/halo_3/levels/multiplayer/bunkerworld/impasse_dev
   - keymind/the_flood/levels/multiplayer/ca_damnation/penance_dev
@@ -15,12 +14,12 @@ commands:
     - rm -rf dist
     - mkdir -p dist
     - mercury luabundle && mercury luabundle server
-    - cp dist/the_flood_mp_client.lua package/lua-map/treason.lua
-    - cp dist/the_flood_mp_client.lua package/lua-map/bleed_it_out.lua
-    - cp dist/the_flood_mp_client.lua package/lua-map/last_voyage.lua
-    - cp dist/the_flood_mp_client.lua package/lua-map/impasse.lua
-    - cp dist/the_flood_mp_client.lua package/lua-map/aqueduct.lua
-    - cp dist/the_flood_mp_server.lua package/lua-sapp/the_flood_mp_server.lua
+    - cp dist/multiplayer_client.lua package/lua-map/treason.lua
+    - cp dist/multiplayer_client.lua package/lua-map/bleed_it_out.lua
+    - cp dist/multiplayer_client.lua package/lua-map/last_voyage.lua
+    - cp dist/multiplayer_client.lua package/lua-map/impasse.lua
+    - cp dist/multiplayer_client.lua package/lua-map/aqueduct.lua
+    - cp dist/multiplayer_server.lua package/lua-sapp/the_flood_mp_server.lua
     - mercury pack package/ dist/
     - rm package/lua-map/*.lua
   structbunker:
@@ -32,8 +31,8 @@ commands:
     - cd hek && harvest_h1a_tool_lm lightmaps keymind\the_flood\levels\multiplayer\bleed_it_out\bleed_light b_gulch 0.9 0.777777 -noassert  
     - invader normalize-lightmaps keymind\the_flood\levels\multiplayer\bleed_it_out\b_gulch    
   symlinks:
-    - ln -f -s "$PWD/dist/the_flood_mp_client.lua" "$HALO_CE_DATA_PATH/chimera/lua/scripts/map/aqueduct_dev.lua"
-    - ln -f -s "$PWD/dist/the_flood_mp_server.lua" "$HALO_CE_DATA_PATH/sapp/lua/the_flood_mp_server.lua"
+    - ln -f -s "$PWD/dist/multiplayer_client.lua" "$HALO_CE_DATA_PATH/chimera/lua/scripts/map/aqueduct_dev.lua"
+    - ln -f -s "$PWD/dist/multiplayer_server.lua" "$HALO_CE_DATA_PATH/sapp/lua/the_flood_mp_server.lua"
   release:
     - mercury build --release --output package/game-maps/
     - mercury build package
