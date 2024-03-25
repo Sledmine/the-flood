@@ -1,22 +1,23 @@
 {
-    "name": "The Flood Multiplayer",
+    "name": "The Flood multiplayer",
     "target": "lua53",
     "include": [
         "lua",
-        "lua/modules/"
+        "lua/lua_modules/"
     ],
     "modules": [
         "inspect",
         "glue",
         "blam",
         "luna",
-        "multiplayer.data.network",
-        "multiplayer.features.fontOverride",
-        "multiplayer.features.core",
-        "multiplayer.features.constants",
-        "multiplayer.features.gameplay",
-        "multiplayer.features.dynamicCross"
+        "the_flood.core",
+        "the_flood.constants",
+        "the_flood.network",
+        "the_flood.gameplay_core.dynamicCross",
+        "the_flood.gameplay_core.hudExtensions",
+        "the_flood.gameplay_core.playerPingObjectives",
+        "the_flood.gameplay_core.healthRegen"
     ],
-    "main": "lua/multiplayer/the_flood_mp_client",
-    "output": "dist/the_flood_mp_client.lua"
+    "main": "lua/multiplayer_client",
+    "output": "dist/multiplayer_client.lua"
 }

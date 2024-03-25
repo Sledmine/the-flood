@@ -3,18 +3,18 @@
     "target": "lua53",
     "include": [
         "lua",
-        "lua/modules/"
+        "lua/lua_modules/"
     ],
     "modules": [
         "inspect",
         "glue",
         "blam",
         "luna",
-        "multiplayer.features.constants",
-        "multiplayer.data.network",
-        "multiplayer.features.core",
-        "multiplayer.features.gameplay"
+        "the_flood.constants",
+        "the_flood.network",
+        "the_flood.core",
+        "the_flood.gameplay_core.healthRegen"
     ],
-    "main": "lua/multiplayer/the_flood_mp_server",
-    "output": "dist/the_flood_mp_server.lua"
+    "main": "lua/multiplayer_server",
+    "output": "dist/multiplayer_server.lua"
 }
