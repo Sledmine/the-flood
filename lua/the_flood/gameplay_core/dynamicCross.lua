@@ -56,7 +56,6 @@ globals_tag = read_dword(get_tag("matg", "globals\\globals") + 0x14)
 local dynamic_crosshairs = true
 
 --END OF CONFIG
-
 local rand = math.random
 local sqrt = math.sqrt
 local cos = math.cos
@@ -66,14 +65,7 @@ local pi = math.pi
 local floor = math.floor
 local ceil = math.ceil
 
-
 function InitializeSettings()
-
-    -- change settings if they were set using a script
-    if get_global("settings_changed") then
-        console_out("Settings changed") 
-        dynamic_crosshairs = get_global("dynamic_crosshairs")
-    end
 
         WEAPON_HUDS = {
             [ma38_tag] = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\assault_rifle\\assault_rifle_ma38") + 0x14),
