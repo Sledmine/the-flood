@@ -1,0 +1,23 @@
+{
+    "name": "The Flood Singleplayer",
+    "target": "lua53",
+    "include": [
+        "lua",
+        "lua/lua_modules/"
+    ],
+    "modules": [
+        "inspect",
+        "glue",
+        "blam",
+        "luna",
+        "the_flood.core",
+        "the_flood.constants",
+        "the_flood.network",
+        "the_flood.gameplay_core.dynamicCross",
+        "the_flood.gameplay_core.hudExtensions",
+        "the_flood.gameplay_core.playerPingObjectives",
+        "the_flood.gameplay_core.healthRegenSP"
+    ],
+    "main": "lua/singleplayer_client",
+    "output": "dist/singleplayer_client.lua"
+}
