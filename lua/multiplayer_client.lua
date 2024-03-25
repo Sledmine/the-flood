@@ -1,35 +1,37 @@
 clua_version = 2.042
-
 ------------------------------------------------------------------------------
--- Treason Script Map
+-- Script Map
 -- Mark Mc'Fuzz
--- This script is intended to provide functions and features to Treason map
+-- This script is intended to provide functions and features to The Flood Maps
 ------------------------------------------------------------------------------
 require "luna"
 blam = require "blam"
 tagClasses = blam.tagClasses
 objectClasses = blam.objectClasses
-local gameplay = require "multiplayer.features.gameplay"
-local dynamicCross = require "multiplayer.features.dynamicCross"
---local dynamicCrossV2 = require "multiplayer.features.dynamicCrossV2"
 DebugMode = false
+
+-- Gameplay Core Modules 
+local hudExtensions = require "the_flood.gameplay_core.hudExtensions"
+local healthRegen = require "the_flood.gameplay_core.healthRegen"
+local dynamicCross = require "the_flood.gameplay_core.dynamicCross"
+local playerPingObjectives = require "the_flood.gameplay_core.playerPingObjectives"
+--local sprint = require "the_flood.gameplay_core.sprint"
 
 function OnRconMessage(message)
     return blam.rcon.handle(message)
 end
 
+-- Functions OnTick
 function OnTick()
     dynamicCross.dynamicReticles()
-    --dynamicCrossV2.dynamicReticles()
-    --gameplay.rotateWeapons()
-    gameplay.swapFirstPerson()
-    gameplay.hudExtensions()
-    gameplay.regenerateHealth()
-    gameplay.hudUpgrades()
-    gameplay.pingObjectives()
-    -- meleeScreen()
+    hudExtensions.radarHideOnZoom()
+    hudExtensions.hudBlurOnLowHealth()
+    hudExtensions.changeGreandeSound()
+    healthRegen.regenerateHealth()
+    --playerPingObjectives.pingObjectives()
 end
 
+-- Print version on pause menu
 function OnFrame()
     local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 1
     if isPlayerOnMenu then
@@ -43,8 +45,6 @@ function OnFrame()
               table.unpack(textColor))
 end
 
-
 set_callback("tick", "OnTick")
 set_callback("preframe", "OnFrame")
 set_callback("rcon message", "OnRconMessage")
--- OnLoad()

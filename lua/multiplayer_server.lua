@@ -2,18 +2,18 @@ api_version = "1.12.0.0"
 require "compat53"
 require "luna"
 blam = require "blam"
-local gameplay
+local healthRegen
 
 function OnTick()
     for playerIndex = 1, 16 do
         if player_alive(playerIndex) then
-            gameplay.regenerateHealth(playerIndex)
+            healthRegen.regenerateHealth(playerIndex)
         end
     end
 end
 
 function OnMapLoad()
-    gameplay = require "multiplayer.features.gameplay"
+    healthRegen = require "the_flood.gameplay_core.healthRegen"
     set_callback("tick", "OnTick")
 end
 

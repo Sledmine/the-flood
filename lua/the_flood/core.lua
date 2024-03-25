@@ -3,7 +3,7 @@ local glue = require "glue"
 
 local core = {}
 
-local const = require "multiplayer.features.constants"
+local const = require "the_flood.constants"
 
 ---@class vector3D
 ---@field x number
