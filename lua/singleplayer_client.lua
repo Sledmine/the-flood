@@ -12,7 +12,7 @@ DebugMode = false
 
 -- Gameplay Core Modules 
 local hudExtensions = require "the_flood.gameplay_core.hudExtensions"
-local healthRegen = require "the_flood.gameplay_core.healthRegen"
+local healthRegen = require "the_flood.gameplay_core.healthRegenSP"
 local dynamicCross = require "the_flood.gameplay_core.dynamicCross"
 local playerPingObjectives = require "the_flood.gameplay_core.playerPingObjectives"
 --local sprint = require "the_flood.gameplay_core.sprint"
