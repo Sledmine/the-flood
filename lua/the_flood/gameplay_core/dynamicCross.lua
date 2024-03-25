@@ -50,8 +50,6 @@ local arc_zapper_tag = read_dword(get_tag("weap", arc_zapper_path) + 0xc)
 
 globals_tag = read_dword(get_tag("matg", "globals\\globals") + 0x14)
 
---CONFIG
-
 -- DYNAMIC RETICLES
 local dynamic_crosshairs = true
 
