@@ -4,11 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.5.5] - 2024-xx-xx
+## [4.5.3] - 2024-xx-xx
 ### Added
 - New map Aqueduct
 - New map Penance
 - More weapon sounds on animations
+
+### Fixed
+
+### Changed
+
+## [4.5.2] - 2024-xx-xx
+### Added
 
 ### Fixed
 - Increased mip map count on terrain textures
