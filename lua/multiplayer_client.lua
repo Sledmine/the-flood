@@ -25,7 +25,7 @@ end
 -- Functions OnTick
 function OnTick()
     dynamicCross.dynamicReticles()
-    --aimingDownSights.adsSystem()
+    aimingDownSights.adsSystem()
     hudExtensions.radarHideOnZoom()
     hudExtensions.hudBlurOnLowHealth()
     hudExtensions.changeGreandeSound()
