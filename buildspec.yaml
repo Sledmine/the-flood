@@ -23,14 +23,6 @@ commands:
     - cp dist/multiplayer_server.lua package/lua-sapp/the_flood_mp_server.lua
     - mercury pack package/ dist/
     - rm package/lua-map/*.lua
-  structbunker:
-    - cd hek && h1a_tool structure keymind\halo_3\levels\multiplayer\bunkerworld bunkerworld 1
-    - cd hek && harvest_h1a_tool_lm lightmaps keymind\halo_3\levels\multiplayer\bunkerworld\bunkerworld_dev bunkerworld 0.9 0.11111
-    - invader normalize-lightmaps keymind\halo_3\levels\multiplayer\bunkerworld\bunkerworld
-  structbleed:
-    - cd hek && h1a_tool structure keymind\the_flood\levels\multiplayer\bleed_it_out b_gulch
-    - cd hek && harvest_h1a_tool_lm lightmaps keymind\the_flood\levels\multiplayer\bleed_it_out\bleed_light b_gulch 0.9 0.777777 -noassert  
-    - invader normalize-lightmaps keymind\the_flood\levels\multiplayer\bleed_it_out\b_gulch    
   symlinks:
     - ln -f -s "$PWD/dist/multiplayer_client.lua" "$HALO_CE_DATA_PATH/chimera/lua/scripts/map/aqueduct_dev.lua"
     - ln -f -s "$PWD/dist/multiplayer_server.lua" "$HALO_CE_DATA_PATH/sapp/lua/the_flood_mp_server.lua"
