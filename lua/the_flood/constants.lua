@@ -24,8 +24,17 @@ constants.projectiles = {
     raycastTag = blam.findTag("raycast", tagClasses.projectile)
 }
 
-function constants.get()
+constants.weapons = {
+    ma38Tag = blam.findTag("assault_rifle_tf", tagClasses.weapon),
+    m6sTag = blam.findTag("magnum_m6s", tagClasses.weapon)
+}
 
+constants.weaponHudInterfaces = {
+    ma38HudTag = blam.findTag("assault_rifle_ma38", tagClasses.weaponHudInterface),
+    m6sHudTag = blam.findTag("magnum_m6s", tagClasses.weaponHudInterface)
+}
+
+function constants.get()
 constants.fonts = {
     text = findTag("text", tagClasses.font),
     title = findTag("title", tagClasses.font),
