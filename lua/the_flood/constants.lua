@@ -17,7 +17,9 @@ constants.hsc = {playSound = [[(begin (sound_impulse_start "%s" (list_get (playe
 
 constants.sounds = {
     uiFGrenadePath = blam.findTag("001_frag_grenade", tagClasses.sound).path,
-    uiPGrenadePath = blam.findTag("001_plasma_grenade", tagClasses.sound).path
+    uiPGrenadePath = blam.findTag("001_plasma_grenade", tagClasses.sound).path,
+    humanRifleZoomIn = blam.findTag("007_human_rifle_zoom_in", tagClasses.sound).path,
+    humanRifleZoomOut = blam.findTag("007_human_rifle_zoom_out", tagClasses.sound).path
 }
 
 constants.projectiles = {
