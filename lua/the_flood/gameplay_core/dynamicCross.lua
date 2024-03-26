@@ -68,7 +68,6 @@ function InitializeSettings()
         WEAPON_HUDS = {
             [ma38_tag] = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\assault_rifle\\assault_rifle_ma38") + 0x14),
             [needlert54c_tag] = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\pistol\\needler\\needler_t54c") + 0x14),
-
             [mag_m6s_tag] = read_dword(get_tag("wphi", mag_m6s_path) + 0x14),
             [plasmap_tag] = read_dword(get_tag("wphi", plasmap_path) + 0x14),
             [m90_tag] = read_dword(get_tag("wphi", m90_path) + 0x14),
