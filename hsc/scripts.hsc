@@ -23,7 +23,7 @@
 ;; For some reason the sound play command does not work if the sound is not referenced
 (script static void sounds
     (begin
-        ;; HUD Sounds
+        ;; Change Grenade HUD Sounds
         (sound_impulse_start
             "keymind\the_flood\sound\001_ui\001_ui_hud\001_ui_hud_grenades\001_frag_grenade"
             (list_get (players) 0)
@@ -31,6 +31,17 @@
         )
         (sound_impulse_start
             "keymind\the_flood\sound\001_ui\001_ui_hud\001_ui_hud_grenades\001_plasma_grenade"
+            (list_get (players) 0)
+            1.0
+        )
+        ;; Human Rifle Zoom Sounds
+        (sound_impulse_start
+            "keymind\the_flood\sound\007_weapon\007_wea_shared\007_human_rifle_zoom\007_human_rifle_zoom_in"
+            (list_get (players) 0)
+            1.0
+        )
+        (sound_impulse_start
+            "keymind\the_flood\sound\007_weapon\007_wea_shared\007_human_rifle_zoom\007_human_rifle_zoom_out"
             (list_get (players) 0)
             1.0
         )
