@@ -15,6 +15,7 @@ constants.raycastVelocity = 80
 
 constants.hsc = {playSound = [[(begin (sound_impulse_start "%s" (list_get (players) %s) %s))]]}
 
+-- Sound References
 constants.sounds = {
     uiFGrenadePath = blam.findTag("001_frag_grenade", tagClasses.sound).path,
     uiPGrenadePath = blam.findTag("001_plasma_grenade", tagClasses.sound).path,
@@ -22,15 +23,18 @@ constants.sounds = {
     humanRifleZoomOut = blam.findTag("007_human_rifle_zoom_out", tagClasses.sound).path
 }
 
+-- Projectile References
 constants.projectiles = {
     raycastTag = blam.findTag("raycast", tagClasses.projectile)
 }
 
+-- Weapon References
 constants.weapons = {
     ma38Tag = blam.findTag("assault_rifle_tf", tagClasses.weapon),
     m6sTag = blam.findTag("magnum_m6s", tagClasses.weapon)
 }
 
+-- Weapon HUD References
 constants.weaponHudInterfaces = {
     ma38HudTag = blam.findTag("assault_rifle_ma38", tagClasses.weaponHudInterface),
     m6sHudTag = blam.findTag("magnum_m6s", tagClasses.weaponHudInterface)
