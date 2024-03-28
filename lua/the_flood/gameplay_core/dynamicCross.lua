@@ -109,7 +109,6 @@ function InitializeSettings()
             --},
         }
 
-
         --MAGNUM CROSSHAIR AND ZOOM SCALE
         m6d_reticle_initial_scale = 0.2
         m6d_reticle_additional_scale = 0.6
@@ -168,7 +167,7 @@ function InitializeSettings()
         --SNIPER ZOOM SCOPE
         sniper_zoom_scope_initial_scale = 0.47
         sniper_zoom_scope_additional_scale = 0.03
-       
+
         --SNIPER ZOOM LEVELS
         sniper_zoom_levels_initial_scale = 0.45
         sniper_zoom_levels_additional_scale = 0.12
@@ -219,7 +218,6 @@ function InitializeSettings()
         dot_reticle_initial_scale = 0.08
         dot_reticle_additional_scale = 0
 
-
         ----dmr392_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\dmr\\dmr_392") + 0x14)
         ----m6d_hud = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\pistol\\magnum_m6d\\magnum_m6d") + 0x14)
 
@@ -247,7 +245,6 @@ function InitializeSettings()
 end
 
 set_timer(600, "InitializeSettings")
-
 
 function dynamicCross.dynamicReticles()
     if dynamic_crosshairs and WEAPON_RETICLES ~= nil then
@@ -413,7 +410,7 @@ function dynamicCross.dynamicReticles()
                             write_float(reticle_overlay_address + 0x04, scaleblur)
                             write_float(reticle_overlay_address + 0x08, scaleblur)
                         elseif j == 5 then
-                               write_float(reticle_overlay_address + 0x04, scaleblur)
+                            write_float(reticle_overlay_address + 0x04, scaleblur)
                             write_float(reticle_overlay_address + 0x08, scaleblur)     
                         elseif j == 6 then
                             write_float(reticle_overlay_address + 0x04, scale_reticle) --Horizontal
