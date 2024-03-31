@@ -15,18 +15,13 @@ end
 -- ADS system for some weapons
 function aimingDownSights.adsSystem()
     local player = blam.biped(get_dynamic_player ())
-    --local object = get_object(read_dword(player + 0x118))
-    --local readyTimer = read_word(player + 0x23A)
     if player then
-        --  -- current weapon
-        -- local objectType = read_word(player + 0xB4) -- (0 = Biped) (1 = Vehicle) (2 = Weapon) (3 = Equipment) (4 = Garbage) (5 = Projectile) (6 = Scenery) (7 = Machine) (8 = Control) (9 = Light Fixture) (10 = Placeholder) (11 = Sound Scenery)
-        -- console_out("ADS Working")
-        if player.actionKey then -- and objectType == 2 and currentWeapon then
+        if player.actionKey then
             local tag = blam.getTag(player.tagId)
             assert(tag, "Tag not found")
-            local fieldOfView = math.deg(read_float(tag.data + 0x1A0))
-            console_out("FOV: " .. fieldOfView)
-            if fieldOfView > 60 then
+            local adsZoom = math.deg(read_float(tag.data + 0x1A0))
+            console_out("Zoom Rad: " .. adsZoom)
+            if adsZoom > 60 then
                 write_float(tag.data + 0x1A0, math.rad(55))
                 aimingDownSights.playSound(const.sounds.humanRifleZoomIn, 5)
             else
