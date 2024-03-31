@@ -10,7 +10,7 @@ local dynamicCross = {}
 
 --WEAPON TAG PATH
 --local smg_name = "keymind\\the_flood\\weapons\\rifle\\smg\\smg_m7"
-local ma38_path = "keymind\\halo_infinite\\weapons\\rifle\\ma40_assault_rifle\\variants\\the_flood\\assault_rifle_tf"
+local ma38_path = "keymind\\the_flood\\weapons\\rifle\\assault_rifle\\assault_rifle_ma38"
 local needlert54c_path = "keymind\\the_flood\\weapons\\pistol\\needler\\needler_t54c"
 --local needlert54b_path = "keymind\\the_flood\\weapons\\pistol\\needler_short\\needler_t54b"
 --local mag_m6d_path = "keymind\\the_flood\\weapons\\pistol\\magnum_m6d\\magnum_m6d"
