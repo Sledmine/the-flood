@@ -7,14 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [4.5.3] - 2024-xx-xx
 ### Added
 - New map Aqueduct
-- New map Penance
 - More weapon sounds on animations
+- (Last Voyage) Local optimization script 
+- (Treason) Ladders on bunker doors
 
 ### Fixed
+- Reduced tag garbage
 
 ### Changed
+- Redone portals on Last Voyage
 
-## [4.5.2] - 2024-xx-xx
+
+## [4.5.2] - 2024-01-18
 ### Added
 
 ### Fixed
