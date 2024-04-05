@@ -59,6 +59,10 @@ data/
 data
 tags/
 tags
+tags_globals_last_voyage/
+tags_globals_last_voyage
+tags_globals_treason/
+tags_globals_treason
 hek/
 maps
 gamestate.txt
@@ -71,3 +75,4 @@ six-shooter.ini
 *.log
 Desktop.ini
 .gitignore
+fortnite_master_chief.7z
