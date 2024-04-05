@@ -224,7 +224,7 @@ function InitializeSettings()
     -- DYNAMIC RETICLES
     if dynamic_crosshairs then
         local m6s_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\magnum_m6s\\magnum_m6s") + 0x14)
-        local ma38_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\rifle\\ma40_assault_rifle\\variants\\the_flood\\assault_rifle_tf") + 0x14)
+        local ma38_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\rifle\\assault_rifle\\assault_rifle_ma38") + 0x14)
 		local needlert54c_tag_data = read_dword(get_tag("weap", "keymind\\the_flood\\weapons\\pistol\\needler\\needler_t54c") + 0x14)
         local spknr_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\support_high\\m41_spknr\\m41_spknr") + 0x14)
         local vakara_tag_data = read_dword(get_tag("weap", "keymind\\halo_infinite\\weapons\\rifle\\vk78_commando\\vk78_commando") + 0x14)
