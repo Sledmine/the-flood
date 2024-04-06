@@ -6,47 +6,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [4.5.3] - 2024-xx-xx
 ### Added
+- New player biped (customizable vía insurrection)
 - New map Aqueduct
 - More weapon sounds on animations
 - (Last Voyage) Local optimization script 
 - (Treason) Ladders on bunker doors
+- (Caster) lens flare when the weapon is charging
 
 ### Fixed
 - Reduced tag garbage
-
-### Changed
-- Redone portals on Last Voyage
-
-
-## [4.5.2] - 2024-01-18
-### Added
-
-### Fixed
+- (Coil) HUD change weapon message appears and flickering when you are holding the coil
 - Increased mip map count on terrain textures
 - (LMG Saw ) change color on rubber shader
 - (Disruptor) shader causing flickering transparent textures
+- (Plasma grenade) sticks on vehicles
 
 ### Changed
-- (Caster) reduced bounce projectile guied angular velocity 5 to 2
-- (Caster) reduced bounce projectile initial velocity 25.5 to 9 wu
-- (Caster) increased bounce projectile final velocity 2.55 to 9 wu
-- (Caster) reduced bounce projectile air gravity 2 to 0.5
-- (Caster) reduced inmediately projectile initial velocity 4.5 to 3.3 wu
-- (Caster) increased inmediately projectile final velocity 0.45 to 3.3 wu
+- Redone portals on Last Voyage
+- (Caster) increased bounce projectile initial velocity 9 to 24 wu
+- (Caster) increased bounce projectile air gravity 0.5 to 0.8
+- (Caster) increased bounce projectile guied angular velocity 0 to 2
+- (Caster) increased rounds per second 3 to 3.75
+- (Caster) increased charged projectile initial velocity 16.5 to 24 wu
+- (Caster) increased charged projectile guied angular velocity 0 to 5
 - (Caster) increased inmediately projectile timer 0.15 to 0.18 secs
 - (Caster) detonation increased radius 0.5 - 1.8 to 0.8 - 2.1 wu
 - (Caster) detonation increased damage upper bound 50 to 55, lower bound 17.5 to 20
-- (Caster) reduced charged projectile initial and final velocity to half
-- (Caster) increased charged projectile guied angular velocity 0 to 15
-- (Caster) reduced charged projectile air gravity 0.3 to 0.1
+- (Coil/caster) unchecked only client side projectile
 - (Coil) Increased damage explosion on 16%
 - (Coil) Increased charging time 0.35 to 0.45
 - (Coil) Increased air gravity 1 to 1.25
 - (Coil) adjusted first person weapon offset projectile
+- (Coil) increased projectile final velocity 3 to 6.75 wu
+- (Coil) reduced projectile air damage range 0-100 to 0-15 wu
 - (Skewer) adjusted first person weapon offset projectile
 - (Skewer) reduced air gravity 4 to 0.7
 - (Skewer) reduced projectile initial velocity 90 to 60 and final velocity 9 to 6 wu
-- (Bleed It Out) returned banshee and wasp spawns by default on slayer (Just in this update)
+- (Bleed It Out) returned banshee and wasp spawns by default on slayer
 
 ## [4.5.0] - 2023-09-24
 ### Added
