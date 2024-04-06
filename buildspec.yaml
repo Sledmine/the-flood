@@ -3,11 +3,8 @@ game_engine: gbx-custom
 tag_space: 64M
 extend_limits: true
 scenarios:
-  - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
   - keymind/the_flood/levels/multiplayer/aqueduct/aqueduct_dev
   - keymind/the_flood/levels/multiplayer/bridge/last_voyage_dev
-  - keymind/the_flood/levels/multiplayer/foundation/treason_dev
-  - keymind/the_flood/levels/multiplayer/ca_damnation/penance_dev
 commands:
   package:
     - rm -rf dist
@@ -21,6 +18,10 @@ commands:
     - ln -f -s "$PWD/dist/multiplayer_client.lua" "$HALO_CE_DATA_PATH/chimera/lua/scripts/map/aqueduct_dev.lua"
     - ln -f -s "$PWD/dist/multiplayer_server.lua" "$HALO_CE_DATA_PATH/sapp/lua/the_flood_mp_server.lua"
   release:
-    - mercury build --output package/game-maps/
-    - cp dist/multiplayer_client.lua package/lua-map/last_voyage.lua
-    - cp dist/multiplayer_client.lua package/lua-map/aqueduct.lua
+    - mercury luabundle
+    - cp dist/multiplayer_client.lua package/lua-map/last_voyage_dev.lua
+    - cp dist/multiplayer_client.lua package/lua-map/aqueduct_dev.lua
+  release_b:
+    - mercury luabundle
+    - cp dist/multiplayer_client.lua package_a/lua-map/last_voyage_dev.lua
+    - cp dist/multiplayer_client.lua package_a/lua-map/aqueduct_dev.lua
