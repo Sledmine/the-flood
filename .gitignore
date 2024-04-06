@@ -51,6 +51,9 @@ luac.out
 /dist/*
 /temp/*
 package/game-maps/*.map
+packdiff/*
+package/*
+package_a/*
 #WTF
 lua/lua_modules/offsets.lua
 
@@ -74,7 +77,8 @@ six-shooter.ini
 
 # Cloud files
 *.db*
+*.zip
+*.7z
 *.log
 Desktop.ini
 .gitignore
-fortnite_master_chief.7z
