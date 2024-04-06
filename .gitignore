@@ -79,6 +79,7 @@ six-shooter.ini
 *.db*
 *.zip
 *.7z
+*.mercu
 *.log
 Desktop.ini
 .gitignore
