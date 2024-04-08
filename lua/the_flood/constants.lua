@@ -1,6 +1,6 @@
 -- Lua libraries
 local blam = require "blam"
-tagClasses = blam.tagClasses
+local tagClasses = blam.tagClasses
 local findTag = blam.findTag
 
 local constants = {}
@@ -30,7 +30,7 @@ constants.projectiles = {
 
 -- Weapon References
 constants.weapons = {
-    ma38Tag = blam.findTag("assault_rifle_tf", tagClasses.weapon),
+    ma38Tag = blam.findTag("assault_rifle_ma38", tagClasses.weapon),
     m6sTag = blam.findTag("magnum_m6s", tagClasses.weapon)
 }
 
