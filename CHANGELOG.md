@@ -20,9 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (LMG Saw ) change color on rubber shader
 - (Disruptor) shader causing flickering transparent textures
 - (Plasma grenade) sticks on vehicles
+- (Last Voyage) optimizer script bugs
 
 ### Changed
 - Redone portals on Last Voyage
+- (Storm Rifle/Caster) renew textures
+- (Caster) Improved effects
 - (Caster) increased bounce projectile initial velocity 9 to 24 wu
 - (Caster) increased bounce projectile air gravity 0.5 to 0.8
 - (Caster) increased bounce projectile guied angular velocity 0 to 2
@@ -32,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (Caster) increased inmediately projectile timer 0.15 to 0.18 secs
 - (Caster) detonation increased radius 0.5 - 1.8 to 0.8 - 2.1 wu
 - (Caster) detonation increased damage upper bound 50 to 55, lower bound 17.5 to 20
+- (Caster) detonation charged proyectile single timer 0.45-0.75 to 0.75-1.35
 - (Coil/caster) unchecked only client side projectile
 - (Coil) Increased damage explosion on 16%
 - (Coil) Increased charging time 0.35 to 0.45

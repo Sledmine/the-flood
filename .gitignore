@@ -52,7 +52,7 @@ luac.out
 /temp/*
 package/game-maps/*.map
 packdiff/*
-package/*
+package/lua-map/*.lua
 package_a/*
 #WTF
 lua/lua_modules/offsets.lua
@@ -83,3 +83,9 @@ six-shooter.ini
 *.log
 Desktop.ini
 .gitignore
+tags_globals_debug/globals/globals.globals
+package/game-root/fonts/EurostileExtended.ttf
+package/game-root/fonts/NexaDemo-Bold.otf
+package/game-root/fonts/NexaDemo-Light.otf
+package/game-root/fonts/NexaKeyboardHalo-Bold.otf
+package/game-root/fonts/QTypeSquare-Bold.otf
