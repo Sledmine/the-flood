@@ -13,6 +13,7 @@ DebugMode = false
 -- Gameplay Core Modules 
 local hudExtensions = require "the_flood.gameplay_core.hudExtensions"
 local healthRegen = require "the_flood.gameplay_core.healthRegenSP"
+local healthRegenAlly = require "the_flood.gameplay_core.healthRegenAlly"
 local dynamicCross = require "the_flood.gameplay_core.dynamicCross"
 local aimingDownSights = require "the_flood.gameplay_core.aimingDownSights"
 local playerPingObjectives = require "the_flood.gameplay_core.playerPingObjectives"
@@ -30,6 +31,7 @@ function OnTick()
     hudExtensions.hudBlurOnLowHealth()
     hudExtensions.changeGreandeSound()
     healthRegen.regenerateHealth()
+    healthRegenAlly.regenerateHealth()
     --playerPingObjectives.pingObjectives()
 end
 

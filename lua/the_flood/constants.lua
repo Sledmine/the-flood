@@ -34,6 +34,11 @@ constants.weapons = {
     m6sTag = blam.findTag("magnum_m6s", tagClasses.weapon)
 }
 
+-- Biped References
+constants.biped = {
+    odstAlly = blam.findTag("gridharvolur_ally", tagClasses.biped)
+}
+
 -- Weapon HUD References
 constants.weaponHudInterfaces = {
     ma38HudTag = blam.findTag("assault_rifle_ma38", tagClasses.weaponHudInterface),

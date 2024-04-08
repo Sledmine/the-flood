@@ -17,7 +17,8 @@
         "the_flood.gameplay_core.hudExtensions",
         "the_flood.gameplay_core.aimingDownSights",
         "the_flood.gameplay_core.playerPingObjectives",
-        "the_flood.gameplay_core.healthRegenSP"
+        "the_flood.gameplay_core.healthRegenSP",
+        "the_flood.gameplay_core.healthRegenAlly"
     ],
     "main": "lua/singleplayer_client",
     "output": "dist/singleplayer_client.lua"
