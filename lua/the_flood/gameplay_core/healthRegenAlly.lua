@@ -5,16 +5,16 @@ local healthRegenAlly = {}
 
 --- Regenerate a designated biped health on low shield using game ticks on singleplayer
 function healthRegenAlly.regenerateHealth()
-    for objectId, index in pairs(blam.getObjects()) do
-        local object = blam.getObject(objectId)
-        if object then
-            local tagId = object.tagId
-            if tagId == const.biped.odstAllyTag.id then
+    for objectHandle, index in pairs(blam.getObjects()) do
+        local bipedObject = blam.getObject(objectHandle)
+        if bipedObject then
+            local bipedTagId = bipedObject.tagId
+            if bipedTagId == const.biped.odstAllyTag.id then
                 --console_out("juasjuasjuas")
-                if object.health < 1 and object.shield > 0.95 then
-                    object.health = object.health + const.healthRegenAiAmount
-                    if object.health > 1 then
-                        object.health = 1
+                if bipedObject.health < 1 and bipedObject.shield > 0.95 then
+                    bipedObject.health = bipedObject.health + const.healthRegenAiAmount
+                    if bipedObject.health > 1 then
+                        bipedObject.health = 1
                     end
                 end
             end
