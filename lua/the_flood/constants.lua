@@ -10,6 +10,7 @@ constants.localPlayerAddress = 0x815918
 
 -- Constant gameplay values
 constants.healthRegenerationAmount = 0.0037
+constants.healthRegenAiAmount = 0.005
 constants.raycastOffset = 0.3
 constants.raycastVelocity = 80
 
@@ -36,7 +37,7 @@ constants.weapons = {
 
 -- Biped References
 constants.biped = {
-    odstAlly = blam.findTag("gridharvolur_ally", tagClasses.biped)
+    odstAllyTag = blam.findTag("gridharvolur_ally", tagClasses.biped)
 }
 
 -- Weapon HUD References
