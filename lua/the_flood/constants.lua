@@ -36,7 +36,7 @@ constants.weapons = {
 }
 
 -- Biped References
-constants.biped = {
+constants.bipeds = {
     odstAllyTag = blam.findTag("gridharvolur_ally", tagClasses.biped)
 }
 
