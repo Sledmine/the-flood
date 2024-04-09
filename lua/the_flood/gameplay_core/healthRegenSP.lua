@@ -13,7 +13,7 @@ function healthRegen.regenerateHealth()
                 player.health = 0.000000001
             end
         end
-        if (player.health < 1 and player.shield >= 1) then
+        if (player.health < 1 and player.shield >= 0.98) then
             local newPlayerHealth = player.health + const.healthRegenerationAmount
             if (newPlayerHealth > 1) then
                 player.health = 1
