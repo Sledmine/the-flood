@@ -1,3 +1,10 @@
+;; Camera Start
+(script startup starting_camera
+(begin
+(camera_control true)
+(camera_set start_camera 0)
+(sleep 120)
+(camera_control false)))
 
 ;; Menu UI Effects
 (script static void menu_blur_off
@@ -17,7 +24,7 @@
 )
 
 (script startup intro
-(fade_in 0.0 0.0 0.0 120)
+(fade_in 0.0 0.0 0.0 180)
 )
 
 ;; For some reason the sound play command does not work if the sound is not referenced

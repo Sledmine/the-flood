@@ -12,8 +12,10 @@
                 (if (= (sleep_until (volume_test_object blue_off (player)) 15) (= triggered true))
                         (begin
                                 (object_destroy_containing "blue_trigger")
+                                (object_create_containing "red_trigger")
                                 (set developer_mode 127)
                                 (print "Blue Objects Destroyed")
+                                (print "Red Objects Restored")
                         )
                 )
                 (if (= (sleep_until (volume_test_object blue_on (player)) 15) (= triggered true))
@@ -32,8 +34,10 @@
                 (if (= (sleep_until (volume_test_object red_off (player)) 15) (= triggered true))
                         (begin
                                 (object_destroy_containing "red_trigger")
+                                (object_create_containing "blue_trigger")
                                 (set developer_mode 127)
                                 (print "Red Objects Destroyed")
+                                (print "Blue Objects Restored")
                         )
                 )
                 (if (= (sleep_until (volume_test_object red_on (player)) 15) (= triggered true))
