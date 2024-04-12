@@ -16,7 +16,14 @@ end
 function aimingDownSights.adsSystem()
     local playerBiped = blam.biped(get_dynamic_player())
     if playerBiped then
-        local weaponId = playerBiped.weaponSlot
+        local weaponId = playerBiped.firstWeaponObjectId
+        if playerBiped.weaponSlot == 1 then
+            weaponId = playerBiped.secondWeaponObjectId
+        elseif playerBiped.weaponSlot == 2 then
+            weaponId = playerBiped.thirdWeaponObjectId
+        elseif playerBiped.weaponSlot == 3 then
+            weaponId = playerBiped.fourthWeaponObjectId
+        end
         if not blam.isNull(weaponId) then
             local weapon = blam.weapon(get_object(weaponId))
             assert(weapon, "weapon found")
