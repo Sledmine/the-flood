@@ -16,6 +16,7 @@ end
 function aimingDownSights.adsSystem()
     local playerBiped = blam.biped(get_dynamic_player())
     if playerBiped then
+        console_out("Weapon Slot: " .. playerBiped.weaponSlot)
         local weaponId = playerBiped.firstWeaponObjectId
         if playerBiped.weaponSlot == 1 then
             weaponId = playerBiped.secondWeaponObjectId
@@ -29,6 +30,8 @@ function aimingDownSights.adsSystem()
             assert(weapon, "weapon found")
             local weaponTagId = weapon.tagId
             if weaponTagId == const.weapons.ma38Tag.id then
+                console_out(blam.getTag(weaponTagId).path)
+                console_out(const.weapons.ma38Tag.path)
                 if playerBiped.actionKey then
                     local tag = blam.getTag(playerBiped.tagId)
                     assert(tag, "Tag not found")
