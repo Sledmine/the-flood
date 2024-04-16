@@ -10,11 +10,15 @@ constants.localPlayerAddress = 0x815918
 
 -- Constant gameplay values
 constants.healthRegenerationAmount = 0.0037
-constants.healthRegenAiAmount = 0.005
+-- health recharged on 90 ticks or 3 seconds
+constants.healthRegenAiAmount = 0.02
 constants.raycastOffset = 0.3
 constants.raycastVelocity = 80
 
-constants.hsc = {playSound = [[(begin (sound_impulse_start "%s" (list_get (players) %s) %s))]]}
+-- hsc constants
+constants.hsc = {
+    playSound = [[(begin (sound_impulse_start "%s" (list_get (players) %s) %s))]]
+}
 
 -- Sound References
 constants.sounds = {
@@ -31,8 +35,7 @@ constants.projectiles = {
 
 -- Weapon References
 constants.weapons = {
-    ma38Tag = blam.findTag("assault_rifle_ma38", tagClasses.weapon),
-    m6sTag = blam.findTag("magnum_m6s", tagClasses.weapon)
+    ma38Tag = blam.findTag("assault_rifle_ma38", tagClasses.weapon)
 }
 
 -- Biped References
@@ -42,17 +45,17 @@ constants.bipeds = {
 
 -- Weapon HUD References
 constants.weaponHudInterfaces = {
-    ma38HudTag = blam.findTag("assault_rifle_ma38", tagClasses.weaponHudInterface),
-    m6sHudTag = blam.findTag("magnum_m6s", tagClasses.weaponHudInterface)
+    ma38HudTag = blam.findTag("assault_rifle_ma38", tagClasses.weaponHudInterface)
 }
 
 function constants.get()
-constants.fonts = {
-    text = findTag("text", tagClasses.font),
-    title = findTag("title", tagClasses.font),
-    subtitle = findTag("subtitle", tagClasses.font),
-    --button = findTag("button", tagClasses.font)
-}
+    local fontName = "geogrotesque-regular-"
+
+    constants.fonts = {
+        text = findTag(fontName .. "text", tagClasses.font),
+        title = findTag(fontName .. "title", tagClasses.font),
+        subtitle = findTag(fontName .. "subtitle", tagClasses.font)
+    }
 end
 
 return constants
