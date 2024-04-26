@@ -10,7 +10,8 @@ tagClasses = blam.tagClasses
 objectClasses = blam.objectClasses
 DebugMode = false
 
--- Gameplay Core Modules 
+
+-- Gameplay Core Modules
 local hudExtensions = require "the_flood.gameplay_core.hudExtensions"
 local healthRegen = require "the_flood.gameplay_core.healthRegen"
 local dynamicCross = require "the_flood.gameplay_core.dynamicCross"
@@ -30,6 +31,7 @@ function OnTick()
     hudExtensions.hudBlurOnLowHealth()
     hudExtensions.changeGreandeSound()
     healthRegen.regenerateHealth()
+    --aimingDownSights.customKeys()
     --playerPingObjectives.pingObjectives()
 end
 
@@ -41,10 +43,10 @@ function OnFrame()
     end
     local font = "smaller"
     local align = "right"
-    local bounds = {left = 0, top = 460, right = 632, bottom = 480}
-    local textColor = {1.0, 0.45, 0.72, 1.0}
+    local bounds = { left = 0, top = 460, right = 632, bottom = 480 }
+    local textColor = { 1.0, 0.45, 0.72, 1.0 }
     draw_text("thefloodmp-4.5.3", bounds.left, bounds.top, bounds.right, bounds.bottom, font, align,
-              table.unpack(textColor))
+        table.unpack(textColor))
 end
 
 set_callback("tick", "OnTick")
