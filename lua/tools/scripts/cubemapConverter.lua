@@ -1,7 +1,7 @@
 package.path = package.path .. ";lua/tools/scripts/modules/?.lua"
 local fs = require "lua.tools.scripts.modules.fs"
 local argparse = require "lua.tools.scripts.modules.argparse"
-local luna = require "lua.modules.luna"
+local luna = require "lua.lua_modules.luna"
 
 ---@class CubemapConverterArgs
 ---@field cubemap string
