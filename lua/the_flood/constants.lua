@@ -15,6 +15,7 @@ constants.healthRegenAiAmount = 0.02
 constants.raycastOffset = 0.3
 constants.raycastVelocity = 80
 
+
 -- hsc constants
 constants.hsc = {
     playSound = [[(begin (sound_impulse_start "%s" (list_get (players) %s) %s))]]
@@ -50,7 +51,6 @@ constants.weaponHudInterfaces = {
 
 function constants.get()
     local fontName = "geogrotesque-regular-"
-
     constants.fonts = {
         text = findTag(fontName .. "text", tagClasses.font),
         title = findTag(fontName .. "title", tagClasses.font),
