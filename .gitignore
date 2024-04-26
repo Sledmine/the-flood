@@ -78,6 +78,7 @@ six-shooter.ini
 
 # Cloud files
 *.db*
+*.png*
 *.zip
 *.7z
 *.mercu
@@ -90,3 +91,4 @@ package/game-root/fonts/NexaDemo-Bold.otf
 package/game-root/fonts/NexaDemo-Light.otf
 package/game-root/fonts/NexaKeyboardHalo-Bold.otf
 package/game-root/fonts/QTypeSquare-Bold.otf
+
