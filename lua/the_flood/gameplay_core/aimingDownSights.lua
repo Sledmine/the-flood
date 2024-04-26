@@ -43,7 +43,7 @@ function aimingDownSights.adsSystem()
             local adsZoom = math.deg(read_float(tag.data + 0x1A0))
             --Custom Key to press for activate ads
             local adsKeyPressed = read_byte(keyboard_input_address + adsKey)
-            if weaponTagId == const.weapons.ma38Tag.id then
+            if weaponTagId == const.weapons.ma38Tag.id and playerBiped.firstWeaponObjectId then
                 if adsZoom > 69 and playerBiped.actionKeyHold and playerBiped.reloadKey then
                     write_float(tag.data + 0x1A0, math.rad(55))
                     aimingDownSights.playSound(const.sounds.humanRifleZoomIn, 5)
