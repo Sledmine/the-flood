@@ -126,7 +126,7 @@ function core.createWaypoint(x, y, z, type, duration)
             flags[waypointIndex].z = z
             scenario.cutsceneFlags = flags
             raycastCoords[waypointIndex] = {x = x, y = y, z = z}
-            set_timer(duration or 2000, "DeleteWaypoint", waypointIndex, playerIndex)
+            set_timer(duration or 4000, "DeleteWaypoint", waypointIndex, playerIndex)
             return true
         end
     end
