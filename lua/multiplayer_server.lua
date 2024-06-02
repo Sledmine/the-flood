@@ -14,6 +14,7 @@ end
 
 function OnMapLoad()
     healthRegen = require "the_flood.gameplay_core.healthRegen"
+    require "the_flood.gameplay_core.playerPingObjectives"
     set_callback("tick", "OnTick")
 end
 
