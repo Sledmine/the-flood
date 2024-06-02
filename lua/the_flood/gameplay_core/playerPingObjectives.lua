@@ -31,6 +31,7 @@ end)
 ---@type number?
 local raycastId
 local canCreateNewObjective = true
+local keyboard_input_address = 0x64C550
 
 function playerPingObjectives.pingObjectives()
     if blam.isGameSAPP() then
@@ -43,9 +44,10 @@ function playerPingObjectives.pingObjectives()
     if not player then
         return
     end
+    local cKeyPressed = read_byte(keyboard_input_address + 60)
     if blam.isNull(player.vehicleObjectId) then
         if not raycastId then
-            if player.actionKey then
+            if cKeyPressed > 0 then
                 local rayX, rayY, rayZ = core.calculateRaycast(player)
                 local raycastTagId = const.projectiles.raycastTag.id
                 --raycastTagId = blam.findTag("plasma_grenade", tagClasses.projectile).id
@@ -77,10 +79,10 @@ function playerPingObjectives.pingObjectives()
             canCreateNewObjective = true
             return false
         end
-        set_timer(2000, "AllowCreateNewObjective")
+        set_timer(4000, "AllowCreateNewObjective")
 
         -- Create the waypoint
-        local type = "default"
+        local type = "objective"
         local x = ray.x
         local y = ray.y
         local z = ray.z
@@ -90,7 +92,7 @@ function playerPingObjectives.pingObjectives()
             if object then
                 x = x + object.x
                 y = y + object.y
-                z = z + object.z + 0.5
+                z = z + object.z + 0.3
                 if object.class == objectClasses.weapon then
                     type = "weapon"
                 end
