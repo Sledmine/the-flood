@@ -92,9 +92,12 @@ function playerPingObjectives.pingObjectives()
             if object then
                 x = x + object.x
                 y = y + object.y
-                z = z + object.z + 0.3
+                z = z + object.z + 0.15
                 if object.class == objectClasses.weapon then
                     type = "weapon"
+                end
+                if object.class == objectClasses.vehicle then
+                    type = "vehicle"
                 end
             end
         end
