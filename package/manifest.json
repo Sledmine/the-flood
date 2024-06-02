@@ -1,11 +1,11 @@
 {
     "manifestVersion": "1.1.0",
     "files": {},
-    "label": "thefloodmpdev",
+    "label": "thefloodmp",
     "version": "4.5.3",
     "category": "map",
     "author": "Keymind Dev Team",
-    "name": "The Flood Multiplayer Maps for Betatesters",
+    "name": "The Flood Multiplayer Maps",
     "description": "Multiplayer maps from The Flood project",
     "dependencies": [
         {
