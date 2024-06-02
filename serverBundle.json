@@ -13,7 +13,8 @@
         "the_flood.constants",
         "the_flood.network",
         "the_flood.core",
-        "the_flood.gameplay_core.healthRegen"
+        "the_flood.gameplay_core.healthRegen",
+        "the_flood.gameplay_core.playerPingObjectives"
     ],
     "main": "lua/multiplayer_server",
     "output": "dist/multiplayer_server.lua"
