@@ -8,22 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - New player biped (customizable vía insurrection)
 - New map Aqueduct
-- More weapon sounds on animations
-- (Last Voyage) Local optimization script 
 - (Treason) Ladders on bunker doors
 - (Caster) lens flare when the weapon is charging
 
 ### Fixed
 - Reduced tag garbage
 - (Coil) HUD change weapon message appears and flickering when you are holding the coil
+- (Coil/Caster) server projectile workaround
 - Increased mip map count on terrain textures
 - (LMG Saw ) change color on rubber shader
 - (Disruptor) shader causing flickering transparent textures
 - (Plasma grenade) sticks on vehicles
-- (Last Voyage) optimizer script bugs
 
 ### Changed
 - Redone portals on Last Voyage
+- Map size optimizations
 - (Storm Rifle/Caster) renew textures
 - (Caster) Improved effects
 - (Caster) increased bounce projectile initial velocity 9 to 24 wu
@@ -46,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (Skewer) adjusted first person weapon offset projectile
 - (Skewer) reduced air gravity 4 to 0.7
 - (Skewer) reduced projectile initial velocity 90 to 60 and final velocity 9 to 6 wu
-- (Bleed It Out) returned banshee and wasp spawns by default on slayer
+- (Skewer) automatic detonation against vehicles
+- (Bleed It Out) default banshee/wasp spawns on slayer/ctf
 
 ## [4.5.0] - 2023-09-24
 ### Added
