@@ -9,7 +9,6 @@ scenarios:
   - keymind/the_flood/levels/multiplayer/bridge/last_voyage_dev
   - keymind/halo_3/levels/multiplayer/bunkerworld/impasse_dev
   - keymind/the_flood/levels/multiplayer/ca_damnation/penance_dev
-  - keymind/the_flood/levels/singleplayer/highlands/highlands_dev
 commands:
   package:
     - rm -rf dist
@@ -20,6 +19,7 @@ commands:
     - cp dist/multiplayer_client.lua package/lua-map/last_voyage.lua
     - cp dist/multiplayer_client.lua package/lua-map/impasse.lua
     - cp dist/multiplayer_client.lua package/lua-map/aqueduct.lua
+    - cp dist/multiplayer_client.lua package/lua-map/penance.lua
     - cp dist/multiplayer_server.lua package/lua-sapp/the_flood_mp_server.lua
     - mercury pack package/ dist/
     - rm package/lua-map/*.lua
@@ -27,5 +27,13 @@ commands:
     - ln -f -s "$PWD/dist/multiplayer_client.lua" "$HALO_CE_DATA_PATH/chimera/lua/scripts/map/aqueduct_dev.lua"
     - ln -f -s "$PWD/dist/multiplayer_server.lua" "$HALO_CE_DATA_PATH/sapp/lua/the_flood_mp_server.lua"
   release:
-    - mercury build --release --output package/game-maps/
-    - mercury build package
+    #- mercury build --release --output package/game-maps/
+    #- mercury build package
+    - mercury luabundle && mercury luabundle server
+    - cp dist/multiplayer_client.lua package/lua-map/treason.lua
+    - cp dist/multiplayer_client.lua package/lua-map/bleed_it_out.lua
+    - cp dist/multiplayer_client.lua package/lua-map/last_voyage.lua
+    - cp dist/multiplayer_client.lua package/lua-map/impasse.lua
+    - cp dist/multiplayer_client.lua package/lua-map/aqueduct.lua
+    - cp dist/multiplayer_client.lua package/lua-map/penance.lua
+    - cp dist/multiplayer_server.lua package/lua-sapp/the_flood_mp_server.lua
