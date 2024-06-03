@@ -79,7 +79,7 @@ function playerPingObjectives.pingObjectives()
             canCreateNewObjective = true
             return false
         end
-        set_timer(4000, "AllowCreateNewObjective")
+        set_timer(2000, "AllowCreateNewObjective")
 
         -- Create the waypoint
         local type = "objective"
@@ -92,7 +92,7 @@ function playerPingObjectives.pingObjectives()
             if object then
                 x = x + object.x
                 y = y + object.y
-                z = z + object.z + 0.15
+                z = z + object.z + 0.5
                 if object.class == objectClasses.weapon then
                     type = "weapon"
                 end
