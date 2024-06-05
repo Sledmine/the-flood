@@ -34,7 +34,7 @@ function healthRegen.regenerateHealth(playerIndex)
                     player.health = 0.000000001
                 end
             end
-            if player.health < 1 and player.shield >= 0.98 then
+            if player.health < 1 and player.shield >= 0.98 and blam.isNull(player.vehicleObjectId) then
                 local newPlayerHealth = player.health + const.healthRegenAiAmount
                 if newPlayerHealth > 1 then
                     player.health = 1
