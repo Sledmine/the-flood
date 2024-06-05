@@ -8,7 +8,6 @@ local const = require "the_flood.constants"
 local aimingDownSights = {}
 
 local keyboard_input_address = 0x64C550
-local adsKey = 60
 
 --- Attempt to play a sound given tag path and optionally a gain number
 function aimingDownSights.playSound(tagPath, gain)
@@ -33,6 +32,7 @@ function aimingDownSights.adsSystem()
             weaponId = playerBiped.fourthWeaponObjectId
         end
         if not blam.isNull(weaponId) then
+
             local weapon = blam.weapon(get_object(weaponId))
             assert(weapon, "weapon found")
             local weaponTagId = weapon.tagId
@@ -42,9 +42,9 @@ function aimingDownSights.adsSystem()
             assert(tag, "Tag not found")
             local adsZoom = math.deg(read_float(tag.data + 0x1A0))
             --Custom Key to press for activate ads
-            local adsKeyPressed = read_byte(keyboard_input_address + adsKey)
+            local altKeyPressed = read_byte(keyboard_input_address + 71)
             if weaponTagId == const.weapons.ma38Tag.id and playerBiped.firstWeaponObjectId then
-                if adsZoom > 69 and playerBiped.actionKeyHold and playerBiped.reloadKey then
+                if adsZoom > 69 and altKeyPressed > 0 then
                     write_float(tag.data + 0x1A0, math.rad(55))
                     aimingDownSights.playSound(const.sounds.humanRifleZoomIn, 5)
                     console_out("Zoom Rad: " .. adsZoom)
