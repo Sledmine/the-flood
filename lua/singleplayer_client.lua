@@ -26,13 +26,13 @@ end
 -- Functions OnTick
 function OnTick()
     dynamicCross.dynamicReticles()
-    --aimingDownSights.adsSystem()
+    aimingDownSights.adsSystem()
     hudExtensions.radarHideOnZoom()
     hudExtensions.hudBlurOnLowHealth()
     hudExtensions.changeGreandeSound()
     healthRegen.regenerateHealth()
     healthRegenAlly.regenerateHealth()
-    --playerPingObjectives.pingObjectives()
+    playerPingObjectives.pingObjectives()
 end
 
 -- Print version on pause menu
