@@ -47,7 +47,8 @@ function playerPingObjectives.pingObjectives()
     local cKeyPressed = read_byte(keyboard_input_address + 60)
     if blam.isNull(player.vehicleObjectId) then
         if not raycastId then
-            if cKeyPressed > 0 then
+            local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 1
+            if cKeyPressed > 0 and isPlayerOnMenu then
                 local rayX, rayY, rayZ = core.calculateRaycast(player)
                 local raycastTagId = const.projectiles.raycastTag.id
                 --raycastTagId = blam.findTag("plasma_grenade", tagClasses.projectile).id
@@ -79,7 +80,7 @@ function playerPingObjectives.pingObjectives()
             canCreateNewObjective = true
             return false
         end
-        set_timer(2000, "AllowCreateNewObjective")
+        set_timer(4000, "AllowCreateNewObjective")
 
         -- Create the waypoint
         local type = "objective"
@@ -98,6 +99,9 @@ function playerPingObjectives.pingObjectives()
                 end
                 if object.class == objectClasses.vehicle then
                     type = "vehicle"
+                end
+                if object.class == objectClasses.biped then
+                    type = "biped"
                 end
             end
         end
