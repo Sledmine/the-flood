@@ -6,10 +6,10 @@ local hudExtensions = {state = {playerCriticalHealth = false}}
 
 ---Improvements for HUD, hide HUD on zoom
 function hudExtensions.radarHideOnZoom()
-    local playerObject = blam.biped(get_dynamic_player())
-    if playerObject then
+    local player = blam.biped(get_dynamic_player())
+    if player then
         -- console_out(playerObject.zoomLevel)
-        if not blam.isNull(playerObject.zoomLevel) then
+        if not blam.isNull(player.zoomLevel) then
             execute_script("hud_show_motion_sensor 0")
         else
             execute_script("hud_show_motion_sensor 1")
@@ -34,16 +34,16 @@ function hudExtensions.changeGreandeSound()
     -- Player must exist and not be a monitor
     if (player) then
         local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 0
-        if (not isPlayerOnMenu) then
+        if not isPlayerOnMenu then
             local localPlayer = read_dword(const.localPlayerAddress)
             local currentGrenadeType = read_word(localPlayer + 202)
-            if (not blam.isNull(currentGrenadeType)) then
+            if not blam.isNull(currentGrenadeType) then
                 if (not lastGrenadeType) then
                     lastGrenadeType = currentGrenadeType
                 end
-                if (lastGrenadeType ~= currentGrenadeType) then
+                if lastGrenadeType ~= currentGrenadeType then
                     lastGrenadeType = currentGrenadeType
-                    if (lastGrenadeType == 1) then
+                    if lastGrenadeType == 1 then
                         hudExtensions.playSound(const.sounds.uiPGrenadePath, 3)
                     else
                         hudExtensions.playSound(const.sounds.uiFGrenadePath, 3)
@@ -57,14 +57,14 @@ end
 -- Blur HUD vision on critical health
 function hudExtensions.hudBlurOnLowHealth()
     local player = blam.biped(get_dynamic_player())
-    if (player) then
-            if (player.health <= 0.25 and player.shield <= 0 and blam.isNull(player.vehicleObjectId)) then
-                if (not hudExtensions.state.playerCriticalHealth) then
+    if player then
+            if player.health <= 0.25 and player.shield <= 0 and blam.isNull(player.vehicleObjectId) then
+                if not hudExtensions.state.playerCriticalHealth then
                     hudExtensions.state.playerCriticalHealth = true
                     hudExtensions.hudBlur(true)
                 end
             else
-                if (hudExtensions.state.playerCriticalHealth) then
+                if hudExtensions.state.playerCriticalHealth then
                     hudExtensions.hudBlur(false)
                 end
                 hudExtensions.state.playerCriticalHealth = false
@@ -77,7 +77,7 @@ end
 
 --- HUD Blur
 function hudExtensions.hudBlur(enableBlur, immediate)
-    if (enableBlur) then
+    if enableBlur then
         execute_script([[(begin
                             (cinematic_screen_effect_start true)
                             (cinematic_screen_effect_set_convolution 2 1 1 1 5)
@@ -85,7 +85,7 @@ function hudExtensions.hudBlur(enableBlur, immediate)
                         )]])
         return true
     end
-    if (not enableBlur and immediate) then
+    if not enableBlur and immediate then
         execute_script([[(begin
                         (cinematic_screen_effect_set_convolution 2 1 1 0 1)
                         (cinematic_screen_effect_start false)
