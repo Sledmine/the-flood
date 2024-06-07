@@ -26,10 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Map size optimizations
 - (Last Votage) portals remade
 - (Bleed It Out) default banshee/wasp spawns on slayer/ctf
-- (Storm Rifle/Caster) upgraded textures
+- Upgraded all textures and shaders on covenant weapons 
 - (Coil/caster) unchecked only client side projectile
 - (Caster) Improved effects
-- (Coil/Caster/Skewer) weapon balance
+- (Coil/Caster/Skewer/Chaingun Turret/VK78/Needler) weapon balance
+- Hud messages centered position
 
 ## [4.5.0] - 2023-09-24
 ### Added
