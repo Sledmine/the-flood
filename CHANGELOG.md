@@ -18,12 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (Coil) HUD change weapon message appears and flickering when you are holding the coil
 - (Coil) server projectile workaround
 - Increased mip map count on terrain textures
-- (LMG Saw) change color on rubber shader
+- (LMG Saw) change color on rubber shader and meter drain
 - (Disruptor) shader causing flickering transparent textures
 - (Plasma grenade) sticks on vehicles
 
 ### Changed
 - Map size optimizations
+- SFX adjustments
 - (Last Votage) portals remade
 - (Bleed It Out) default banshee/wasp spawns on slayer/ctf
 - Upgraded all textures and shaders on covenant weapons 
