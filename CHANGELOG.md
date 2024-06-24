@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.5.3] - 2024-06-07
+## [4.5.3] - 2024-06-23
 ### Added
 - New player biped (customizable vía insurrection)
 - New map Aqueduct
@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Map size optimizations
 - SFX adjustments
+- (Battle Rifle) longer burst interval and fire sounds
 - (Last Votage) portals remade
 - (Bleed It Out) default banshee/wasp spawns on slayer/ctf
 - Upgraded all textures and shaders on covenant weapons 
