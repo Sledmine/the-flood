@@ -27,6 +27,7 @@ local skewer_path = "keymind\\halo_infinite\\weapons\\support_high\\skewer\\skew
 local plasma_caster_path = "keymind\\halo_5\\weapons\\rifle\\cv_grenade_launcher\\cv_grenade_launcher"
 local lmg_saw_path = "keymind\\halo_5\\weapons\\rifle\\lmg_saw\\lmg_saw"
 local arc_zapper_path = "keymind\\halo_infinite\\weapons\\pistol\\proto_arc_zapper\\proto_arc_zapper"
+--local wasp_weap_path = "keymind\\halo_5\\vehicles\\unsc\\wasp\\wasp"
 
 -- WEAPON TAG PATH VARIABLE
 --local smg_tag = read_dword(get_tag("weap", smg_name) + 0xC)
@@ -47,6 +48,7 @@ local skewer_tag = read_dword(get_tag("weap", skewer_path) + 0xc)
 local plasma_caster_tag = read_dword(get_tag("weap", plasma_caster_path) + 0xC)
 local lmg_saw_tag = read_dword(get_tag("weap", lmg_saw_path) + 0xc)
 local arc_zapper_tag = read_dword(get_tag("weap", arc_zapper_path) + 0xc)
+--local wasp_weap_tag = read_dword(get_tag("weap", wasp_weap_path) + 0xc)
 
 globals_tag = read_dword(get_tag("matg", "globals\\globals") + 0x14)
 
