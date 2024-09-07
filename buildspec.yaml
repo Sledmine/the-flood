@@ -8,6 +8,8 @@ scenarios:
   - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
   - keymind/the_flood/levels/multiplayer/bridge/last_voyage_dev
   - keymind/halo_3/levels/multiplayer/bunkerworld/impasse_dev
+  - keymind/the_flood/levels/singleplayer/highlands/highlands_test
+  - keymind/halo_4/levels/multiplayer/monolith/monolith_dev
 commands:
   extra_tags:
     - extra/keymind/the_flood/ui/shell
