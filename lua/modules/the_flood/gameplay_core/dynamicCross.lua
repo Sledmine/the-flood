@@ -246,7 +246,8 @@ function InitializeSettings()
     end
 end
 
-set_timer(600, "InitializeSettings")
+--set_timer(600, "InitializeSettings")
+InitializeSettings()
 
 function dynamicCross.dynamicReticles()
     if dynamic_crosshairs and WEAPON_RETICLES ~= nil then

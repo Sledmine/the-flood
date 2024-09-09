@@ -1,11 +1,13 @@
 -- Lua libraries
 local const = require "the_flood.constants"
+local engine = Engine
 
 local healthRegen = {}
 
 local isGameClient = function ()
-    return blam.isGameDedicated() or blam.isGameHost()
+    return engine.netgame.getServerType() == "local" or engine.netgame.getServerType() == 'none'
 end
+
 
 --- Attempt to play a sound given tag path and optionally a gain number
 function healthRegen.playSound(tagPath, gain)
@@ -19,7 +21,7 @@ end
 --- Regenerate players health on low shield using game ticks
 ---@param playerIndex? number
 function healthRegen.regenerateHealth(playerIndex)
-    if blam.isGameSAPP() or isGameClient() then
+    --if blam.isGameSAPP() or isGameClient() then
         local player
         if playerIndex then
             player = blam.biped(get_dynamic_player(playerIndex))
@@ -46,7 +48,7 @@ function healthRegen.regenerateHealth(playerIndex)
                 end
             end
         end
-    end
+    --end
 end
 
 return healthRegen
