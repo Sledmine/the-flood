@@ -1,11 +1,9 @@
 -- Lua libraries
 local const = require "the_flood.constants"
-local _, harmony
-if not blam.isGameSAPP() then
-    _, harmony = pcall(require, "mods.harmony")
-end
 local core = require "the_flood.core"
 local network = require "the_flood.network"
+local engine = Engine
+local balltze = Balltze
 
 local playerPingObjectives = {}
 
@@ -72,15 +70,16 @@ function playerPingObjectives.pingObjectives()
             return
         end
         -- Play the ping sound
-        harmony.menu.play_sound(const.sounds.uiFGrenadePath)
+        engine.userInterface.playSound(const.sounds.uiFGrenadePath.id)
 
         -- Lock the player from creating new objectives
         canCreateNewObjective = false
+        local timer
         AllowCreateNewObjective = function()
             canCreateNewObjective = true
-            return false
+            timer.stop()
         end
-        set_timer(4000, "AllowCreateNewObjective")
+        timer = balltze.misc.setTimer(4000, AllowCreateNewObjective)
 
         -- Create the waypoint
         local type = "objective"

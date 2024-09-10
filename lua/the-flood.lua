@@ -1,60 +1,18 @@
-clua_version = 2.042
-------------------------------------------------------------------------------
--- Script Map
--- Mark Mc'Fuzz
--- This script is intended to provide functions and features to The Flood Maps
-------------------------------------------------------------------------------
-require "luna"
-blam = require "blam"
-tagClasses = blam.tagClasses
-objectClasses = blam.objectClasses
-DebugMode = false
 local balltze = Balltze
 local engine = Engine
-local onTickEvent
-execute_script = engine.hsc.executeScript
+require "luna"
 
--- Gameplay Core Modules
-local hudExtensions
-local healthRegen
-local dynamicCross
--- local aimingDownSights = require "the_flood.gameplay_core.aimingDownSights"
--- local playerPingObjectives = require "the_flood.gameplay_core.playerPingObjectives"
--- local sprint = require "the_flood.gameplay_core.sprint"
+local main
+local multiplayerMaps = {"treason", "bleed_it_out", "last_voyage", "impasse", "aqueduct"}
 
-function OnRconMessage(message)
-    return blam.rcon.handle(message)
-end
-
--- Functions OnTick
-function OnTick()
-    dynamicCross.dynamicReticles()
-    -- aimingDownSights.adsSystem()
-    hudExtensions.radarHideOnZoom()
-    hudExtensions.hudBlurOnLowHealth()
-    hudExtensions.changeGreandeSound()
-    healthRegen.regenerateHealth()
-    -- aimingDownSights.customKeys()
-    -- playerPingObjectives.pingObjectives()
-end
-
--- Print version on pause menu
-function OnFrame()
-    local isPlayerOnMenu = read_byte(blam.addressList.gameOnMenus) == 1
-    if isPlayerOnMenu then
-        return
+local function isMultiplayerMap(mapName)
+    for _, map in pairs(multiplayerMaps) do
+        if mapName == map or mapName == map .. "_dev" then
+            return true
+        end
     end
-    local font = "smaller"
-    local align = "right"
-    local bounds = {left = 0, top = 460, right = 632, bottom = 480}
-    local textColor = {1.0, 0.45, 0.72, 1.0}
-    draw_text("thefloodmp-4.5.3", bounds.left, bounds.top, bounds.right, bounds.bottom, font, align,
-              table.unpack(textColor))
+    return false
 end
-
--- set_callback("tick", "OnTick")
--- set_callback("preframe", "OnFrame")
--- set_callback("rcon message", "OnRconMessage")
 
 function PluginMetadata()
     return {
@@ -70,6 +28,7 @@ function PluginInit()
     engine.core.consolePrint("plugin init")
     logger = balltze.logger.createLogger("helljumper")
     -- Replace Chimera functions with Balltze functions
+    execute_script = engine.hsc.executeScript
     write_bit = function(address, bit, value)
         local byte = read_byte(address)
         if value then
@@ -92,18 +51,26 @@ function PluginInit()
             write_byte(address, 0)
         end
     end
+
     balltze.event.mapLoad.subscribe(function(event)
         if event.time == "after" then
-            if not onTickEvent then
-                if event.context:mapName() == "aqueduct_dev" then
-                    dynamicCross = require "the_flood.gameplay_core.dynamicCross"
-                    hudExtensions = require "the_flood.gameplay_core.hudExtensions"
-                    healthRegen = require "the_flood.gameplay_core.healthRegen"
-                    onTickEvent = balltze.event.tick.subscribe(function(event)
-                        if engine.map.getCurrentMapHeader().name == "aqueduct_dev" then
-                            OnTick()
+            local currentMap = event.context:mapName()
+            engine.core.consolePrint("map loaded: " .. currentMap)
+            if isMultiplayerMap(currentMap) then
+                if not main then
+                    logger:info("loading main")
+                    main = require "the_flood.main"
+                end
+            else
+                if main then
+                    main.unload()
+                    package.loaded["the_flood.main"] = nil
+                    for k, v in pairs(package.loaded) do
+                        if k:includes "the_flood" then
+                            package.loaded[k] = nil
                         end
-                    end)
+                    end
+                    main = nil
                 end
             end
         end
@@ -111,11 +78,20 @@ function PluginInit()
 end
 
 function PluginLoad()
-    engine.core.consolePrint("plugin load")
     -- Load Chimera compatibility
     for k, v in pairs(balltze.chimera) do
         if not k:includes "timer" and not k:includes "execute_script" then
             _G[k] = v
         end
     end
+
+    local currentMap = engine.map.getCurrentMapHeader().name
+    if isMultiplayerMap(currentMap) then
+        if not main then
+            main = require "the_flood.main"
+        end
+    end
+end
+
+function PluginUnload()
 end

@@ -1,5 +1,6 @@
 -- Lua libraries
 local glue = require "glue"
+local balltze = Balltze
 
 local core = {}
 
@@ -126,7 +127,11 @@ function core.createWaypoint(x, y, z, type, duration)
             flags[waypointIndex].z = z
             scenario.cutsceneFlags = flags
             raycastCoords[waypointIndex] = {x = x, y = y, z = z}
-            set_timer(duration or 4000, "DeleteWaypoint", waypointIndex, playerIndex)
+            local timer
+            timer = balltze.misc.setTimer(duration or 4000, function (...)
+                DeleteWaypoint(waypointIndex, playerIndex)
+                timer.stop()
+            end)
             return true
         end
     end

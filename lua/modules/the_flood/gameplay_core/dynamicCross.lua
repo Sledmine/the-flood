@@ -246,7 +246,6 @@ function InitializeSettings()
     end
 end
 
---set_timer(600, "InitializeSettings")
 InitializeSettings()
 
 function dynamicCross.dynamicReticles()
