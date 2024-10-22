@@ -53,14 +53,14 @@ local onTickEvent = balltze.event.tick.subscribe(function(event)
         OnTick()
     end
 end)
-local onTickFrame = balltze.event.frame.subscribe(function(event)
+local onFrameEvent = balltze.event.frame.subscribe(function(event)
     if event.time == "before" then
         OnFrame()
     end
 end)
-local onTickRconMessage = balltze.event.rconMessage.subscribe(function(event)
+local onRconMessageEvent = balltze.event.rconMessage.subscribe(function(event)
     if event.time == "before" then
-        OnRconMessage(event.context.message)
+        OnRconMessage(event.context:message())
     end
 end)
 
@@ -68,7 +68,7 @@ return {
     unload = function()
         logger:warning("Unloadig The Flood")
         onTickEvent:remove()
-        onTickFrame:remove()
-        onTickRconMessage:remove()
+        onFrameEvent:remove()
+        onRconMessageEvent:remove()
     end
 }

@@ -27,6 +27,7 @@ end
 function PluginInit()
     engine.core.consolePrint("plugin init")
     logger = balltze.logger.createLogger("helljumper")
+    server_type = engine.netgame.getServerType()
     -- Replace Chimera functions with Balltze functions
     execute_script = engine.hsc.executeScript
     write_bit = function(address, bit, value)
@@ -54,6 +55,7 @@ function PluginInit()
 
     balltze.event.mapLoad.subscribe(function(event)
         if event.time == "after" then
+            server_type = engine.netgame.getServerType()
             local currentMap = event.context:mapName()
             engine.core.consolePrint("map loaded: " .. currentMap)
             if isMultiplayerMap(currentMap) then
