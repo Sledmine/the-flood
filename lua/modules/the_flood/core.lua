@@ -79,8 +79,7 @@ local currentWaypointsIndexes = {}
 function core.deleteWaypoint(index, playerIndex)
     local index = tonumber(index)
     if index then
-        local deactivateWaypoint =
-            [[(deactivate_nav_point_flag (unit (list_get (players) %s)) waypoint_%s)]]
+        local deactivateWaypoint = [[(deactivate_nav_point_flag (unit (list_get (players) %s)) waypoint_%s)]]
         execute_script(deactivateWaypoint:format(playerIndex, index))
         raycastCoords[index] = nil
         currentWaypointsIndexes[index] = nil
@@ -111,6 +110,7 @@ function core.createWaypoint(x, y, z, type, duration)
             if not localPlayer then
                 return false
             end
+            -- Find a player index different from the local player 
             for i = 0, 15 do
                 local player = blam.player(get_player(i))
                 if player and player.index ~= localPlayer.index then
@@ -129,6 +129,7 @@ function core.createWaypoint(x, y, z, type, duration)
             raycastCoords[waypointIndex] = {x = x, y = y, z = z}
             local timer
             timer = balltze.misc.setTimer(duration or 4000, function (...)
+                Engine.core.consolePrint("deleting waypoint...")
                 DeleteWaypoint(waypointIndex, playerIndex)
                 timer.stop()
             end)
