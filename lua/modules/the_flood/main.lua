@@ -68,7 +68,7 @@ end)
 
 return {
     unload = function()
-        logger:warning("Unloadig The Flood")
+        logger:warning("Unloading main")
         onTickEvent:remove()
         onFrameEvent:remove()
         onRconMessageEvent:remove()

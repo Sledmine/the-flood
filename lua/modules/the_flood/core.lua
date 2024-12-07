@@ -79,14 +79,19 @@ local currentWaypointsIndexes = {}
 function core.deleteWaypoint(index, playerIndex)
     local index = tonumber(index)
     if index then
-        local deactivateWaypoint = [[(deactivate_nav_point_flag (unit (list_get (players) %s)) waypoint_%s)]]
-        execute_script(deactivateWaypoint:format(playerIndex, index))
+        for i = 0, 15 do
+            local player = blam.player(get_player(i))
+            if player then
+                playerIndex = player.index
+            end
+            local deactivateWaypoint = [[(deactivate_nav_point_flag (unit (list_get (players) %s)) waypoint_%s)]]
+            execute_script(deactivateWaypoint:format(playerIndex, index))
+        end
         raycastCoords[index] = nil
         currentWaypointsIndexes[index] = nil
     end
     return false
 end
-DeleteWaypoint = core.deleteWaypoint
 
 ---Create a waypoint at the given coordinates
 ---@param x number
@@ -96,6 +101,7 @@ DeleteWaypoint = core.deleteWaypoint
 ---@param duration? number
 ---@return boolean
 function core.createWaypoint(x, y, z, type, duration)
+    local waypointIndex
     for i = 1, 4 do
         if not currentWaypointsIndexes[i] then
             currentWaypointsIndexes[i] = true
@@ -105,11 +111,11 @@ function core.createWaypoint(x, y, z, type, duration)
     end
     if waypointIndex then
         if not raycastCoords[waypointIndex] then
-            local playerIndex = 0
             local localPlayer = blam.player(get_player())
             if not localPlayer then
                 return false
             end
+            local playerIndex = 0
             -- Find a player index different from the local player 
             for i = 0, 15 do
                 local player = blam.player(get_player(i))
@@ -130,7 +136,7 @@ function core.createWaypoint(x, y, z, type, duration)
             local timer
             timer = balltze.misc.setTimer(duration or 4000, function ()
                 logger:info("Deleting waypoint {}", waypointIndex)
-                DeleteWaypoint(waypointIndex, playerIndex)
+                core.deleteWaypoint(waypointIndex, playerIndex)
                 timer.stop()
             end)
             return true

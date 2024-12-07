@@ -79,7 +79,7 @@ function playerPingObjectives.pingObjectives()
             canCreateNewObjective = true
             timer.stop()
         end
-        timer = balltze.misc.setTimer(4000, AllowCreateNewObjective)
+        timer = balltze.misc.setTimer(4300, AllowCreateNewObjective)
 
         -- Create the waypoint
         local type = "objective"
