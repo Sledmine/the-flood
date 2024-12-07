@@ -128,8 +128,8 @@ function core.createWaypoint(x, y, z, type, duration)
             scenario.cutsceneFlags = flags
             raycastCoords[waypointIndex] = {x = x, y = y, z = z}
             local timer
-            timer = balltze.misc.setTimer(duration or 4000, function (...)
-                Engine.core.consolePrint("deleting waypoint...")
+            timer = balltze.misc.setTimer(duration or 4000, function ()
+                logger:info("Deleting waypoint {}", waypointIndex)
                 DeleteWaypoint(waypointIndex, playerIndex)
                 timer.stop()
             end)
