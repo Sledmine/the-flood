@@ -18,10 +18,6 @@ local aimingDownSights = require "the_flood.gameplay_core.aimingDownSights"
 local playerPingObjectives = require "the_flood.gameplay_core.playerPingObjectives"
 local sprint = require "the_flood.gameplay_core.sprint"
 
-function OnRconMessage(message)
-    return blam.rcon.handle(message)
-end
-
 -- Functions OnTick
 function OnTick()
     dynamicCross.dynamicReticles()
@@ -60,7 +56,7 @@ local onFrameEvent = balltze.event.frame.subscribe(function(event)
 end)
 local onRconMessageEvent = balltze.event.rconMessage.subscribe(function(event)
     if event.time == "before" then
-        if not OnRconMessage(event.context:message()) then
+        if blam.rcon.handle(event.context:message()) == false then
             event:cancel()
         end
     end
