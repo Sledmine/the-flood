@@ -4,15 +4,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.5.4] - 2024-xx-xx
+## [5.0.0] - 2024-11-10
 ### Added
-- (Aqueduct) Water collision on center map
-- HUD meters xbox shader
 
 ### Fixed
-- Upgraded warthog HUD
+- Plasma caster player kill/suicide register
+- Warthog physics and handling
+- "Last Voyage" Sound environment
 
 ### Changed
+- Map scripts for Balltze Plugin
+- Multibitmap weapon meters
+- Reduced flashlight radius/distance
+
+### To Do
+- Changed warthog model
+- New map "Penance"
+- Updated weapon LODs
+- Player biped LODs
+- New weapon "Mangler"
+- New vehicle "Scorpion"
+
+## [4.5.4] - 2024-07-10
+### Added
+- (Aqueduct) Water collision on center map
+- HUD meters xbox shader implementation
+
+### Fixed
+
+### Changed
+- Upgraded warthog HUD
 
 ## [4.5.3] - 2024-06-23
 ### Added
@@ -36,7 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Map size optimizations
 - SFX adjustments
 - (Battle Rifle) longer burst interval and fire sounds
-- (Last Votage) portals remade
+- (Last Voyage) portals remade
 - (Bleed It Out) default banshee/wasp spawns on slayer/ctf
 - Upgraded all textures and shaders on covenant weapons 
 - (Coil/caster) unchecked only client side projectile
