@@ -1,44 +1,39 @@
 local balltze = Balltze
 local engine = Engine
+package.preload["luna"] = nil
+package.loaded["luna"] = nil
 require "luna"
 
 local main
-local multiplayerMaps = {"treason", "bleed_it_out", "last_voyage", "impasse", "aqueduct"}
+local loadWhenIn = {"treason", "bleed_it_out", "last_voyage", "impasse", "aqueduct"}
 
-local function isMultiplayerMap(mapName)
-    for _, map in pairs(multiplayerMaps) do
-        if mapName == map or mapName == map .. "_dev" then
-            return true
-        end
-    end
-    return false
-end
+loadWhenIn = table.extend(loadWhenIn, table.map(loadWhenIn, function(map)
+    return map .. "_dev"
+end))
 
 function PluginMetadata()
     return {
         name = "Helljumper Multiplayer",
         author = "Keymind Dev Team",
         version = "4.5.4",
-        targetApi = "1.0.0-rc.1",
-        reloadable = true
+        targetApi = "1.0.0",
+        reloadable = true,
+        maps = loadWhenIn
     }
 end
 
-function PluginInit()
-    engine.core.consolePrint("plugin init")
-    logger = balltze.logger.createLogger("helljumper")
-    server_type = engine.netgame.getServerType()
-    -- Replace Chimera functions with Balltze functions
-    execute_script = engine.hsc.executeScript
-    write_bit = function(address, bit, value)
-        local byte = read_byte(address)
-        if value then
-            byte = byte | (1 << bit)
-        else
-            byte = byte & ~(1 << bit)
+local function loadChimeraCompatibility()
+    -- Load Chimera compatibility
+    for k, v in pairs(balltze.chimera) do
+        if not k:includes "timer" and not k:includes "execute_script" and
+            not k:includes "set_callback" then
+            _G[k] = v
         end
-        write_byte(address, byte)
     end
+    server_type = engine.netgame.getServerType()
+
+    -- Replace Chimera functions with Balltze functions
+    write_bit = balltze.memory.writeBit
     write_byte = balltze.memory.writeInt8
     write_word = balltze.memory.writeInt16
     write_dword = balltze.memory.writeInt32
@@ -52,47 +47,25 @@ function PluginInit()
             write_byte(address, 0)
         end
     end
+    execute_script = engine.hsc.executeScript
+end
 
-    balltze.event.mapLoad.subscribe(function(event)
-        if event.time == "after" then
-            server_type = engine.netgame.getServerType()
-            local currentMap = event.context:mapName()
-            engine.core.consolePrint("map loaded: " .. currentMap)
-            if isMultiplayerMap(currentMap) then
-                if not main then
-                    logger:info("loading main")
-                    main = require "the_flood.main"
-                end
-            else
-                if main then
-                    main.unload()
-                    package.loaded["the_flood.main"] = nil
-                    for k, v in pairs(package.loaded) do
-                        if k:includes "the_flood" then
-                            package.loaded[k] = nil
-                        end
-                    end
-                    main = nil
-                end
+local main
+
+function PluginLoad()
+    logger = balltze.logger.createLogger("Helljumper")
+    logger:muteDebug(not DebugMode)
+
+    loadChimeraCompatibility()
+
+    balltze.event.tick.subscribe(function(event)
+        if event.time == "before" then
+            if not main then
+                main = require "the_flood.main"
             end
         end
     end)
-end
 
-function PluginLoad()
-    -- Load Chimera compatibility
-    for k, v in pairs(balltze.chimera) do
-        if not k:includes "timer" and not k:includes "execute_script" then
-            _G[k] = v
-        end
-    end
-
-    local currentMap = engine.map.getCurrentMapHeader().name
-    if isMultiplayerMap(currentMap) then
-        if not main then
-            main = require "the_flood.main"
-        end
-    end
 end
 
 function PluginUnload()
