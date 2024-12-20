@@ -66,6 +66,7 @@ function PluginLoad()
         end
     end)
 
+    return true
 end
 
 function PluginUnload()
