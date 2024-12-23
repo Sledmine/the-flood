@@ -8,5 +8,5 @@
     "modules": [
     ],
     "main": "lua/the-flood",
-    "output": "dist/the-flood"
+    "output": "dist/the-flood.lua"
 }
