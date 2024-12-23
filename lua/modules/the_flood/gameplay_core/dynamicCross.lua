@@ -65,7 +65,7 @@ local pi = math.pi
 local floor = math.floor
 local ceil = math.ceil
 
-function InitializeSettings()
+function dynamicCross.initializeSettings()
 
         WEAPON_HUDS = {
             [ma38_tag] = read_dword(get_tag("wphi", "keymind\\the_flood\\weapons\\rifle\\assault_rifle\\assault_rifle_ma38") + 0x14),
@@ -245,8 +245,6 @@ function InitializeSettings()
         --write_float(needlert54b_tag_data + 0x35C, 5)
     end
 end
-
-InitializeSettings()
 
 function dynamicCross.dynamicReticles()
     if dynamic_crosshairs and WEAPON_RETICLES ~= nil then

@@ -19,6 +19,8 @@ local playerPingObjectives = require "the_flood.gameplay_core.playerPingObjectiv
 local sprint = require "the_flood.gameplay_core.sprint"
 local weaponExtensions = require "the_flood.gameplay_core.weaponExtensions"
 
+dynamicCross.initializeSettings()
+
 -- Functions OnTick
 function OnTick()
     dynamicCross.dynamicReticles()
