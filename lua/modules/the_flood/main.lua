@@ -17,6 +17,7 @@ local healthRegen = require "the_flood.gameplay_core.healthRegen"
 local aimingDownSights = require "the_flood.gameplay_core.aimingDownSights"
 local playerPingObjectives = require "the_flood.gameplay_core.playerPingObjectives"
 local sprint = require "the_flood.gameplay_core.sprint"
+local weaponExtensions = require "the_flood.gameplay_core.weaponExtensions"
 
 -- Functions OnTick
 function OnTick()
@@ -28,6 +29,7 @@ function OnTick()
     healthRegen.regenerateHealth()
     -- aimingDownSights.customKeys()
     playerPingObjectives.pingObjectives()
+    --weaponExtensions.casterFixHeat()
 end
 
 -- Print version on pause menu
