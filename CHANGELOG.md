@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.0.0] - 2024-11-10
 ### Added
+- (Aqueduct) Water collision on center map
+- HUD meters xbox shader implementation
 
 ### Fixed
 - Plasma caster player kill/suicide register
@@ -16,23 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Map scripts for Balltze Plugin
 - Multibitmap weapon meters
 - Reduced flashlight radius/distance
-
-### To Do
-- Changed warthog model
-- New map "Penance"
-- Updated weapon LODs
-- Player biped LODs
-- New weapon "Mangler"
-- New vehicle "Scorpion"
-
-## [4.5.4] - 2024-07-10
-### Added
-- (Aqueduct) Water collision on center map
-- HUD meters xbox shader implementation
-
-### Fixed
-
-### Changed
 - Upgraded warthog HUD
 
 ## [4.5.3] - 2024-06-23
