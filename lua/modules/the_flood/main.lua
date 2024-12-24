@@ -21,10 +21,16 @@ local weaponExtensions = require "the_flood.gameplay_core.weaponExtensions"
 
 dynamicCross.initializeSettings()
 
+--function OnLoad()  
+--    logger:info("Main loaded")
+--    dynamicCross.dynamicReticles()
+--end
+--
+--OnLoad()
+
 -- Functions OnTick
 function OnTick()
     dynamicCross.dynamicReticles()
-    -- aimingDownSights.adsSystem()
     hudExtensions.radarHideOnZoom()
     hudExtensions.hudBlurOnLowHealth()
     hudExtensions.changeGreandeSound()
@@ -44,7 +50,7 @@ function OnFrame()
     local align = "right"
     local bounds = {left = 0, top = 460, right = 632, bottom = 480}
     local textColor = {1.0, 0.45, 0.72, 1.0}
-    draw_text("thefloodmp-4.5.3", bounds.left, bounds.top, bounds.right, bounds.bottom, font, align,
+    draw_text("thefloodmp-5.0.0", bounds.left, bounds.top, bounds.right, bounds.bottom, font, align,
               table.unpack(textColor))
 end
 
