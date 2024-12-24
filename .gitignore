@@ -53,6 +53,7 @@ luac.out
 package/game-maps/*.map
 packdiff/*
 package/lua-map/*.lua
+package/my-games-data-path/balltze/plugins/*.lua
 package_a/*
 #WTF
 lua/lua_modules/offsets.lua
