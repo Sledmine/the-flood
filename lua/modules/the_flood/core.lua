@@ -1,5 +1,4 @@
 -- Lua libraries
-local glue = require "glue"
 local balltze = Balltze
 
 local core = {}
@@ -68,7 +67,7 @@ function core.secondsToTicks(seconds)
 end
 
 function core.ticksToSeconds(ticks)
-    return glue.round(ticks / 30)
+    return math.floor(ticks / 30 + 0.5)
 end
 
 ---@type table<number, {x: number, y: number, z: number}>
