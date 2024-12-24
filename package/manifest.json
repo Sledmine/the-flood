@@ -1,15 +1,26 @@
 {
-    "manifestVersion": "1.1.0",
-    "files": {},
+    "manifestVersion": "2.0.0",
     "label": "thefloodmp",
-    "version": "4.5.3",
+    "version": "5.0.0",
+    "files": {},
     "category": "map",
     "author": "Keymind Dev Team",
     "name": "The Flood Multiplayer Maps",
     "description": "Multiplayer maps from The Flood project",
+    "deletes": [
+        "lua-map/aqueduct.lua",
+        "lua-map/bleed_it_out.lua",
+        "lua-map/impasse.lua",
+        "lua-map/last_voyage.lua",
+        "lua-map/treason.lua"
+    ],
     "dependencies": [
         {
             "label": "chimera"
+        },
+        {
+            "label": "balltze",
+            "version": "1.2.0"
         },
         {
             "label": "censhine"
