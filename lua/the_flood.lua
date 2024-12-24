@@ -4,8 +4,14 @@ package.preload["luna"] = nil
 package.loaded["luna"] = nil
 require "luna"
 
-local main
-local loadWhenIn = {"treason", "bleed_it_out", "last_voyage", "impasse", "aqueduct"}
+--local main
+local loadWhenIn = {
+    "treason",
+    "bleed_it_out",
+    "last_voyage",
+    "impasse",
+    "aqueduct"
+}
 
 loadWhenIn = table.extend(loadWhenIn, table.map(loadWhenIn, function(map)
     return map .. "_dev"
@@ -15,7 +21,7 @@ function PluginMetadata()
     return {
         name = "Helljumper Multiplayer",
         author = "Keymind Dev Team",
-        version = "4.5.4",
+        version = "5.0.0",
         targetApi = "1.0.0",
         reloadable = true,
         maps = loadWhenIn
