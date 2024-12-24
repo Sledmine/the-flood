@@ -3,10 +3,10 @@
     "target": "lua53",
     "include": [
         "lua",
-        "lua/lua_modules"
+        "lua/modules"
     ],
     "modules": [
     ],
-    "main": "lua/the-flood",
-    "output": "dist/the-flood.lua"
+    "main": "lua/the_flood",
+    "output": "dist/the_flood.lua"
 }
