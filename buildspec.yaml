@@ -8,6 +8,9 @@ scenarios:
   - keymind/the_flood/levels/multiplayer/bleed_it_out/bleed_it_out_dev
   - keymind/the_flood/levels/multiplayer/bridge/last_voyage_dev
   - keymind/halo_3/levels/multiplayer/bunkerworld/impasse_dev
+  - keymind/the_flood/levels/multiplayer/ca_damnation/penance_dev
+  - keymind/the_flood/levels/test/showcase/showcase_dev
+  - keymind/halo_3/levels/dlc/warehouse/warehouse_dev
 commands:
   extra_tags:
     - extra/keymind/the_flood/ui/shell
